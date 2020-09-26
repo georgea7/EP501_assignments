@@ -2,7 +2,6 @@
 %https://github.com/Zettergren-Courses/EP501_matlab/blob/master/linear_algebra/backsub.m
 
 function x=backsub(A)
-
 % This function performs back substitution on an upper triangular matrix that has
 % been modified by concatenating the RHS of the system.  
 % Note that B is assumed to be upper triangular at this point.
@@ -20,5 +19,4 @@ for ir1=n-1:-1:1
     end %for
     x(ir1)=x(ir1)/fact;      %divide once at the end to minimize number of ops
 end %for
-
 end %function
