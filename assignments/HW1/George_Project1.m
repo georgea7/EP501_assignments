@@ -34,4 +34,4 @@ disp(L\bL);
 
 %% Problem 2
 load testproblem.mat    
-BackElim= SBackElim(A,b);
+SimpleElimination= SimpleElim(A,b);
