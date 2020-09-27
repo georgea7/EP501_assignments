@@ -33,3 +33,5 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(L\bL);
 
 %% Problem 2
+load testproblem.mat    
+BackElim= SBackElim(A,b);
