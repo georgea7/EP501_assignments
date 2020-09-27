@@ -25,6 +25,7 @@ disp(A\b);
 
 %c
 load lowertriang_testproblem.mat
+disp('Lower Triangular Matrix/forward substitution:  ');
 TriForElim=LTriFowardrSub(L,bL);
 disp(TriForElim);
 
@@ -33,5 +34,9 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(L\bL);
 
 %% Problem 2
+%a
+%existing function works for multiple right-hand sides (RHS)
+%b
+%SimpleELim function
 load testproblem.mat    
 SimpleElimination= SimpleElim(A,b);
