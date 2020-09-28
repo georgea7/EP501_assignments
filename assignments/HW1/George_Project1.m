@@ -40,3 +40,6 @@ disp(L\bL);
 %SimpleELim function
 load testproblem.mat    
 SimpleElimination= SimpleElim(A,b);
+%% Problem 3
+
+

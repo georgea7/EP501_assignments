@@ -15,7 +15,6 @@ for ir1=2:nref              %loop over rows from 2 to n performing elimination, 
     for ir2=ir1:nref        %this index marks the present position where elimination is being performed - i.e. where we are applying the elementary row operations
         fact=Awork(ir2,ir1-1); %multiplier of the variable we are attempting to eliminate, its ir-1 column of this row
         Awork(ir2,:)=Awork(ir2,:)-fact/Awork(ir1-1,ir1-1).*Awork(ir1-1,:);    %subtract off previous row modified by a factor that eliminates the ir-1 column term in this row (so it has only super-diagonal elements)
-        Awork(ir1,ir2)=0;
     end %for
 end %for
 x=Awork;
