@@ -10,10 +10,10 @@ clearvars
 close all
 
 %%Problem 1
-
+disp('Problem 1');
 %a 
 load testproblem.mat    
-ForwardElim= SForwardElim(A,b);
+ForwardElim= SForwardElim(A,b,0);
 
 %b
 x=backsub(ForwardElim);
@@ -34,12 +34,31 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(L\bL);
 
 %% Problem 2
+disp('Problem 2');
 %a
 %existing function works for multiple right-hand sides (RHS)
 %b
 %SimpleELim function
 load testproblem.mat    
 SimpleElimination= SimpleElim(A,b);
-%% Problem 3
 
+Inv=SimpleElim(A,eye(8));
+Inverse = Inv(:,9);
+for ir=10:16
+    Inverse=cat(2,Inverse,Inv(:,ir));
+end
+disp('Inverse/Gauss-Jordan Elimination:  ');
+disp(Inverse);
+
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(inv(A));
+%% Problem 3
+disp('Problem 3');
+[Amod,Det]=Gauss_elim(A,b);
+x2=backsub(Amod);
+
+disp(Det);
+
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(det(A));
 
