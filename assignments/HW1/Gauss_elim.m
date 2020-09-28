@@ -24,7 +24,7 @@ end %if
 Amod=cat(2,A,b);          %make a copy of A and modify with RHS of system
 n=size(A,1);              %number of unknowns
 ord=(1:n)';               %ord is a mapping from input row being operated upon to the actual row that represents in the matrix ordering
-I=0;                      %Counter for number of pivots
+I=1;                      %Counter for number of pivots
 
 %Elimination with scaled, partial pivoting for matrix Amod; note all row
 %indices must be screen through ord mapping.
@@ -81,7 +81,7 @@ end %for
 Amod=Amod(ord,:);
 Det=Amod(1,1);
 for ic=2:n
-    Det=Amod(ic,ic);
+    Det=Det*Amod(ic,ic);
 end
 I=(-1)^I;
 Det=Det*I;
