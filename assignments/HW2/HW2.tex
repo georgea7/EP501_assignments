@@ -5,8 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-\usepackage{draftwatermark}
-
+%\usepackage{draftwatermark}
 %\SetWatermarkText{DRAFT}
 %\SetWatermarkScale{5}
 %\SetWatermarkLightness{0.5}
@@ -67,6 +66,8 @@
   \begin{itemize}
     \item[(a)] Starting with the Jacobi function source code from the repository (or starting from scratch if you wish), create a new function that implements successive over-relaxation.  
     \item[(b)] Try this solver on the \emph{iterative} test problem in this directory (\texttt{./iterative\_testproblem.mat}) and show that it gives the same results as the built-in Matlab utilities. 
+    \item[(c)] By repeated application of your solver, iteratively adjust the relaxation parameter until you find the approximate value that minimizes the number of iterations needed to achieve converge.  Use a fairly strict convergence criteria, e.g. $10^{-6}$ or less.  
+    \item[(d)]  How many fewer iterations are needed for your optimal case vs. the standard Gauss-Seidel algorithm (relaxation parameter of one).  Approximately speaking which values of relaxation parameter (if any) perform worse than Gauss-Seidel?  
   \end{itemize}  
 \end{enumerate}
 

@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{draftwatermark}
+
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{3}
+\SetWatermarkLightness{0.5}
+
+\begin{document}
+
+\title{EP 501 Homework 3:  Nonlinear Equations and Root-finding}
+
+\maketitle
+
+~\\
+\textbf{Instructions:}  
+\begin{itemize}
+  \item Complete all problems.
+  \item Submit all source code and publish Matlab results via Canvas.  Please zip all contents of your solution into single file and then submit that file.    
+  \item Discussing the assignment with others is fine, but you must not copy anyone's code.  
+  \item I must be able to run your code and produce all results by executing a single top-level Matlab script, e.g. \textsf{assignment1.m} or similar.  
+  \item You may use any of the example codes from our course repository:  \url{https://github.com/mattzett/EP501/}.
+  \item Do not copy verbatim any other codes (i.e. any source codes other than from our course repository).  You may use other examples as a reference but you must write you own programs (except for those I give you).  
+    \item For demonstrating that your code is correct when you turn in the assignment, you must use the test problems given in the assignment text below.  
+    \item  All solutions for this homework must be accurate to at least six decimal places.  
+
+\end{itemize}
+~\\~\\~\\
+\textbf{Purpose of this assignment:}  
+\begin{itemize}
+  \item Learn principles behind numerical solutions to nonlinear algebraic equations.  
+  \item Develop good coding and documentation practices, such that your programs are easily understood by others.  
+  \item Hone skills of developing, debugging, and testing your own software
+  \item Learn how to build programs on top of existing codes
+\end{itemize}
+
+\pagebreak
+
+\begin{enumerate}
+  \item Finding roots of functions lacking a closed form:  
+  \begin{itemize}
+    \item[(a)]  Alter the Newton method function from the repository (\texttt{newton\_exact.m}) so that it implements the approximate Newton method, i.e. so that the derivative is computed numerically as in Equation 3.77 in the course textbook.  
+    \item[(b)]  Write a block of code that uses your \texttt{newton\_approx.m} function to find the first root (i.e. the smallest one) of the Bessel function of order zero: $J_0(x)$ for the region $0 \le x \le \infty$.  Plot the Bessel function first and use the plot to select a starting point in the vicinity of the first root.  The Matlab basics scripts from the course repository (\url{https://github.com/mattzett/EP501/blob/master/matlab_basics/matlab_basics.m}) shows you how to use Matlab's built in Bessel functions.   
+    \item[(c)]  Product a version of this script that finds the first six roots of the Bessel function of order zero (these roots are needed for solutions of various types of boundary value problems in physics and engineering).  These roots are commonly listed in ODE and PDE textbooks; look them up and verify your solutions (cite your sources).  
+  \end{itemize} 
+  \item Numerical solution for multiple polynomial roots:
+  \begin{itemize}
+    \item[(a)]  Suppose you have a polynomial of known or given order and need to find all of its roots.  Write a block of code or a script that uses the exact Newton method (e.g. the function in the course repository) to find all of the real-valued roots of a polynomial.  Assume that you do not need to identify repeated roots (if any).  Test your code on the polynomial used in the book (Eqn. 3.115):
+    \begin{equation}
+      x^5-15x^4+85x^3-225x^2+274x-120=0 \label{eqn:highpoly}
+    \end{equation}
+    \item[(b)]  Produce an altered version of your code to deal with the fact that there are potentially complex roots to your polynomial.  Use this code to find all roots, including complex-valued solutions of the following polynomial (Eqn 3.145 in the book):
+    \begin{equation}
+      x^3-3x^2+4x-2=0
+    \end{equation}  
+  \end{itemize}
+  \item Multivariate root finding:
+  \begin{itemize}
+    \item[(a)]  Use the multi-dimensional Newton method (given the in course repository:  \texttt{newton2D\_exact.m}) to find all four roots of the system:
+    \begin{eqnarray}
+      x^2+y^2&=&2x+y \\
+      \frac{x^2}{4}+y^2&=&1      
+    \end{eqnarray}
+    \item[(b)]  Produce an altered multi-dimensional Newton method (start from \texttt{newton2D\_exact.m}) to find a root for the three equations system:
+    \begin{eqnarray}
+      x^2+y^2+z^2&=&6\\
+      x^2-y^2+2z^2&=&2\\
+      2x^2+y^2-z^2&=&3   
+    \end{eqnarray}    
+  \end{itemize}
+\end{enumerate}
+
+\end{document}
