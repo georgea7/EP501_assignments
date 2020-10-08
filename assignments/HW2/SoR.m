@@ -1,4 +1,4 @@
-function [x,nit]=SoR(x0,A,b,tol,verbose)
+function [x,nit]=SoR(x0,A,b,tol,verbose,w)
 %Successive over-Relaxation
 %This code has been developed by modifying the Jacobi.m code provided by
 %Dr.Zettergen in
@@ -9,13 +9,14 @@ function [x,nit]=SoR(x0,A,b,tol,verbose)
 %A      : LHS Matrix
 %b      : RHS Matrix
 %tol    : Tolerance
+%w      : Relaxation parameter (Omega)
 %verbose: 'true' to see steps, 'false' to hide steps
 %
 %Outputs
 %x      : Solution
 %nit    : Number of iterations
 %% Check the inputs
-narginchk(3,5);
+narginchk(3,6);
 if nargin<4
     tol=1e-6;
 end %if
@@ -40,10 +41,13 @@ while(difftot>tol && it<=maxit)
     xprev=x;
     for i=1:n
         residual(i)=b(i);
-        for j=1:n
+        for j=1:i-1
+            residual(i)=residual(i)-A(i,j)*x(j);
+        end %for
+        for j=i:n
             residual(i)=residual(i)-A(i,j)*xprev(j);
         end %for
-        x(i)=xprev(i)+residual(i)/A(i,i);
+        x(i)=xprev(i)+w*residual(i)/A(i,i);
     end %for
     difftot=sum(abs(residual-resprev));
     

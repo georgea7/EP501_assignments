@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>George_Project2</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-07"><meta name="DC.source" content="George_Project2.m"><style type="text/css">
+      --><title>George_Project2</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-08"><meta name="DC.source" content="George_Project2.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -70,10 +70,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
   </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">1 C)</a></li><li><a href="#4">1 D)</a></li><li><a href="#5">Problem 2</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
 <span class="comment">%EP 501</span>
 <span class="comment">%Project 2</span>
-<span class="comment">%This code contains excerpts from the simple_elim_example provided by Dr.</span>
-<span class="comment">%Zettergen.</span>
+<span class="comment">%This code contains excerpts from codes provided by Dr. Zettergen.</span>
 <span class="comment">%https://github.com/Zettergren-Courses/EP501_matlab/blob/master/...</span>
-<span class="comment">%linear_algebra/simple_elim_example.m</span>
+<span class="comment">%linear_algebra</span>
 clc
 clearvars
 close <span class="string">all</span>
@@ -82,10 +81,10 @@ close <span class="string">all</span>
 <span class="comment">%b</span>
 disp(<span class="string">'b)'</span>);
 load <span class="string">'testproblem.mat'</span>
-[L,U] = DLUfactor(A)
+[L,U] = DLUfactor(A);
 
 <span class="comment">%Forward sub for b'</span>
-bprime=LTriForwardSub(L,b)
+bprime=LTriForwardSub(L,b);
 
 <span class="comment">%Back substitution for x</span>
 x=backsub(cat(2,U,bprime));
@@ -96,68 +95,6 @@ disp(x);
 disp(<span class="string">'Matlab,GNU/Octave built-in solution:  '</span>);
 disp(A\b);
 </pre><pre class="codeoutput">b)
-
-L =
-
-  Columns 1 through 7
-
-    1.0000         0         0         0         0         0         0
-    0.4641    1.0000         0         0         0         0         0
-   -0.1350   -0.4295    1.0000         0         0         0         0
-    0.2876   -0.2767    0.0696    1.0000         0         0         0
-   -0.2974   -0.4159    0.3247    1.4176    1.0000         0         0
-   -0.3940   -1.0627   -0.3439    2.1578    8.1997    1.0000         0
-    0.9163    0.9053    0.9062   -0.7006    4.3450    0.8867    1.0000
-    0.1742   -0.0886   -0.1767    0.6487   -1.1912   -0.1647   -2.0441
-
-  Column 8
-
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-    1.0000
-
-
-U =
-
-  Columns 1 through 7
-
-   -1.0149   -2.1321    2.1778   -0.2730   -0.7841   -0.4677   -0.2841
-         0    2.1349    0.1277    1.7030   -1.4414    0.0922    0.0452
-         0         0   -2.1480    0.2136    1.1336    1.4554   -1.4883
-         0         0         0    0.8624   -0.8568   -0.8022    0.3901
-         0         0   -0.0000         0    0.1172    1.3485   -0.9577
-         0         0    0.0000         0         0   -8.6038    6.3411
-         0         0   -0.0000         0         0         0    0.7162
-         0         0   -0.0000         0         0         0   -0.0000
-
-  Column 8
-
-   -0.2883
-    0.4839
-   -1.6670
-    1.3688
-    1.1407
-  -11.5207
-    7.2391
-   13.5981
-
-
-bprime =
-
-  -10.8600
-    8.9982
-  -14.9430
-    8.0335
-   11.0994
-  -99.4011
-   62.9261
-  108.7849
-
 Doolittle LU factorisation, b:  
     1.0000
     2.0000
@@ -307,20 +244,145 @@ Matlab,GNU/Octave built-in solution:
    -0.7433
     0.0735
 
-</pre><h2 id="5">Problem 2</h2><pre class="codeinput"><span class="comment">%a Kindly refer to Jacobi function</span>
+</pre><h2 id="5">Problem 2</h2><pre class="codeinput"><span class="comment">%a Kindly refer to SoR.m function</span>
 
 <span class="comment">%b</span>
+<span class="comment">%Initialisation</span>
 load <span class="string">'iterative_testproblem.mat'</span>
+nref=size(Ait,1);
+nit=10;
+x0=zeros(nref,1);
+tol=1e-10;
+w=1.1;
+<span class="comment">%Testing Successive over-Relaxation</span>
+[xit,iter]=SoR(x0,Ait,bit,tol,false,w);
+disp(<span class="string">'Solution with Successive over-Relaxation iteration: '</span>)
+disp(xit);
+disp(<span class="string">'Number of Iterations required: '</span>)
+disp(iter);
+disp(<span class="string">'Tolerance: '</span>)
+disp(tol);
+disp(<span class="string">'MATLAB built-in solution: '</span>)
+disp(Ait\bit);
+</pre><pre class="codeoutput">Solution with Successive over-Relaxation iteration: 
+    0.0329
+    0.1316
+    0.2400
+    0.3375
+    0.4142
+    0.4642
+    0.4839
+    0.4720
+    0.4293
+    0.3584
+    0.2641
+    0.1526
+    0.0310
+   -0.0926
+   -0.2101
+   -0.3138
+   -0.3971
+   -0.4544
+   -0.4819
+   -0.4780
+   -0.4427
+   -0.3785
+   -0.2896
+   -0.1817
+   -0.0619
+    0.0619
+    0.1817
+    0.2896
+    0.3785
+    0.4427
+    0.4780
+    0.4819
+    0.4544
+    0.3971
+    0.3138
+    0.2101
+    0.0926
+   -0.0310
+   -0.1526
+   -0.2641
+   -0.3584
+   -0.4293
+   -0.4720
+   -0.4839
+   -0.4642
+   -0.4142
+   -0.3375
+   -0.2400
+   -0.1316
+   -0.0329
+
+Number of Iterations required: 
+    21
+
+Tolerance: 
+   1.0000e-10
+
+MATLAB built-in solution: 
+    0.0329
+    0.1316
+    0.2400
+    0.3375
+    0.4142
+    0.4642
+    0.4839
+    0.4720
+    0.4293
+    0.3584
+    0.2641
+    0.1526
+    0.0310
+   -0.0926
+   -0.2101
+   -0.3138
+   -0.3971
+   -0.4544
+   -0.4819
+   -0.4780
+   -0.4427
+   -0.3785
+   -0.2896
+   -0.1817
+   -0.0619
+    0.0619
+    0.1817
+    0.2896
+    0.3785
+    0.4427
+    0.4780
+    0.4819
+    0.4544
+    0.3971
+    0.3138
+    0.2101
+    0.0926
+   -0.0310
+   -0.1526
+   -0.2641
+   -0.3584
+   -0.4293
+   -0.4720
+   -0.4839
+   -0.4642
+   -0.4142
+   -0.3375
+   -0.2400
+   -0.1316
+   -0.0329
+
 </pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Introduction
 %Aldous George
 %EP 501
 %Project 2
-%This code contains excerpts from the simple_elim_example provided by Dr.
-%Zettergen.
+%This code contains excerpts from codes provided by Dr. Zettergen.
 %https://github.com/Zettergren-Courses/EP501_matlab/blob/master/...
-%linear_algebra/simple_elim_example.m
+%linear_algebra
 clc
 clearvars
 close all
@@ -331,10 +393,10 @@ close all
 %b
 disp('b)');
 load 'testproblem.mat'
-[L,U] = DLUfactor(A)
+[L,U] = DLUfactor(A);
 
 %Forward sub for b'
-bprime=LTriForwardSub(L,b)
+bprime=LTriForwardSub(L,b);
 
 %Back substitution for x
 x=backsub(cat(2,U,bprime));
@@ -392,10 +454,27 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(inv(A));
 %% Problem 2
 
-%a Kindly refer to Jacobi function
+%a Kindly refer to SoR.m function
 
 %b
+%Initialisation
 load 'iterative_testproblem.mat'
+nref=size(Ait,1);
+nit=10;
+x0=zeros(nref,1);
+tol=1e-10;
+w=1.1;
+%Testing Successive over-Relaxation
+[xit,iter]=SoR(x0,Ait,bit,tol,false,w);
+disp('Solution with Successive over-Relaxation iteration: ')
+disp(xit);
+disp('Number of Iterations required: ')
+disp(iter);
+disp('Tolerance: ')
+disp(tol);
+disp('MATLAB built-in solution: ')
+disp(Ait\bit);
+
 
 ##### SOURCE END #####
 --></body></html>

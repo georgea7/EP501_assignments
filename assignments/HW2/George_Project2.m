@@ -2,10 +2,9 @@
 %Aldous George
 %EP 501
 %Project 2
-%This code contains excerpts from the simple_elim_example provided by Dr.
-%Zettergen.
+%This code contains excerpts from codes provided by Dr. Zettergen.
 %https://github.com/Zettergren-Courses/EP501_matlab/blob/master/...
-%linear_algebra/simple_elim_example.m
+%linear_algebra
 clc
 clearvars
 close all
@@ -58,7 +57,7 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(A\b3);
 %% 1 D)
 %d
-
+%Calculating Inverse one column at a time
 nref=length(b);
 InvA=[];
 for ir=1:nref
@@ -67,9 +66,9 @@ for ir=1:nref
     %Forward sub for b'
     Bprime=LTriForwardSub(L,B);
     %Back substitution for x
-    x=backsub(cat(2,U,Bprime));
+    x=backsub(cat(2,U,Bprime)); %ith column of the Inverse
     InvA=cat(2,InvA,x);
-end
+end %for
 disp('Inverse of A:  ');
 disp(InvA);
 
@@ -77,7 +76,28 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(inv(A));
 %% Problem 2
 
-%a Kindly refer to Jacobi function
+%a Kindly refer to SoR.m function
 
 %b
+disp('2-b)');
+%Initialisation
 load 'iterative_testproblem.mat'
+nref=size(Ait,1);
+nit=10;
+x0=zeros(nref,1);
+tol=1e-10;
+w=1.1;
+%Testing Successive over-Relaxation
+[xit,iter]=SoR(x0,Ait,bit,tol,false,w);
+disp('Solution with Successive over-Relaxation iteration: ')
+disp(xit);
+disp('Number of Iterations required: ')
+disp(iter);
+disp('Tolerance: ')
+disp(tol);
+disp('MATLAB built-in solution: ')
+disp(Ait\bit);
+
+%% 2-c)
+
+for 
