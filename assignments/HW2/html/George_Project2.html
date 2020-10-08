@@ -1,0 +1,401 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>George_Project2</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-07"><meta name="DC.source" content="George_Project2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">1 C)</a></li><li><a href="#4">1 D)</a></li><li><a href="#5">Problem 2</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
+<span class="comment">%EP 501</span>
+<span class="comment">%Project 2</span>
+<span class="comment">%This code contains excerpts from the simple_elim_example provided by Dr.</span>
+<span class="comment">%Zettergen.</span>
+<span class="comment">%https://github.com/Zettergren-Courses/EP501_matlab/blob/master/...</span>
+<span class="comment">%linear_algebra/simple_elim_example.m</span>
+clc
+clearvars
+close <span class="string">all</span>
+</pre><h2 id="2">Problem 1</h2><pre class="codeinput"><span class="comment">%a Kindly refer to DLUfactor function</span>
+
+<span class="comment">%b</span>
+disp(<span class="string">'b)'</span>);
+load <span class="string">'testproblem.mat'</span>
+[L,U] = DLUfactor(A)
+
+<span class="comment">%Forward sub for b'</span>
+bprime=LTriForwardSub(L,b)
+
+<span class="comment">%Back substitution for x</span>
+x=backsub(cat(2,U,bprime));
+
+disp(<span class="string">'Doolittle LU factorisation, b:  '</span>);
+disp(x);
+
+disp(<span class="string">'Matlab,GNU/Octave built-in solution:  '</span>);
+disp(A\b);
+</pre><pre class="codeoutput">b)
+
+L =
+
+  Columns 1 through 7
+
+    1.0000         0         0         0         0         0         0
+    0.4641    1.0000         0         0         0         0         0
+   -0.1350   -0.4295    1.0000         0         0         0         0
+    0.2876   -0.2767    0.0696    1.0000         0         0         0
+   -0.2974   -0.4159    0.3247    1.4176    1.0000         0         0
+   -0.3940   -1.0627   -0.3439    2.1578    8.1997    1.0000         0
+    0.9163    0.9053    0.9062   -0.7006    4.3450    0.8867    1.0000
+    0.1742   -0.0886   -0.1767    0.6487   -1.1912   -0.1647   -2.0441
+
+  Column 8
+
+         0
+         0
+         0
+         0
+         0
+         0
+         0
+    1.0000
+
+
+U =
+
+  Columns 1 through 7
+
+   -1.0149   -2.1321    2.1778   -0.2730   -0.7841   -0.4677   -0.2841
+         0    2.1349    0.1277    1.7030   -1.4414    0.0922    0.0452
+         0         0   -2.1480    0.2136    1.1336    1.4554   -1.4883
+         0         0         0    0.8624   -0.8568   -0.8022    0.3901
+         0         0   -0.0000         0    0.1172    1.3485   -0.9577
+         0         0    0.0000         0         0   -8.6038    6.3411
+         0         0   -0.0000         0         0         0    0.7162
+         0         0   -0.0000         0         0         0   -0.0000
+
+  Column 8
+
+   -0.2883
+    0.4839
+   -1.6670
+    1.3688
+    1.1407
+  -11.5207
+    7.2391
+   13.5981
+
+
+bprime =
+
+  -10.8600
+    8.9982
+  -14.9430
+    8.0335
+   11.0994
+  -99.4011
+   62.9261
+  108.7849
+
+Doolittle LU factorisation, b:  
+    1.0000
+    2.0000
+    3.0000
+    4.0000
+    5.0000
+    6.0000
+    7.0000
+    8.0000
+
+Matlab,GNU/Octave built-in solution:  
+    1.0000
+    2.0000
+    3.0000
+    4.0000
+    5.0000
+    6.0000
+    7.0000
+    8.0000
+
+</pre><h2 id="3">1 C)</h2><pre class="codeinput"><span class="comment">%forward sub for b2</span>
+<span class="comment">%Forward sub for b'</span>
+b2prime=LTriForwardSub(L,b2);
+
+<span class="comment">%Back substitution for x</span>
+x=backsub(cat(2,U,b2prime));
+
+disp(<span class="string">'Doolittle LU factorisation, b2:  '</span>);
+disp(x);
+
+disp(<span class="string">'Matlab,GNU/Octave built-in solution:  '</span>);
+disp(A\b2);
+
+<span class="comment">%forward sub for b3</span>
+<span class="comment">%Forward sub for b'</span>
+b3prime=LTriForwardSub(L,b3);
+
+<span class="comment">%Back substitution for x</span>
+x=backsub(cat(2,U,b3prime));
+
+disp(<span class="string">'Doolittle LU factorisation, b3:  '</span>);
+disp(x);
+
+disp(<span class="string">'Matlab,GNU/Octave built-in solution:  '</span>);
+disp(A\b3);
+</pre><pre class="codeoutput">Doolittle LU factorisation, b2:  
+    2.0000
+    4.0000
+    6.0000
+    8.0000
+   10.0000
+   12.0000
+   14.0000
+   16.0000
+
+Matlab,GNU/Octave built-in solution:  
+    2.0000
+    4.0000
+    6.0000
+    8.0000
+   10.0000
+   12.0000
+   14.0000
+   16.0000
+
+Doolittle LU factorisation, b3:  
+   10.0000
+   20.0000
+   30.0000
+   40.0000
+   50.0000
+   60.0000
+   70.0000
+   80.0000
+
+Matlab,GNU/Octave built-in solution:  
+   10.0000
+   20.0000
+   30.0000
+   40.0000
+   50.0000
+   60.0000
+   70.0000
+   80.0000
+
+</pre><h2 id="4">1 D)</h2><pre class="codeinput"><span class="comment">%d</span>
+
+nref=length(b);
+InvA=[];
+<span class="keyword">for</span> ir=1:nref
+    B=zeros(nref,1);
+    B(ir) = 1;
+    <span class="comment">%Forward sub for b'</span>
+    Bprime=LTriForwardSub(L,B);
+    <span class="comment">%Back substitution for x</span>
+    x=backsub(cat(2,U,Bprime));
+    InvA=cat(2,InvA,x);
+<span class="keyword">end</span>
+disp(<span class="string">'Inverse of A:  '</span>);
+disp(InvA);
+
+disp(<span class="string">'Matlab,GNU/Octave built-in solution:  '</span>);
+disp(inv(A));
+</pre><pre class="codeoutput">Inverse of A:  
+  Columns 1 through 7
+
+   -0.4480    0.3835    0.0281   -0.0881   -0.5795    1.0474   -0.5356
+   -0.0540   -0.1948   -0.2456   -0.6264    0.1978   -0.2692    0.2222
+    0.2062   -0.1064   -0.3766   -1.1154   -0.0220    0.5605    0.2837
+   -0.3250    0.4251    0.0724   -0.1670   -0.3128    0.8816    0.4305
+   -0.0697   -0.5582   -0.4000   -1.3059    0.0704    0.6537    0.8908
+    0.3565    0.3345    0.1079   -0.1491    0.2014    0.0363   -0.2920
+   -0.1222    0.1436    0.0008    0.7677   -0.2421   -0.0132   -0.1231
+    0.1043   -0.2818   -0.2839   -0.2878    0.4281   -0.1212    0.1503
+
+  Column 8
+
+    0.2581
+    0.2324
+    0.3873
+    0.2608
+    0.6467
+   -0.6463
+   -0.7433
+    0.0735
+
+Matlab,GNU/Octave built-in solution:  
+  Columns 1 through 7
+
+   -0.4480    0.3835    0.0281   -0.0881   -0.5795    1.0474   -0.5356
+   -0.0540   -0.1948   -0.2456   -0.6264    0.1978   -0.2692    0.2222
+    0.2062   -0.1064   -0.3766   -1.1154   -0.0220    0.5605    0.2837
+   -0.3250    0.4251    0.0724   -0.1670   -0.3128    0.8816    0.4305
+   -0.0697   -0.5582   -0.4000   -1.3059    0.0704    0.6537    0.8908
+    0.3565    0.3345    0.1079   -0.1491    0.2014    0.0363   -0.2920
+   -0.1222    0.1436    0.0008    0.7677   -0.2421   -0.0132   -0.1231
+    0.1043   -0.2818   -0.2839   -0.2878    0.4281   -0.1212    0.1503
+
+  Column 8
+
+    0.2581
+    0.2324
+    0.3873
+    0.2608
+    0.6467
+   -0.6463
+   -0.7433
+    0.0735
+
+</pre><h2 id="5">Problem 2</h2><pre class="codeinput"><span class="comment">%a Kindly refer to Jacobi function</span>
+
+<span class="comment">%b</span>
+load <span class="string">'iterative_testproblem.mat'</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Introduction
+%Aldous George
+%EP 501
+%Project 2
+%This code contains excerpts from the simple_elim_example provided by Dr.
+%Zettergen.
+%https://github.com/Zettergren-Courses/EP501_matlab/blob/master/...
+%linear_algebra/simple_elim_example.m
+clc
+clearvars
+close all
+%% Problem 1
+
+%a Kindly refer to DLUfactor function
+
+%b
+disp('b)');
+load 'testproblem.mat'
+[L,U] = DLUfactor(A)
+
+%Forward sub for b'
+bprime=LTriForwardSub(L,b)
+
+%Back substitution for x
+x=backsub(cat(2,U,bprime));
+
+disp('Doolittle LU factorisation, b:  ');
+disp(x);
+
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(A\b);
+%% 1 C)
+
+%forward sub for b2
+%Forward sub for b'
+b2prime=LTriForwardSub(L,b2);
+
+%Back substitution for x
+x=backsub(cat(2,U,b2prime));
+
+disp('Doolittle LU factorisation, b2:  ');
+disp(x);
+
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(A\b2);
+
+%forward sub for b3
+%Forward sub for b'
+b3prime=LTriForwardSub(L,b3);
+
+%Back substitution for x
+x=backsub(cat(2,U,b3prime));
+
+disp('Doolittle LU factorisation, b3:  ');
+disp(x);
+
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(A\b3);
+%% 1 D)
+%d
+
+nref=length(b);
+InvA=[];
+for ir=1:nref
+    B=zeros(nref,1);
+    B(ir) = 1;
+    %Forward sub for b'
+    Bprime=LTriForwardSub(L,B);
+    %Back substitution for x
+    x=backsub(cat(2,U,Bprime));
+    InvA=cat(2,InvA,x);
+end
+disp('Inverse of A:  ');
+disp(InvA);
+
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(inv(A));
+%% Problem 2
+
+%a Kindly refer to Jacobi function
+
+%b
+load 'iterative_testproblem.mat'
+
+##### SOURCE END #####
+--></body></html>

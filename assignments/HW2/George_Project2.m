@@ -10,9 +10,6 @@ clc
 clearvars
 close all
 %% Problem 1
-%Example 1.7
-% A=[80, 20, -20; -20, 40,-20; -20, -20, 130];
-% b=[20; 20; 20];
 
 %a Kindly refer to DLUfactor function
 
@@ -32,9 +29,8 @@ disp(x);
 
 disp('Matlab,GNU/Octave built-in solution:  ');
 disp(A\b);
+%% 1 C)
 
-%c
-disp('c)');
 %forward sub for b2
 %Forward sub for b'
 b2prime=LTriForwardSub(L,b2);
@@ -60,9 +56,8 @@ disp(x);
 
 disp('Matlab,GNU/Octave built-in solution:  ');
 disp(A\b3);
-
+%% 1 D)
 %d
-disp('d)');
 
 nref=length(b);
 InvA=[];
@@ -78,6 +73,11 @@ end
 disp('Inverse of A:  ');
 disp(InvA);
 
+disp('Matlab,GNU/Octave built-in solution:  ');
+disp(inv(A));
 %% Problem 2
 
+%a Kindly refer to Jacobi function
 
+%b
+load 'iterative_testproblem.mat'
