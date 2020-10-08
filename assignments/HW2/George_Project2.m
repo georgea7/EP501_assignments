@@ -79,7 +79,7 @@ disp(inv(A));
 %a Kindly refer to SoR.m function
 
 %b
-disp('2-b)');
+disp('2 B)');
 %Initialisation
 load 'iterative_testproblem.mat'
 nref=size(Ait,1);
@@ -98,6 +98,34 @@ disp(tol);
 disp('MATLAB built-in solution: ')
 disp(Ait\bit);
 
-%% 2-c)
-
-for 
+%% 2 C)
+i=1;
+for w=0.38:0.025:1.73
+    [xit,iter]=SoR(x0,Ait,bit,tol,false,w);
+    Iteration(i)=iter;
+    Omega(i)=w;
+    i=i+1;
+end
+[Min, Index] = min(Iteration);
+disp('Relaxation parameter (Omega) that minimizes iterations: ')
+disp(Omega(Index));
+disp('Number of iterations performed with that Relaxation parameter (Omega): ')
+disp(Iteration(Index));
+%% 2 D)
+[xit,iter]=SoR(x0,Ait,bit,tol,false,1);
+disp('Number of iterations performed by Gauss-Seidel: ')
+disp(iter);
+disp('Difference in number of iterations performed by Gauss-Seidel vs Optimal case: ')
+disp(abs(iter-Iteration(Index)));
+j=1;
+for i=1:length(Iteration)
+    if iter==Iteration(i)
+        ind(j,1)=i;
+        ind(j,2)=Omega(i);
+        j=j+1;
+    end %if
+end %for
+disp('The lowest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: ')
+disp(ind(1,2));
+disp('The highest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: ')
+disp(ind(2,2));

@@ -67,7 +67,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">1 C)</a></li><li><a href="#4">1 D)</a></li><li><a href="#5">Problem 2</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">1 C)</a></li><li><a href="#4">1 D)</a></li><li><a href="#5">Problem 2</a></li><li><a href="#6">2 C)</a></li><li><a href="#7">2 D)</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
 <span class="comment">%EP 501</span>
 <span class="comment">%Project 2</span>
 <span class="comment">%This code contains excerpts from codes provided by Dr. Zettergen.</span>
@@ -181,7 +181,7 @@ Matlab,GNU/Octave built-in solution:
    80.0000
 
 </pre><h2 id="4">1 D)</h2><pre class="codeinput"><span class="comment">%d</span>
-
+<span class="comment">%Calculating Inverse one column at a time</span>
 nref=length(b);
 InvA=[];
 <span class="keyword">for</span> ir=1:nref
@@ -190,9 +190,9 @@ InvA=[];
     <span class="comment">%Forward sub for b'</span>
     Bprime=LTriForwardSub(L,B);
     <span class="comment">%Back substitution for x</span>
-    x=backsub(cat(2,U,Bprime));
+    x=backsub(cat(2,U,Bprime)); <span class="comment">%ith column of the Inverse</span>
     InvA=cat(2,InvA,x);
-<span class="keyword">end</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
 disp(<span class="string">'Inverse of A:  '</span>);
 disp(InvA);
 
@@ -247,6 +247,7 @@ Matlab,GNU/Octave built-in solution:
 </pre><h2 id="5">Problem 2</h2><pre class="codeinput"><span class="comment">%a Kindly refer to SoR.m function</span>
 
 <span class="comment">%b</span>
+disp(<span class="string">'2 B)'</span>);
 <span class="comment">%Initialisation</span>
 load <span class="string">'iterative_testproblem.mat'</span>
 nref=size(Ait,1);
@@ -264,7 +265,8 @@ disp(<span class="string">'Tolerance: '</span>)
 disp(tol);
 disp(<span class="string">'MATLAB built-in solution: '</span>)
 disp(Ait\bit);
-</pre><pre class="codeoutput">Solution with Successive over-Relaxation iteration: 
+</pre><pre class="codeoutput">2 B)
+Solution with Successive over-Relaxation iteration: 
     0.0329
     0.1316
     0.2400
@@ -374,6 +376,55 @@ MATLAB built-in solution:
    -0.1316
    -0.0329
 
+</pre><h2 id="6">2 C)</h2><pre class="codeinput">i=1;
+<span class="keyword">for</span> w=0.38:0.025:1.73
+    [xit,iter]=SoR(x0,Ait,bit,tol,false,w);
+    Iteration(i)=iter;
+    Omega(i)=w;
+    i=i+1;
+<span class="keyword">end</span>
+[Min, Index] = min(Iteration);
+disp(<span class="string">'Relaxation parameter (Omega) that minimizes iterations: '</span>)
+disp(Omega(Index));
+disp(<span class="string">'Number of iterations performed with that Relaxation parameter (Omega): '</span>)
+disp(Iteration(Index));
+</pre><pre class="codeoutput">Warning: Solution may not have converged fully... 
+Warning: Solution may not have converged fully... 
+Relaxation parameter (Omega) that minimizes iterations: 
+    1.1050
+
+Number of iterations performed with that Relaxation parameter (Omega): 
+    21
+
+</pre><h2 id="7">2 D)</h2><pre class="codeinput">[xit,iter]=SoR(x0,Ait,bit,tol,false,1);
+disp(<span class="string">'Number of iterations performed by Gauss-Seidel: '</span>)
+disp(iter);
+disp(<span class="string">'Difference in number of iterations performed by Gauss-Seidel vs Optimal case: '</span>)
+disp(abs(iter-Iteration(Index)));
+j=1;
+<span class="keyword">for</span> i=1:length(Iteration)
+    <span class="keyword">if</span> iter==Iteration(i)
+        ind(j,1)=i;
+        ind(j,2)=Omega(i);
+        j=j+1;
+    <span class="keyword">end</span> <span class="comment">%if</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
+disp(<span class="string">'The lowest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: '</span>)
+disp(ind(1,2));
+disp(<span class="string">'The highest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: '</span>)
+disp(ind(2,2));
+</pre><pre class="codeoutput">Number of iterations performed by Gauss-Seidel: 
+    26
+
+Difference in number of iterations performed by Gauss-Seidel vs Optimal case: 
+     5
+
+The lowest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: 
+    1.0050
+
+The highest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: 
+    1.2300
+
 </pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Introduction
@@ -435,7 +486,7 @@ disp('Matlab,GNU/Octave built-in solution:  ');
 disp(A\b3);
 %% 1 D)
 %d
-
+%Calculating Inverse one column at a time
 nref=length(b);
 InvA=[];
 for ir=1:nref
@@ -444,9 +495,9 @@ for ir=1:nref
     %Forward sub for b'
     Bprime=LTriForwardSub(L,B);
     %Back substitution for x
-    x=backsub(cat(2,U,Bprime));
+    x=backsub(cat(2,U,Bprime)); %ith column of the Inverse
     InvA=cat(2,InvA,x);
-end
+end %for
 disp('Inverse of A:  ');
 disp(InvA);
 
@@ -457,6 +508,7 @@ disp(inv(A));
 %a Kindly refer to SoR.m function
 
 %b
+disp('2 B)');
 %Initialisation
 load 'iterative_testproblem.mat'
 nref=size(Ait,1);
@@ -475,6 +527,37 @@ disp(tol);
 disp('MATLAB built-in solution: ')
 disp(Ait\bit);
 
+%% 2 C)
+i=1;
+for w=0.38:0.025:1.73
+    [xit,iter]=SoR(x0,Ait,bit,tol,false,w);
+    Iteration(i)=iter;
+    Omega(i)=w;
+    i=i+1;
+end
+[Min, Index] = min(Iteration);
+disp('Relaxation parameter (Omega) that minimizes iterations: ')
+disp(Omega(Index));
+disp('Number of iterations performed with that Relaxation parameter (Omega): ')
+disp(Iteration(Index));
+%% 2 D)
+[xit,iter]=SoR(x0,Ait,bit,tol,false,1);
+disp('Number of iterations performed by Gauss-Seidel: ')
+disp(iter);
+disp('Difference in number of iterations performed by Gauss-Seidel vs Optimal case: ')
+disp(abs(iter-Iteration(Index)));
+j=1;
+for i=1:length(Iteration)
+    if iter==Iteration(i)
+        ind(j,1)=i;
+        ind(j,2)=Omega(i);
+        j=j+1;
+    end %if
+end %for
+disp('The lowest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: ')
+disp(ind(1,2));
+disp('The highest value of the Relaxation parameter (Omega) that performs atleast as well as the Gauss-Seidel method: ')
+disp(ind(2,2));
 
 ##### SOURCE END #####
 --></body></html>

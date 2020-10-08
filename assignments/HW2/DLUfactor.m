@@ -21,10 +21,4 @@ for ir1=2:nref              %loop over rows from 2 to n performing elimination, 
     end %for
 end %for
 U=A;
-
-
-
-
-
-
 end %function
