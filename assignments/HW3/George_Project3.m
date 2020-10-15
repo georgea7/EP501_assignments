@@ -21,7 +21,7 @@ x0i1=x(10);
 [r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,true);
 
 %b
-%plot 
+%plot
 figure(1)
 plot(x,ygrid)
 
@@ -30,11 +30,32 @@ plot(x,ygrid)
 
 %% Problem 2
 
+%a
 f=@objfuna;
 fprime=@objfuna_deriv;
 ygrid=f(x);
 plot(x,ygrid);
 
-x0=1;
-[R2,it,success]=newton_exact(f,fprime,x0,maxit,tol,true);
+for x0=1:5
+    [R2(x0),it,success]=newton_exact(f,fprime,x0,maxit,tol,true);
+end
+
+%b
+f=@objfunb;
+fprime=@objfunb_deriv;
+ygrid=f(x);
+plot(x,ygrid);
+
+for x0=1:5
+    [R3(x0),it,success]=newton_exact(f,fprime,x0,maxit,tol,true);
+end
+
+%% Problem 3
+
+%a
+f=@objfun2Df;
+g=@objfun2Dg;
+[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,true)
+
+
 
