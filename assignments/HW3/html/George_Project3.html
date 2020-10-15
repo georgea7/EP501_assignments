@@ -1,0 +1,289 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>George_Project3</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-15"><meta name="DC.source" content="George_Project3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">Problem 2</a></li><li><a href="#4">Problem 3</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
+<span class="comment">%EP 501</span>
+<span class="comment">%Project 3</span>
+<span class="comment">%This code contains excerpts from codes provided by Dr. Zettergen.</span>
+<span class="comment">%https://github.com/Zettergren-Courses/EP501_matlab/blob/master/nonlinear_eqns</span>
+clc
+clearvars
+close <span class="string">all</span>
+</pre><h2 id="2">Problem 1</h2><pre class="codeinput"><span class="comment">%setup</span>
+x=linspace(0,20);        <span class="comment">%radial independent variable</span>
+maxit =100;
+tol=1e-3;
+Bessel=@objfunbessel;
+ygrid=Bessel(x);
+verbose = false;
+
+x0=x(12);
+x0i1=x(10);
+[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+
+<span class="comment">%b</span>
+<span class="comment">%plot</span>
+figure(1)
+plot(x,ygrid)
+
+<span class="comment">%c</span>
+</pre><pre class="codeoutput">Warning: Used max number of iterations, or derivative near zero... 
+</pre><img vspace="5" hspace="5" src="George_Project3_01.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput"><span class="comment">%a</span>
+disp(<span class="string">'2-a)'</span>);
+f=@objfuna;
+fprime=@objfuna_deriv;
+
+<span class="keyword">for</span> x0=1:5
+    [R2(x0),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
+<span class="keyword">end</span>
+
+disp(<span class="string">'Roots of x^5 - 15x^4 + 85x^3 - 225x^2 + 274x - 120 = 0'</span>)
+disp(R2);
+
+<span class="comment">%b</span>
+disp(<span class="string">'2-b)'</span>);
+f=@objfunb;
+fprime=@objfunb_deriv;
+ygrid=f(x);
+
+<span class="keyword">for</span> j=1:4
+    x0=j+1i;
+    [R3(j),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
+<span class="keyword">end</span>
+
+disp(<span class="string">'Roots of x^3 - 3x^2 + 4x - 2 = 0'</span>)
+disp(R3);
+</pre><pre class="codeoutput">2-a)
+Roots of x^5 - 15x^4 + 85x^3 - 225x^2 + 274x - 120 = 0
+     1     2     3     4     5
+
+2-b)
+Roots of x^3 - 3x^2 + 4x - 2 = 0
+   1.0000 + 1.0000i   1.0000 + 1.0000i   1.0000 + 0.0000i   1.0000 + 0.0000i
+
+</pre><h2 id="4">Problem 3</h2><pre class="codeinput"><span class="comment">%a</span>
+disp(<span class="string">'3-a)'</span>);
+f=@objfun2Df;
+g=@objfun2Dg;
+gradf=@grad_objfun2Df;
+gradg=@grad_objfun2Dg;
+x0=0.1;
+y0=0.1;
+[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
+
+disp(<span class="string">'     x^2 + y^2 = 2x + y'</span>);
+disp(<span class="string">'(1/4)x^2 + y^2 = 1'</span>);
+disp(<span class="string">'Roots:'</span>);
+disp(rootx);
+disp(rooty);
+
+<span class="comment">%b</span>
+disp(<span class="string">'3-b)'</span>);
+f=@objfun3Df;
+g=@objfun3Dg;
+h=@objfun3Dh;
+gradf=@grad_objfun3Df;
+gradg=@grad_objfun3Dg;
+gradh=@grad_objfun3Dh;
+x0=0.1;
+y0=0.1;
+z0=0.1;
+[rootx,rooty,rootz,it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
+
+disp(<span class="string">' x^2 + y^2 +  z^2= 6'</span>);
+disp(<span class="string">' x^2 - y^2 + 2z^2= 2'</span>);
+disp(<span class="string">'2x^2 + y^2 -  z^2= 3'</span>);
+disp(<span class="string">'Roots:'</span>);
+disp(rootx);
+disp(rooty);
+disp(rootz);
+</pre><pre class="codeoutput">3-a)
+     x^2 + y^2 = 2x + y
+(1/4)x^2 + y^2 = 1
+Roots:
+  -5.2926e-05
+
+    1.0001
+
+3-b)
+ x^2 + y^2 +  z^2= 6
+ x^2 - y^2 + 2z^2= 2
+2x^2 + y^2 -  z^2= 3
+Roots:
+    1.0000
+
+    1.7321
+
+    1.4142
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Introduction
+%Aldous George
+%EP 501
+%Project 3
+%This code contains excerpts from codes provided by Dr. Zettergen.
+%https://github.com/Zettergren-Courses/EP501_matlab/blob/master/nonlinear_eqns
+clc
+clearvars
+close all
+%% Problem 1
+
+%setup
+x=linspace(0,20);        %radial independent variable
+maxit =100;
+tol=1e-3;
+Bessel=@objfunbessel;
+ygrid=Bessel(x);
+verbose = false;
+
+x0=x(12);
+x0i1=x(10);
+[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+
+%b
+%plot
+figure(1)
+plot(x,ygrid)
+
+%c
+
+
+%% Problem 2
+
+%a
+disp('2-a)');
+f=@objfuna;
+fprime=@objfuna_deriv;
+
+for x0=1:5
+    [R2(x0),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
+end
+
+disp('Roots of x^5 - 15x^4 + 85x^3 - 225x^2 + 274x - 120 = 0')
+disp(R2);
+
+%b
+disp('2-b)');
+f=@objfunb;
+fprime=@objfunb_deriv;
+ygrid=f(x);
+
+for j=1:4
+    x0=j+1i;
+    [R3(j),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
+end
+
+disp('Roots of x^3 - 3x^2 + 4x - 2 = 0')
+disp(R3);
+
+%% Problem 3
+
+%a
+disp('3-a)');
+f=@objfun2Df;
+g=@objfun2Dg;
+gradf=@grad_objfun2Df;
+gradg=@grad_objfun2Dg;
+x0=0.1;
+y0=0.1;
+[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
+
+disp('     x^2 + y^2 = 2x + y');
+disp('(1/4)x^2 + y^2 = 1');
+disp('Roots:');
+disp(rootx);
+disp(rooty);
+
+%b
+disp('3-b)');
+f=@objfun3Df;
+g=@objfun3Dg;
+h=@objfun3Dh;
+gradf=@grad_objfun3Df;
+gradg=@grad_objfun3Dg;
+gradh=@grad_objfun3Dh;
+x0=0.1;
+y0=0.1;
+z0=0.1;
+[rootx,rooty,rootz,it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
+
+disp(' x^2 + y^2 +  z^2= 6');
+disp(' x^2 - y^2 + 2z^2= 2');
+disp('2x^2 + y^2 -  z^2= 3');
+disp('Roots:');
+disp(rootx);
+disp(rooty);
+disp(rootz);
+
+
+
+
+##### SOURCE END #####
+--></body></html>

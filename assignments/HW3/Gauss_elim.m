@@ -1,6 +1,4 @@
-%backsub function as provided by Dr. Zettergen.
-%https://github.com/Zettergren-Courses/EP501_matlab/blob/master/linear_algebra
-function [Amod,Det]=Gauss_elim(A,b,verbose)
+function [Amod,ord]=Gauss_elim(A,b,verbose)
 
 % [Amod,ord]=Gauss_elim(A,b,verbose)
 %
@@ -24,7 +22,6 @@ end %if
 Amod=cat(2,A,b);          %make a copy of A and modify with RHS of system
 n=size(A,1);              %number of unknowns
 ord=(1:n)';               %ord is a mapping from input row being operated upon to the actual row that represents in the matrix ordering
-I=1;                      %Counter for number of pivots
 
 %Elimination with scaled, partial pivoting for matrix Amod; note all row
 %indices must be screen through ord mapping.
@@ -44,7 +41,6 @@ for ir1=1:n-1
         if (pivcurr>pivmax)
             pivmax=pivcurr;
             ipivmax=ipiv;     %this stores the index into ord for row having largest pivot element
-            I=I+1;
         end %if
     end %for
     
@@ -78,11 +74,5 @@ for ir1=1:n-1
         disp(Amod(ord,:));
     end %if
 end %for
-Amod=Amod(ord,:);
-Det=Amod(1,1);
-for ic=2:n
-    Det=Det*Amod(ic,ic);
-end
-I=(-1)^I;
-Det=Det*I;
+
 end %function
