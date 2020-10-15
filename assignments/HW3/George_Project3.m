@@ -98,8 +98,6 @@ y0=-1;
 z0=-1;
 [rootx(2),rooty(2),rootz(2),it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
 
-
-
 disp(' x^2 + y^2 +  z^2= 6');
 disp(' x^2 - y^2 + 2z^2= 2');
 disp('2x^2 + y^2 -  z^2= 3');
@@ -109,5 +107,3 @@ disp('Y Root:');
 disp(rooty);
 disp('Z Root:');
 disp(rootz);
-
-
