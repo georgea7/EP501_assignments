@@ -46,8 +46,9 @@ fprime=@objfunb_deriv;
 ygrid=f(x);
 plot(x,ygrid);
 
-for x0=1:5
-    [R3(x0),it,success]=newton_exact(f,fprime,x0,maxit,tol,true);
+for j=1:4
+    x0=j+1i;
+    [R3(j),it,success]=newton_exact(f,fprime,x0,maxit,tol,true);
 end
 
 %% Problem 3
@@ -55,7 +56,13 @@ end
 %a
 f=@objfun2Df;
 g=@objfun2Dg;
-[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,true)
+gradf=@grad_objfun2Df;
+gradg=@grad_objfun2Dg;
+x0=0.1;
+y0=0.1;
+[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,true);
+
+%b
 
 
 
