@@ -15,7 +15,7 @@ maxit =100;
 tol=1e-3;
 Bessel=@objfunbessel;
 ygrid=Bessel(x);
-verbose = false;
+verbose = true;
 
 x0=x(12);
 x0i1=x(10);
