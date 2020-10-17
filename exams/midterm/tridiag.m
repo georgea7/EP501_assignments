@@ -1,5 +1,5 @@
 function x = tridiag(A,b)
-%Tridiagonal Matrix Algorith or Thomas Algorithm
+%Tridiagonal Matrix Algorithm or Thomas Algorithm
 %x = tridiag(A,b)
 %A - tridiagonal matrix
 %b - b matrix
@@ -14,6 +14,8 @@ Aprime3=diag(A,1);         %Aprime thrid column done seperately
 Aprime3(n,1)=0;                 %Correcting rows since third column has empty last row 
 Aprime=cat(2,Aprime,Aprime3);   %Aprime third coloumn
 
+%The following algorithm was inspired by the example in Page 72 of 'Numerical 
+%Methods for Engineers and Scientists' by Joe D. Hoffman
 %forward sweep 
 for i=2:n
     proc=Aprime(i,1)/Aprime(i-1,2);

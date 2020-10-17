@@ -95,3 +95,28 @@ xlabel('system size');
 ylabel('time to solve (s)');
 legend('Gauss elim.','Jacobi it.', 'Thomas Algo.')
 title('Empirically Determined Performance');
+%% Problem 2
+
+
+%% Problem 3
+%3-a)
+%   ax^2 + bx + c = 0
+%example problem
+A=[2;-6;4];
+x=quadratic(A);
+disp('Solutions for 2.x^2 - 6.x + 4 = 0');
+disp(x);
+
+%3-b)
+%Example
+% A = x^5 - 15x^4 + 85x^3 - 225x^2 + 274x -120 = 0
+% B = (x-5)
+
+A= [1 -15 85 -225 274 -120];
+B= 5;
+
+[b,R]=SynthDiv(A,B);
+
+% 3-c)
+
+
