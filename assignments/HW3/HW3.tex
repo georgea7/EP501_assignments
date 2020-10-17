@@ -20,10 +20,10 @@
 \textbf{Instructions:}  
 \begin{itemize}
   \item Complete all problems.
-  \item Submit all source code and publish Matlab results via Canvas.  Please zip all contents of your solution into single file and then submit that file.    
+  \item Submit all source code (MATLAB or Python) and results via Canvas.  Please zip all contents of your solution into single file and then submit that file.    
   \item Discussing the assignment with others is fine, but you must not copy anyone's code.  
-  \item I must be able to run your code and produce all results by executing a single top-level Matlab script, e.g. \textsf{assignment1.m} or similar.  
-  \item You may use any of the example codes from our course repository:  \url{https://github.com/mattzett/EP501/}.
+  \item I must be able to run your code and produce all results by executing a single top-level MATLAB or Python script, e.g. \textsf{assignment1.(m,py)} or similar.  
+  \item You may use any of the example codes from our course repository:  \url{https://github.com/Zettergren-Courses}.  The MATLAB and Python examples are included in their respective repositories under \texttt{./nonlinear\_eqns/}
   \item Do not copy verbatim any other codes (i.e. any source codes other than from our course repository).  You may use other examples as a reference but you must write you own programs (except for those I give you).  
     \item For demonstrating that your code is correct when you turn in the assignment, you must use the test problems given in the assignment text below.  
     \item  All solutions for this homework must be accurate to at least six decimal places.  
@@ -43,8 +43,8 @@
 \begin{enumerate}
   \item Finding roots of functions lacking a closed form:  
   \begin{itemize}
-    \item[(a)]  Alter the Newton method function from the repository (\texttt{newton\_exact.m}) so that it implements the approximate Newton method, i.e. so that the derivative is computed numerically as in Equation 3.77 in the course textbook.  
-    \item[(b)]  Write a block of code that uses your \texttt{newton\_approx.m} function to find the first root (i.e. the smallest one) of the Bessel function of order zero: $J_0(x)$ for the region $0 \le x \le \infty$.  Plot the Bessel function first and use the plot to select a starting point in the vicinity of the first root.  The Matlab basics scripts from the course repository (\url{https://github.com/mattzett/EP501/blob/master/matlab_basics/matlab_basics.m}) shows you how to use Matlab's built in Bessel functions.   
+    \item[(a)]  Alter the Newton method function from the repository (\texttt{newton\_exact}) so that it implements the approximate Newton method, i.e. so that the derivative is computed numerically as in Equation 3.77 in the course textbook.  If you are using Python you can just add another function definition to (\texttt{newton\_methods.py}); if using MATLAB just create a new file with your function.  
+    \item[(b)]  Write a block of code that uses your \texttt{newton\_approx.(m,py)} function to find the first root (i.e. the smallest one) of the Bessel function of order zero: $J_0(x)$ for the region $0 \le x \le \infty$.  Plot the Bessel function first and use the plot to select a starting point in the vicinity of the first root.  The MATLAB/Python basics scripts (\texttt{(matlab,python)\_basics.(m,py)}) from the course repository shows you how to use built in Bessel functions for these languages.   
     \item[(c)]  Product a version of this script that finds the first six roots of the Bessel function of order zero (these roots are needed for solutions of various types of boundary value problems in physics and engineering).  These roots are commonly listed in ODE and PDE textbooks; look them up and verify your solutions (cite your sources).  
   \end{itemize} 
   \item Numerical solution for multiple polynomial roots:
@@ -60,12 +60,12 @@
   \end{itemize}
   \item Multivariate root finding:
   \begin{itemize}
-    \item[(a)]  Use the multi-dimensional Newton method (given the in course repository:  \texttt{newton2D\_exact.m}) to find all four roots of the system:
+    \item[(a)]  Use the multi-dimensional Newton method (given the in course repository:  \texttt{newton2D\_exact.m} or \texttt{newton\_methods.py}) to find all four roots of the system:
     \begin{eqnarray}
       x^2+y^2&=&2x+y \\
       \frac{x^2}{4}+y^2&=&1      
     \end{eqnarray}
-    \item[(b)]  Produce an altered multi-dimensional Newton method (start from \texttt{newton2D\_exact.m}) to find a root for the three equations system:
+    \item[(b)]  Produce an altered multi-dimensional Newton method (start from \texttt{newton2D\_exact.m} or \texttt{newton\_methods.py}) to find a root for the three equations system:
     \begin{eqnarray}
       x^2+y^2+z^2&=&6\\
       x^2-y^2+2z^2&=&2\\
