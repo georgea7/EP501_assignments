@@ -1,0 +1,20 @@
+%% Introduction
+%Aldous George
+%EP 501
+%Midterm Exam
+%This code contains excerpts from codes provided by Dr. Zettergen.
+%https://github.com/Zettergren-Courses/EP501_matlab
+clc
+clearvars
+close all
+%% Problem 1
+load('iterative_testproblem.mat')
+
+x = tridiag(Ait,bit);
+disp('Tridiagonal Matrix Algorithm/Thomas Algorithm')
+disp(x);
+
+disp('MATLAB built-in solution');
+disp(Ait\bit);
+
+%%Bench
