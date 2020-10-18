@@ -118,5 +118,48 @@ B= 5;
 [b,R]=SynthDiv(A,B);
 
 % 3-c)
+f=@objfun3;
+maxit=100;
+tol=1e-10;
+verbose=false;
+x0=1;
+x0i1=0.5;
+%Root of Polynomial of order 5
+[r,it,success]=newton_approx(f,x0,x0i1,maxit,tol,verbose);
+disp('First root of the polynomial: ');
+disp(r);
 
+%3-d)
+A= [1 -15 85 -225 274 -120];
+B= 1;
+%Deflation to Polynomial of order 4
+[b2,R]=SynthDiv(A,B);
+disp('Polynomial of order 4')
+fprintf('(%.0fx^4) + (%.0fx^3) + (%.0fx^2) + (%.0fx) + (%.0f) =0\n\n', b2(1),b2(2), b2(3), b2(4), b2(5));
+
+%3-e)
+%Root of Polynomial of order 4
+f=@objfun32;
+[r,it,success]=newton_approx(f,x0,x0i1,maxit,tol,verbose);
+disp('Second root of the polynomial: ');
+disp(r);
+%Deflation to Polynomial of order 3
+[b3,R]=SynthDiv(b2,r);
+disp('Polynomial of order 3')
+fprintf('(%.0fx^3) + (%.0fx^2) + (%.0fx) + (%.0f) =0\n\n', b3(1),b3(2), b3(3), b3(4));
+
+%Root of Polynomial of order 3
+f=@objfun33;
+[r,it,success]=newton_approx(f,x0,x0i1,maxit,tol,verbose);
+disp('Third root of the polynomial: ');
+disp(r);
+%Deflation to Polynomial of order 2
+[b4,R]=SynthDiv(b3,r);
+disp('Polynomial of order 2')
+fprintf('(%.0fx^2) + (%.0fx) + (%.0f) =0\n\n', b4(1),b4(2), b4(3));
+
+b4=b4';
+x=quadratic(b4);
+disp('Fourth and Fifth roots of the polynomial');
+disp(x);
 

@@ -46,8 +46,9 @@ end
 legend('Bessel function: order zero','root','x_i','x_i_-_1');
 disp('Roots of Bessel Function of Order Zero');
 disp(r);
+r_theory=[];
 disp('Roots of Bessel Function of Order Zero- by') 
-
+disp(r_theory);
 %% Problem 2
 
 %a
