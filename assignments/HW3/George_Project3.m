@@ -15,19 +15,38 @@ maxit =100;
 tol=1e-3;
 Bessel=@objfunbessel;
 ygrid=Bessel(x);
-verbose = true;
+verbose = false;
 
-x0=x(12);
-x0i1=x(10);
-[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
 
 %b
+x0=x(12);
+x0i1=x(10-2);
+[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+disp('1st Root of Bessel function');
+disp(r1);
+disp('Iterations:');
+disp(it);
 %plot
 figure(1)
 plot(x,ygrid)
-
+hold on
+title('Roots of Bessel Function of Order Zero');
 %c
-
+k=0;
+for i=1:6
+    k=k+3;
+    x0=k;
+    x0i1=k-0.5;
+    [r(i),it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+    figure(1)
+    plot(r(i),Bessel(r1),'o','MarkerEdgeColor','k');
+    plot(x0,Bessel(x0),'*','MarkerEdgeColor','r');
+    plot(x0i1,Bessel(x0i1),'*','MarkerEdgeColor','g');
+end
+legend('Bessel function: order zero','root','x_i','x_i_-_1');
+disp('Roots of Bessel Function of Order Zero');
+disp(r);
+disp('Roots of Bessel Function of Order Zero- by') 
 
 %% Problem 2
 

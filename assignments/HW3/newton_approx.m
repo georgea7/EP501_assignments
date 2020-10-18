@@ -1,4 +1,4 @@
-function [root,it,success]=newton_approx(f,x01,x0i1,maxit,tol,verbose)
+function [root,it,success]=newton_approx(f,x0,x0i1,maxit,tol,verbose)
 
 % root=newton_approx(f)
 %
@@ -17,20 +17,12 @@ if (nargin<6)
     verbose=false;
 end %if
 
-
-% %% Make sure we don't start at an inflection point with zero derivative
-% if (abs(fprime(x0))<tol)
-%     warning(' Attempting to start Newton iterations near an inflection point, you may wish to restart with a different guess...');
-%     x0=x0+1;   %bump the guess a ways off of initial value to see if we can get anything sensible
-% end %if
-
-
 %% Newton iterations
-it=1;
-root=x01;       %Xi
-rooti1=x0i1;      %Xi-1
-fval=f(root);
-fvali1=f(rooti1);
+it=1;               %initiation
+root=x0;            %Xi
+rooti1=x0i1;        %Xi-1
+fval=f(root);       %initiation
+fvali1=f(rooti1);   %initiation
 converged=false;
 while(~converged && it<=maxit)
     derivative=(fval-fvali1)/(root-rooti1); %secant method formula
@@ -39,9 +31,10 @@ while(~converged && it<=maxit)
         warning(' Derivative close to zero, terminating iterations with failed convergence... ');
         break;
     else
-        rooti1=root;
+        rooti1=root;                   % update root_i-1 
         root=root-fval./derivative;    % update root estimate
         fval=f(root);                  % see how far off we are from zero...
+        fvali1=f(rooti1);              % update fval_i-1
         if (verbose)
             fprintf(' iteration: %d; root:  %f + %f i; function value: %f, derivative:  %f \n',it,real(root),imag(root),fval,derivative);
         end %if
