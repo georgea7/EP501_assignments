@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>George_Project3</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-15"><meta name="DC.source" content="George_Project3.m"><style type="text/css">
+      --><title>George_Project3</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-10-19"><meta name="DC.source" content="George_Project3.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -77,23 +77,62 @@ clearvars
 close <span class="string">all</span>
 </pre><h2 id="2">Problem 1</h2><pre class="codeinput"><span class="comment">%setup</span>
 x=linspace(0,20);        <span class="comment">%radial independent variable</span>
-maxit =100;
-tol=1e-3;
-Bessel=@objfunbessel;
-ygrid=Bessel(x);
-verbose = false;
+maxit =100;              <span class="comment">%Max Iterations</span>
+tol=1e-3;                <span class="comment">%Tolerance</span>
+Bessel=@objfunbessel;    <span class="comment">%Bessel function</span>
+ygrid=Bessel(x);         <span class="comment">%Y for graph</span>
+verbose = false;         <span class="comment">%True to see steps, False to hide steps</span>
 
-x0=x(12);
-x0i1=x(10);
-[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
 
 <span class="comment">%b</span>
+x0=x(12);               <span class="comment">%Initial guess x_i</span>
+x0i1=x(10-2);           <span class="comment">%x_i-1</span>
+[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+disp(<span class="string">'1st Root of Bessel function'</span>);
+disp(r1);
+disp(<span class="string">'Iterations:'</span>);
+disp(it);
 <span class="comment">%plot</span>
 figure(1)
 plot(x,ygrid)
-
+hold <span class="string">on</span>
+title(<span class="string">'Roots of Bessel Function of Order Zero'</span>);
 <span class="comment">%c</span>
-</pre><pre class="codeoutput">Warning: Used max number of iterations, or derivative near zero... 
+<span class="comment">%Finding the first 6 roots of the Bessel function of order zero</span>
+k=0;
+<span class="keyword">for</span> i=1:6
+    k=k+3;          <span class="comment">%Initial guess adjuster</span>
+    x0=k;           <span class="comment">%Initial guess x_i</span>
+    x0i1=k-0.5;     <span class="comment">%x_i-1</span>
+    [r(i),it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+    figure(1)
+    plot(r(i),Bessel(r1),<span class="string">'o'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'k'</span>);
+    plot(x0,Bessel(x0),<span class="string">'*'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'r'</span>);
+    plot(x0i1,Bessel(x0i1),<span class="string">'*'</span>,<span class="string">'MarkerEdgeColor'</span>,<span class="string">'g'</span>);
+<span class="keyword">end</span>
+legend(<span class="string">'Bessel function: order zero'</span>,<span class="string">'root'</span>,<span class="string">'x_i'</span>,<span class="string">'x_i_-_1'</span>);
+disp(<span class="string">'Roots of Bessel Function of Order Zero'</span>);
+disp(r);
+r_theory=[2.404826, 5.520078, 8.653728, 11.791534, 14.930918, 18.071064];
+disp(<span class="string">'Roots of Bessel Function of Order Zero- by Vrahatis et al'</span>)
+disp(r_theory);
+fprintf(<span class="string">'Vrahatis, M N, et al. &#8220;On the Localization and Computation of Zeros of Bessel Functions.&#8221; \n Zeros of Bessel Function, University of Patras,\n thalis.math.upatras.gr/~vrahatis/papers/journals/VrahatisGRZ97_Z_ANGEW_MATH_MECH_77_pp467-475_1997.pdf.\n\n'</span>)
+</pre><pre class="codeoutput">1st Root of Bessel function
+    2.4045
+
+Iterations:
+     2
+
+Roots of Bessel Function of Order Zero
+    2.4048    5.5217    8.6535   11.7933   14.9301   18.0744
+
+Roots of Bessel Function of Order Zero- by Vrahatis et al
+    2.4048    5.5201    8.6537   11.7915   14.9309   18.0711
+
+Vrahatis, M N, et al. &#8220;On the Localization and Computation of Zeros of Bessel Functions.&#8221; 
+ Zeros of Bessel Function, University of Patras,
+ thalis.math.upatras.gr/~vrahatis/papers/journals/VrahatisGRZ97_Z_ANGEW_MATH_MECH_77_pp467-475_1997.pdf.
+
 </pre><img vspace="5" hspace="5" src="George_Project3_01.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput"><span class="comment">%a</span>
 disp(<span class="string">'2-a)'</span>);
 f=@objfuna;
@@ -112,8 +151,9 @@ f=@objfunb;
 fprime=@objfunb_deriv;
 ygrid=f(x);
 
-<span class="keyword">for</span> j=1:4
-    x0=j+1i;
+<span class="keyword">for</span> j=1:3
+    k=-2*1i+j*1i; <span class="comment">%Initial condition adjuster</span>
+    x0=(j-1)+k;   <span class="comment">%Initial condition x_i</span>
     [R3(j),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
 <span class="keyword">end</span>
 
@@ -125,62 +165,77 @@ Roots of x^5 - 15x^4 + 85x^3 - 225x^2 + 274x - 120 = 0
 
 2-b)
 Roots of x^3 - 3x^2 + 4x - 2 = 0
-   1.0000 + 1.0000i   1.0000 + 1.0000i   1.0000 + 0.0000i   1.0000 + 0.0000i
+   1.0000 - 1.0000i   1.0000 + 0.0000i   1.0000 + 1.0000i
 
 </pre><h2 id="4">Problem 3</h2><pre class="codeinput"><span class="comment">%a</span>
 disp(<span class="string">'3-a)'</span>);
-f=@objfun2Df;
-g=@objfun2Dg;
-gradf=@grad_objfun2Df;
-gradg=@grad_objfun2Dg;
-x0=0.1;
-y0=0.1;
-[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
+f=@objfun2Df;           <span class="comment">%function f</span>
+g=@objfun2Dg;           <span class="comment">%function g</span>
+gradf=@grad_objfun2Df;  <span class="comment">%f'</span>
+gradg=@grad_objfun2Dg;  <span class="comment">%g'</span>
+x0=0.1;                 <span class="comment">%Initial condition x_i</span>
+y0=0.1;                 <span class="comment">%Initial condition y_i</span>
+[rootx(1),rooty(1),it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
+
+x0=-0.1;                <span class="comment">%Initial condition x_i</span>
+y0=-0.5;                <span class="comment">%Initial condition y_i</span>
+[rootx(2),rooty(2),it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
 
 disp(<span class="string">'     x^2 + y^2 = 2x + y'</span>);
 disp(<span class="string">'(1/4)x^2 + y^2 = 1'</span>);
-disp(<span class="string">'Roots:'</span>);
+disp(<span class="string">'Rootx:'</span>);
 disp(rootx);
+disp(<span class="string">'Rooty:'</span>);
 disp(rooty);
 
 <span class="comment">%b</span>
 disp(<span class="string">'3-b)'</span>);
-f=@objfun3Df;
-g=@objfun3Dg;
-h=@objfun3Dh;
-gradf=@grad_objfun3Df;
-gradg=@grad_objfun3Dg;
-gradh=@grad_objfun3Dh;
-x0=0.1;
-y0=0.1;
-z0=0.1;
-[rootx,rooty,rootz,it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
+f=@objfun3Df;           <span class="comment">%function f</span>
+g=@objfun3Dg;           <span class="comment">%function g</span>
+h=@objfun3Dh;           <span class="comment">%function h</span>
+gradf=@grad_objfun3Df;  <span class="comment">%f'</span>
+gradg=@grad_objfun3Dg;  <span class="comment">%g'</span>
+gradh=@grad_objfun3Dh;  <span class="comment">%h'</span>
+x0=0.1;                 <span class="comment">%initial condition x_i</span>
+y0=0.1;                 <span class="comment">%initial condition y_i</span>
+z0=0.1;                 <span class="comment">%initial condition z_i</span>
+[rootx(1),rooty(1),rootz(1),it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
+
+x0=-1;                 <span class="comment">%initial condition x_i</span>
+y0=-1;                 <span class="comment">%initial condition y_i</span>
+z0=-1;                 <span class="comment">%initial condition z_i</span>
+[rootx(2),rooty(2),rootz(2),it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
 
 disp(<span class="string">' x^2 + y^2 +  z^2= 6'</span>);
 disp(<span class="string">' x^2 - y^2 + 2z^2= 2'</span>);
 disp(<span class="string">'2x^2 + y^2 -  z^2= 3'</span>);
-disp(<span class="string">'Roots:'</span>);
+disp(<span class="string">'X Root:'</span>);
 disp(rootx);
+disp(<span class="string">'Y Root:'</span>);
 disp(rooty);
+disp(<span class="string">'Z Root:'</span>);
 disp(rootz);
 </pre><pre class="codeoutput">3-a)
      x^2 + y^2 = 2x + y
 (1/4)x^2 + y^2 = 1
-Roots:
-  -5.2926e-05
+Rootx:
+   -0.0001    2.0000
 
-    1.0001
+Rooty:
+    1.0001    0.0000
 
 3-b)
  x^2 + y^2 +  z^2= 6
  x^2 - y^2 + 2z^2= 2
 2x^2 + y^2 -  z^2= 3
-Roots:
-    1.0000
+X Root:
+    1.0000   -1.0000
 
-    1.7321
+Y Root:
+    1.7321   -1.7321
 
-    1.4142
+Z Root:
+    1.4142   -1.4142
 
 </pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
@@ -197,24 +252,46 @@ close all
 
 %setup
 x=linspace(0,20);        %radial independent variable
-maxit =100;
-tol=1e-3;
-Bessel=@objfunbessel;
-ygrid=Bessel(x);
-verbose = false;
+maxit =100;              %Max Iterations 
+tol=1e-3;                %Tolerance
+Bessel=@objfunbessel;    %Bessel function
+ygrid=Bessel(x);         %Y for graph
+verbose = false;         %True to see steps, False to hide steps
 
-x0=x(12);
-x0i1=x(10);
-[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
 
 %b
+x0=x(12);               %Initial guess x_i
+x0i1=x(10-2);           %x_i-1
+[r1,it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+disp('1st Root of Bessel function');
+disp(r1);
+disp('Iterations:');
+disp(it);
 %plot
 figure(1)
 plot(x,ygrid)
-
+hold on
+title('Roots of Bessel Function of Order Zero');
 %c
-
-
+%Finding the first 6 roots of the Bessel function of order zero
+k=0;
+for i=1:6
+    k=k+3;          %Initial guess adjuster
+    x0=k;           %Initial guess x_i
+    x0i1=k-0.5;     %x_i-1
+    [r(i),it,success]=newton_approx(Bessel,x0,x0i1,maxit,tol,verbose);
+    figure(1)
+    plot(r(i),Bessel(r1),'o','MarkerEdgeColor','k');
+    plot(x0,Bessel(x0),'*','MarkerEdgeColor','r');
+    plot(x0i1,Bessel(x0i1),'*','MarkerEdgeColor','g');
+end
+legend('Bessel function: order zero','root','x_i','x_i_-_1');
+disp('Roots of Bessel Function of Order Zero');
+disp(r);
+r_theory=[2.404826, 5.520078, 8.653728, 11.791534, 14.930918, 18.071064];
+disp('Roots of Bessel Function of Order Zero- by Vrahatis et al') 
+disp(r_theory);
+fprintf('Vrahatis, M N, et al. “On the Localization and Computation of Zeros of Bessel Functions.” \n Zeros of Bessel Function, University of Patras,\n thalis.math.upatras.gr/~vrahatis/papers/journals/VrahatisGRZ97_Z_ANGEW_MATH_MECH_77_pp467-475_1997.pdf.\n\n')
 %% Problem 2
 
 %a
@@ -235,8 +312,9 @@ f=@objfunb;
 fprime=@objfunb_deriv;
 ygrid=f(x);
 
-for j=1:4
-    x0=j+1i;
+for j=1:3
+    k=-2*1i+j*1i; %Initial condition adjuster
+    x0=(j-1)+k;   %Initial condition x_i
     [R3(j),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
 end
 
@@ -247,43 +325,52 @@ disp(R3);
 
 %a
 disp('3-a)');
-f=@objfun2Df;
-g=@objfun2Dg;
-gradf=@grad_objfun2Df;
-gradg=@grad_objfun2Dg;
-x0=0.1;
-y0=0.1;
-[rootx,rooty,it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
+f=@objfun2Df;           %function f
+g=@objfun2Dg;           %function g
+gradf=@grad_objfun2Df;  %f'
+gradg=@grad_objfun2Dg;  %g'
+x0=0.1;                 %Initial condition x_i
+y0=0.1;                 %Initial condition y_i
+[rootx(1),rooty(1),it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
+
+x0=-0.1;                %Initial condition x_i
+y0=-0.5;                %Initial condition y_i
+[rootx(2),rooty(2),it,success]=newton2D_exact(f,gradf,g,gradg,x0,y0,maxit,tol,verbose);
 
 disp('     x^2 + y^2 = 2x + y');
 disp('(1/4)x^2 + y^2 = 1');
-disp('Roots:');
+disp('Rootx:');
 disp(rootx);
+disp('Rooty:');
 disp(rooty);
 
 %b
 disp('3-b)');
-f=@objfun3Df;
-g=@objfun3Dg;
-h=@objfun3Dh;
-gradf=@grad_objfun3Df;
-gradg=@grad_objfun3Dg;
-gradh=@grad_objfun3Dh;
-x0=0.1;
-y0=0.1;
-z0=0.1;
-[rootx,rooty,rootz,it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
+f=@objfun3Df;           %function f
+g=@objfun3Dg;           %function g
+h=@objfun3Dh;           %function h
+gradf=@grad_objfun3Df;  %f'
+gradg=@grad_objfun3Dg;  %g'
+gradh=@grad_objfun3Dh;  %h'
+x0=0.1;                 %initial condition x_i
+y0=0.1;                 %initial condition y_i
+z0=0.1;                 %initial condition z_i
+[rootx(1),rooty(1),rootz(1),it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
+
+x0=-1;                 %initial condition x_i
+y0=-1;                 %initial condition y_i
+z0=-1;                 %initial condition z_i
+[rootx(2),rooty(2),rootz(2),it,success]=newton3D_exact(f,gradf,g,gradg,h,gradh,x0,y0,z0,maxit,tol,verbose);
 
 disp(' x^2 + y^2 +  z^2= 6');
 disp(' x^2 - y^2 + 2z^2= 2');
 disp('2x^2 + y^2 -  z^2= 3');
-disp('Roots:');
+disp('X Root:');
 disp(rootx);
+disp('Y Root:');
 disp(rooty);
+disp('Z Root:');
 disp(rootz);
-
-
-
 
 ##### SOURCE END #####
 --></body></html>
