@@ -1,8 +1,8 @@
-function [root,it,success]=newton_approx(f,x0,x0i1,maxit,tol,verbose)
+function [root,it,success]=newton_approx(A,x0,x0i1,maxit,tol,verbose)
 
 % root=newton_approx(f)
 %
-% finds a set of roots corresponding to the function f (input as a handle)
+% finds a set of roots corresponding to the function f (A is the coeffcient matrix)
 % given a function which computes the derivative
 
 %% Error checking of input and setting of default values
@@ -21,8 +21,8 @@ end %if
 it=1;               %initiation
 root=x0;            %Xi
 rooti1=x0i1;        %Xi-1
-fval=f(root);       %initiation
-fvali1=f(rooti1);   %initiation
+fval=polyval(A,root);       %initiation
+fvali1=polyval(A,rooti1);   %initiation
 converged=false;
 while(~converged && it<=maxit)
     derivative=(fval-fvali1)/(root-rooti1); %secant method formula
@@ -33,8 +33,8 @@ while(~converged && it<=maxit)
     else
         rooti1=root;                   % update root_i-1 
         root=root-fval./derivative;    % update root estimate
-        fval=f(root);                  % see how far off we are from zero...
-        fvali1=f(rooti1);              % update fval_i-1
+        fval=polyval(A,root);          % see how far off we are from zero...
+        fvali1=polyval(A,rooti1);      % update fval_i-1
         if (verbose)
             fprintf(' iteration: %d; root:  %f + %f i; function value: %f, derivative:  %f \n',it,real(root),imag(root),fval,derivative);
         end %if
