@@ -38,7 +38,7 @@ for in=1:numel(nvals)
         tend=cputime;
         testtimesG(in)=testtimes(in)+(tend-tstart)/lrep;
     end %for
-    disp([' GE solution for system of size ',num2str(nlarge),' takes average time ',num2str(testtimes(in)),' s']);
+    disp([' GE solution for system of size ',num2str(nlarge),' takes average time ',num2str(testtimesG(in)),' s']);
 end %for
 
 figure(1);
@@ -62,7 +62,7 @@ for in=1:numel(nvals)
         tend=cputime;
         testtimesJ(in)=testtimes(in)+(tend-tstart)/lrep;
     end %for
-    disp([' JI solution for system of size ',num2str(nlarge),' takes average time ',num2str(testtimes(in)),' s']);
+    disp([' JI solution for system of size ',num2str(nlarge),' takes average time ',num2str(testtimesJ(in)),' s']);
 end %for
 
 figure(1);
@@ -85,7 +85,7 @@ for in=1:numel(nvals)
         tend=cputime;
         testtimesT(in)=testtimes(in)+(tend-tstart)/lrep;
     end %for
-    disp([' TA solution for system of size ',num2str(nlarge),' takes average time ',num2str(testtimes(in)),' s']);
+    disp([' TA solution for system of size ',num2str(nlarge),' takes average time ',num2str(testtimesT(in)),' s']);
 end %for
 
 figure(1);
@@ -98,6 +98,41 @@ fprintf('\n');
 title('Empirically Determined Performance');
 %% Problem 2
 disp('Problem 2');
+
+%Initialisation
+gamma=5/3;
+rho=1.67*10^(-21);  %kg/m^3
+p=1.38*10^(-11);    %Pa
+B=10^(-9);          %[T]
+mu0=4*pi*10^(-7);
+
+maxit=100;
+tol=1e-4;
+verbose=false;
+x=linspace(-120,120,100000);
+
+Cs=sqrt((gamma*p)/(rho));   %m/s
+Ca=sqrt(B^2/(mu0*rho));     %m/s
+
+Cs=Cs*10^(-3);              %km/s
+Ca=Ca*10^(-3);              %km/s
+disp(['Sound Speed: ', num2str(Cs), ' km/s']);
+disp(['Alfen speed: ', num2str(Ca), ' km/s']);
+
+f=@objfun2;         %f function
+fprime=@objfun2prime;
+ygrid=f(x);         %Y for graph
+figure(2)
+plot(x,ygrid);
+title('Wave Speed of Magnetohydrodynamic plasma');
+xlabel('x');
+ylabel('V, km/s');
+x0=200;
+[root(1),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
+x0=-200;
+[root(2),it,success]=newton_exact(f,fprime,x0,maxit,tol,verbose);
+
+disp(['roots: ', num2str(root)]);
 
 %% Problem 3
 disp('Problem 3');
@@ -123,6 +158,7 @@ B= 5;
 
 % 3-c)
 disp('3-c)');
+%initialisation
 f=@objfun3;
 maxit=100;
 tol=1e-10;
@@ -152,7 +188,7 @@ for i=1:3
     %Deflation to Polynomial of lower order
     [A,R]=SynthDiv(A,r(i));
 end
-    x=quadratic(A);
-    r=cat(2,r,x);
-    disp('Roots of the 5th order Polynomial: ');
-    disp(r);
+x=quadratic(A);
+r=cat(2,r,x);
+disp('Roots of the 5th order Polynomial: ');
+disp(r);
