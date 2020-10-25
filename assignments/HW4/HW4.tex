@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{draftwatermark}
+
+%\SetWatermarkText{DRAFT}
+%\SetWatermarkScale{3}
+%\SetWatermarkLightness{0.5}
+
+\begin{document}
+
+\title{EP 501 Homework 4:  Least Squares and Interpolation}
+
+\maketitle
+
+~\\
+\textbf{Instructions:}  
+\begin{itemize}
+  \item Complete all listed steps to the problems.
+  \item Submit all source code, which must be either MATLAB or Python, and output (results printed to the screen or plotted) via Canvas.  
+  \item Results must be compiled into a single .pdf file which contains descriptions of the calculations that you have done alongside the results.  
+  \item Source codes must run and produce the same essential output presented in your documents.  
+  \item Discussing the assignment with others is fine, but you must not copy the code of another student \emph{verbatim}; this is considered an academic integrity violation.  
+  \item During submission on the canvas website compress all of your files for a given assignment into a single .zip file, e.g. \textsf{assignment4.zip} .  I should be able to run your codes by unzipping the files and then opening them and running them in the appropriate developer environment (MATLAB or Spyder).  
+  \item You may use, \emph{verbatim} or modified, any of the example codes from one of the course repositories contained on the GitHub organization website  \url{https://github.com/Zettergren-Courses}. 
+  \item For demonstrating that your code is correct when you turn in the assignment, you must use the test problems referenced in the assignment, namely \textsf{test\_lsq.mat} and \textsf{test\_interp.mat}.  
+
+\end{itemize}
+~\\~\\~\\
+\textbf{Purpose of this assignment:}  
+\begin{itemize}
+  \item Learn principles behind data fitting and polynomial approximation.  
+  \item Develop good coding and documentation practices, such that your programs are easily understood by others.  
+  \item Hone skills of developing, debugging, and testing your own software
+  \item Learn how to build programs on top of existing codes
+\end{itemize}
+
+\pagebreak
+
+\begin{enumerate}
+  \item This problem concerns least squares and data fitting and requires use of the example dataset from the repository, \texttt{test\_lsq.mat}, which provides data for variables $x_i,y_i,\sigma_{yi}$ referenced below.  
+  \begin{itemize}
+    \item[(a)] Write a program that performs a linear least squares fit of a set of data to a polynomial of arbitrary order $n$.  You may use any functions in the course repository or that you have written for your homework for solving the required system of equations; however, you may not use the built-in MATLAB functions for your solution (only to check the results).  
+    \item[(b)] Use your fitting program to fit the test data ($y_i$ located at independent variable positions $x_i$) to a line and a quadratic form.  Plot your results and the data on the same axis so they can be easily compared.  Test your results against the built-in Matlab functions \texttt{polyfit} and \texttt{polyval} (\texttt{numpy.polyfit} and \texttt{numpy.poly1d} if using Python).  Compare the error vectors and residuals for the two fits.  
+    \item[(c)] A rigorous way of deciding between preferred functional forms in fits (from some set of options like linear, quadratic, cubic, quartic, etc.) is to define a \emph{goodness-of-fit} statistic that quantifies how effective a particular form is a describing a given data set.  This goodness statistic should balance the need to fit the data (by having more parameters (unknowns) in the fit against the fact that of course one can fit a set of data given enough unknowns (a problem referred to as ``overfitting the data'').  The simplest and most commonly used goodness of fit statistic is the \emph{reduced Chi-squared statistic} defined by:  
+    \begin{equation}
+      \chi^2_\nu = \frac{1}{\nu} \sum_i \frac{\left( y_i - f(x_i) \right) ^2}{\sigma_{y,i}^2},
+    \end{equation}
+    where, as before, $x_i$ are the points of the independent variable at which data are sampled, $y_i$ are the data, $f(\cdot)$ is the function which is being fitted to the data (linear, quadratic, cubic, etc.), $\sigma_i$ is the uncertainty of the data and $\nu$ is the number of degrees of freedom in your fit (equal to the number of data points minus number of parameters being estimated).  Write a function that evaluates $\chi^2_\nu$ for a polynomial fit of order $n$.  
+    \item[(d)] Use your goodness-of-fit statistic to determine whether is best (in the statistical sense) to fit these data with a linear, quadratic, or cubic polynomial.  Show how you reached your decision.  
+  \end{itemize}
+  \item This problem concerns bilinear interpolation methods and requires use of the grid (variables \texttt{xg,yg}) and data samples (\texttt{f2D}) from \textsf{test\_interp.mat}.  
+  \begin{itemize}
+    \item[(a)]  Write a function that takes in a grid of points describing some independent variable (say $x_i$), and a point to which the data are to be interpolated $x'$ and finds the index $i$ into the array $x_i$ such that:  $x_i \le x' \le x_{i+1}$.  
+    \item[(b)]  Use the function from part (a) to construct an additional function that works over a 2D grid $x,y$.  I.e. given two grids $x_i,y_j$ find the indices $i,j$ such that:  $x_i \le x' \le x_{i+1}$, $y_j \le y' \le y_{j+1}$.
+    \item[(c)]  Use your results from parts a and b to create a bilinear interpolation function that takes in a sequence of data points $\{x'_k,y'_k\}$ to which data are being interpolated, a grid $x_i,y_j$, and a dataset $f_{ij}$ that is defined over this grid and produces bilinearly interpolated values of $f_k$ at the points $\{x'_k,y'_k\}$.  Write your program so that the input points are simply a flat list and not necessarily a 2D grid of points (you can always \texttt{reshape} the results later if needed).  
+    \item[(d)]  Test your results against Matlab's bilinear interpolation function (\texttt{interp2}) and show that you get the same result.  Use the test data from the repository (\textsf{test\_interp.mat}).  The source grid data are stored in \texttt{xg,yg}, while the value of the function at those points is in \texttt{f2D}.  \texttt{xgi,ygi} are the densely sampled grid point to which the data are to be interpolated for this test.  
+  \end{itemize} 
+\end{enumerate}
+
+\end{document}

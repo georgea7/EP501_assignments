@@ -32,3 +32,15 @@ Please read all instructions carefully before starting and assignment and please
 1. Located in ./HW2/HW2.pdf
 2. Test data included in ./HW2/*.mat
 3. Due ??/??/??
+
+### Project 3
+
+1. Located in ./HW3/HW3.pdf
+2. No test data required
+3. Due ??/??/??
+
+### Project 4
+
+1. Located in ./HW4/HW4.pdf
+2. Test data included in ./HW4/*.mat
+3. Due ??/??/??
