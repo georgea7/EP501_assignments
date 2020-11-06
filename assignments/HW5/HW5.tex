@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{draftwatermark}
+
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{3}
+\SetWatermarkLightness{0.5}
+
+\begin{document}
+
+\title{EP 501 Homework 5:  Differentiation and Integration}
+
+\maketitle
+
+~\\
+\textbf{Instructions:}  
+\begin{itemize}
+  \item Submit all MATLAB or Python source code and results via Canvas.  Please zip all contents of your solution into single file and then submit in a single zip file.    
+  \item Discussing the assignment with others is fine, but you must not copy anyone's code.  
+  \item Please arrange your code so that I can run a single script and produce all results by executing, e.g. \textsf{assignment1.(m,py)} or similar.  
+  \item You may use any of the example codes from our course repositories:  \url{https://github.com/Zettergren-Courses/EP501_python} and \url{https://github.com/Zettergren-Courses/EP501_matlab}.
+  \item Do not copy verbatim any other codes (i.e. any source codes other than from our course repository).  You may use other examples as a reference but you must write you own programs (except for those I give you).  
+
+\end{itemize}
+~\\~\\~\\
+\textbf{Purpose of this assignment:}  
+\begin{itemize}
+  \item Use numerical differentiation to solve complex problems.  
+  \item Develop good coding and documentation practices, such that your programs are easily understood by others.  
+  \item Exercise good judgement in numerical problem setup.
+  \item Demonstrate higher reasoning to synthesize a problem and devise a basic set of algorithms to solve it.  
+\end{itemize}
+
+\pagebreak
+
+\begin{enumerate}
+  \item  Numerical Vector Derivatives (curl):  
+  \begin{itemize}  
+    \item[(a)] Plot the two components of the vector magnetic field defined by the piecewise function:
+    \begin{equation}
+      \mathbf{B}(x,y)= \left\{
+      \begin{array}{c}
+      \frac{\mu_0 I}{2 \pi a^2} \sqrt{x^2+y^2} \left( - \frac{y}{\sqrt{x^2+y^2}}\hat{\mathbf{e}}_x + \frac{x}{\sqrt{x^2+y^2}} \hat{\mathbf{e}}_y \right) \qquad \left( \sqrt{x^2+y^2} < a \right)
+      \\
+      \frac{\mu_0 I}{2 \pi \sqrt{x^2+y^2}} \left( - \frac{y}{\sqrt{x^2+y^2}} \hat{\mathbf{e}}_x + \frac{x}{\sqrt{x^2+y^2}} \hat{\mathbf{e}}_y \right) \qquad \left( \sqrt{x^2+y^2} \ge a \right)
+      \end{array}
+      \right.      
+    \end{equation}
+    Assume the parameters in this equation have the numerical values:
+    \begin{eqnarray}
+      I &=& 10 \qquad \left( \mathrm{A} \right) \nonumber \\
+      \mu_0 &=& 4 \pi \times 10^{-7} \qquad (\mathrm{H/m}) \nonumber \\
+      a &=& 0.005 \qquad (\mathrm{m}) \nonumber 
+    \end{eqnarray}
+    Use an image plot (e.g. \texttt{pcolor} and \texttt{shading flat} in MATLAB or \texttt{matplotlib.pyplot.pcolor} in Python) for each magnetic field component ($B_x,B_y$) and have your plot show the region $-3 a \le x \le 3 a, -3a \le y \le 3a$.  Make sure you add a colorbar and axis labels to your plot.  You will need to define a range and resolution in $x$ and $y$, and create a meshgrid from that.  Be sure to use a resolution fine enough to resolve important variations in this function.  
+    \item[(b)]  Make a quiver plot of the magnetic field $\mathbf{B}$; add labels, etc.
+    \item[(c)]  Compute the numerical curl of $\mathbf{B}$, i.e. $\nabla \times \mathbf{B}$.  Use centered differences on the interior grid points and first-order derivatives on the edges.  Plot your result using \texttt{imagesc}, or \texttt{pcolor}.  
+    \item[(d)]  Compute $\nabla \times \mathbf{B}$ analytically (viz. by hand).  Plot the  alongside your numerical approximation and demonstrate that they are suitably similar. 
+  \end{itemize} 
+  \item Numerical Vector Derivatives (gradient and laplacian):
+  \begin{itemize}
+    \item[(a)]  Compute and plot the scalar field:
+    \begin{equation}
+      \Phi(x,y,z)= \left\{
+      \begin{array}{c}
+      \frac{Q}{4 \pi \epsilon_0 a} - \frac{Q}{8 \pi \epsilon_0 a^3} \left(x^2+y^2+z^2 - a^2 \right)
+      \qquad \left( \sqrt{x^2+y^2+z^2} < a \right)
+      \\
+      \frac{Q}{4 \pi \epsilon_0 \sqrt{x^2+y^2+z^2}} \qquad \left( \sqrt{x^2+y^2+z^2} \ge a \right)
+      \end{array}
+      \right.      
+    \end{equation}
+    Use the parameters:
+    \begin{eqnarray}
+      Q &=& 1  \qquad \left( \mathrm{C} \right) \nonumber \\
+      a &=& 1 \qquad (\mathrm{m}) \nonumber \\
+      \epsilon_0 &=& 8.854 \times 10^{-12} \qquad (\mathrm{F/m}) \nonumber 
+    \end{eqnarray}    
+    and plot this function in the region $-3a \le x \le 3a, -3a \le y \le 3a$ in the $z=0$ plane. Be sure to use a resolution fine enough to resolve variations in this function (aside from those associated with the singularity).
+    \item[(b)]  Write a function to numerically compute the Laplacian of a scalar field, i.e. $\nabla^2 \Phi$.  Plot your result with appropriate labels and colorbars.  
+    \item[(c)]  Compute an analytical laplacian (viz. differentiate by hand), plot the results alongside your numerical calculation, and demonstrate that your numerical laplacian is suitably accurate.  
+  \end{itemize}
+  \item  Integration in Multiple Dimensions.  
+  \begin{itemize}
+    \item[(a)] Numerically compute the electrostatic energy in the region $R \equiv -3a \le x \le 3a, -3a \le y \le 3a, -3a \le z \le 3a$, defined by the integral:  
+    \begin{equation}
+      W_E = - \frac{1}{2} \iiint_R \left( \epsilon_0 \nabla^2 \Phi \right) \Phi ~dx dy dz
+    \end{equation}
+    using an iterated trapezoidal method (sweeps of single dimensional integrations) or multi-dimensional trapezoidal method program that you write.  
+  \end{itemize}
+  \item Line Integration:  
+  \begin{itemize}
+    \item[(a)]  Compute and plot the parametric path
+    \begin{equation}
+       \mathbf{r}(\phi) \equiv x(\phi)\hat{\mathbf{e}}_x + y(\phi)\hat{\mathbf{e}}_y = r_0 \cos \phi ~ \hat{\mathbf{e}}_x + r_0 \sin \phi ~ \hat{\mathbf{e}}_y \qquad (0 \le \phi \le 2 \pi)
+    \end{equation}    
+    in the $x,y$ plane on the same axis as your magnetic field components from problem 1 (create a new figure which plots the path on top of a \texttt{pcolor} plot of each component).  Take $r_0 = 2a$.  You will need to define a grid in $\phi$ to do this.
+    \item[(b)]  Plot the two components of the magnetic field $\mathbf{B}(x(\phi),y(\phi))$ at the $x,y$ points along $\mathbf{r}$ and visually compare against your image plots of the magnetic field and path to verify.  
+    \item[(c)]  Numerically compute the tangent vector to the path $\mathbf{r}$ by performing the derivative:  
+    \begin{equation}
+      \frac{d \mathbf{r}}{d \phi} =  \frac{d x}{d \phi} \hat{\mathbf{e}}_x + \frac{d y}{d \phi} \hat{\mathbf{e}}_y
+    \end{equation}
+    Compare your numerical results against the analytical derivative (e.g. plot the two) and refine your grid in $\phi$ (if necessary) such that you get visually acceptable results - i.e. such that the path appears circular.  
+    \item[(d)]  Numerically compute the auxiliary magnetic field integrated around the path $\mathbf{r}$, i.e.:
+    \begin{equation}
+       I = \int_{\mathbf{r}} \frac{\mathbf{B}}{\mu_0} \cdot d \boldsymbol{\ell} 
+    \end{equation}
+    where the differential path length is given by:
+    \begin{equation}
+      d \boldsymbol{\ell} = \frac{d \mathbf{r}}{d \phi} d \phi 
+    \end{equation}   
+  \end{itemize}
+\end{enumerate}
+
+\end{document}
