@@ -10,6 +10,7 @@ close all
 %% Problem 1
 %a
 load('test_lsq.mat');
+n=length(x);                            %size of data
 
 %Plot of noisy data
 figure(1);
@@ -19,9 +20,9 @@ ylabel('y');
 title('Illustrating a Least Square fit')
 hold on;
 
-%a
 %I discussed with Kaijus Palm on how to do this part.
 for N=1:3                               %Polynomials of varying degree
+    %1-a)
     %Calculating M matrix for the polynomial
     for i=1:N+1
         M(:,i)=x.^(i-1);                
@@ -29,6 +30,16 @@ for N=1:3                               %Polynomials of varying degree
     %Polynomial function y
     a=flipud(inv((M')*M)*(M')*ynoisy);  %Coefficient a
     y=polyval(a,x);                     %Polynomial
+    
+    %1-b)
+    %Error vector and Residual
+    df=length(a);                       %number of coefficients
+    v=n-df;                             
+    error(:,N)=abs(y-ynoisy);
+    residual(N)=sum(error,'all');
+    
+    %1-c)
+    Chi_sq(N)=(1/v)*sum(((ynoisy-y).^(2)/(sigmay).^2),'all');
     
     %plot
     figure(1)
@@ -53,7 +64,6 @@ hold off
 
 legend('Data','Linear fit','Quadratic fit','Cubic fit',...
     'MATLAB built-in Linear fit', 'MATLAB built-in Quadratic fit',...
-    'MATLAB built-in Cubic fit');
+    'MATLAB built-in Cubic fit','Location','northwest');
 
-%c
-Chi_sq=(1/509)*sum((ynoisy-y).^(2)/(sigmay).^2)
+
