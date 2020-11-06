@@ -1,0 +1,256 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>George_Project4</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-06"><meta name="DC.source" content="George_Project4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">Problem 2</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
+<span class="comment">%EP 501</span>
+<span class="comment">%Project 4</span>
+<span class="comment">%This code contains excerpts from codes provided by Dr. Zettergen.</span>
+<span class="comment">%https://github.com/Zettergren-Courses/EP501_matlab/</span>
+clc
+clearvars
+close <span class="string">all</span>
+</pre><h2 id="2">Problem 1</h2><pre class="codeinput"><span class="comment">%a</span>
+load(<span class="string">'test_lsq.mat'</span>);
+n=length(x);                            <span class="comment">%size of data</span>
+
+<span class="comment">%Plot of noisy data</span>
+figure(1);
+plot(x,ynoisy,<span class="string">'ko'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'Illustrating a Least Square fit'</span>)
+hold <span class="string">on</span>;
+
+<span class="comment">%I discussed with Kaijus Palm on how to do this part.</span>
+<span class="keyword">for</span> N=1:3                               <span class="comment">%Polynomials of varying degree</span>
+    <span class="comment">%1-a)</span>
+    <span class="comment">%Calculating M matrix for the polynomial</span>
+    <span class="keyword">for</span> i=1:N+1
+        M(:,i)=x.^(i-1);
+    <span class="keyword">end</span> <span class="comment">%for</span>
+    <span class="comment">%Polynomial function y</span>
+    a=flipud(inv((M')*M)*(M')*ynoisy);  <span class="comment">%Coefficient a</span>
+    y=polyval(a,x);                     <span class="comment">%Polynomial</span>
+
+    <span class="comment">%1-b)</span>
+    <span class="comment">%Error vector and Residual</span>
+    df=length(a);                       <span class="comment">%number of coefficients</span>
+    v=n-df;
+    error(:,N)=(y-ynoisy);
+    residual(N)=sum(error,<span class="string">'all'</span>);
+
+    <span class="comment">%1-c)</span>
+    Chi_sq(N)=(1/v)*sum(((ynoisy-y).^(2)/(sigmay).^2),<span class="string">'all'</span>);
+
+    <span class="comment">%plot</span>
+    figure(1)
+    hold <span class="string">on</span>
+    plot(x,y,<span class="string">'b'</span>, <span class="string">'LineWidth'</span>,1.2);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="comment">%Testing with Matlab built-in function</span>
+<span class="keyword">for</span> N=1:3
+f=polyfit(x,ynoisy,N);
+F=polyval(f,x);
+
+<span class="comment">%error and residual</span>
+Merror(:,N)=F-ynoisy;
+Mresidual(N)=sum(Merror(:,N),<span class="string">'all'</span>);
+
+<span class="comment">%Plots</span>
+figure(1)
+hold <span class="string">on</span>
+plot(x,F,<span class="string">'r--'</span>,<span class="string">'LineWidth'</span>,1.2)
+<span class="keyword">end</span>
+legend(<span class="string">'Data'</span>,<span class="string">'Linear fit'</span>,<span class="string">'Quadratic fit'</span>,<span class="string">'Cubic fit'</span>,<span class="keyword">...</span>
+    <span class="string">'MATLAB built-in Linear fit'</span>, <span class="string">'MATLAB built-in Quadratic fit'</span>,<span class="keyword">...</span>
+    <span class="string">'MATLAB built-in Cubic fit'</span>,<span class="string">'Location'</span>,<span class="string">'northwest'</span>);
+
+figure(2)
+plot(x,error(:,3));
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'Error'</span>);
+title(<span class="string">'Error in Cubic Least Square fit'</span>)
+
+<span class="comment">%Displaying Results</span>
+disp(<span class="string">'Problem 1-b)'</span>);
+disp([<span class="string">'                Residual: '</span>, num2str(residual)]);
+disp([<span class="string">'MATLAB built-in Residual: '</span>, num2str(Mresidual)]);
+
+disp(<span class="string">'Problem 1-c)'</span>);
+disp(<span class="string">'Reduced Chi^2'</span>);
+disp([<span class="string">'Linear fit   : '</span>, num2str(Chi_sq(1))]);
+disp([<span class="string">'Quadratic fit: '</span>, num2str(Chi_sq(2))]);
+disp([<span class="string">'Cubic fit    : '</span>, num2str(Chi_sq(3))]);
+
+disp(<span class="string">'Problem 1-d)'</span>);
+fprintf(<span class="string">'Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error \n seem to mostly depict noise about zero, it appears to be the best fit'</span>)
+</pre><pre class="codeoutput">Problem 1-b)
+                Residual: -1.9096e-13 -4.9072e-13 -1.5321e-13
+MATLAB built-in Residual: -4.0945e-13 -5.7288e-14  1.0658e-14
+Problem 1-c)
+Reduced Chi^2
+Linear fit   : 2.9125
+Quadratic fit: 1.3754
+Cubic fit    : 1.0285
+Problem 1-d)
+Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error 
+ seem to mostly depict noise about zero, it appears to be the best fit</pre><img vspace="5" hspace="5" src="George_Project4_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project4_02.png" alt=""> <h2 id="3">Problem 2</h2><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Introduction
+%Aldous George
+%EP 501
+%Project 4
+%This code contains excerpts from codes provided by Dr. Zettergen.
+%https://github.com/Zettergren-Courses/EP501_matlab/
+clc
+clearvars
+close all
+%% Problem 1
+%a
+load('test_lsq.mat');
+n=length(x);                            %size of data
+
+%Plot of noisy data
+figure(1);
+plot(x,ynoisy,'ko');
+xlabel('x');
+ylabel('y');
+title('Illustrating a Least Square fit')
+hold on;
+
+%I discussed with Kaijus Palm on how to do this part.
+for N=1:3                               %Polynomials of varying degree
+    %1-a)
+    %Calculating M matrix for the polynomial
+    for i=1:N+1
+        M(:,i)=x.^(i-1);                
+    end %for
+    %Polynomial function y
+    a=flipud(inv((M')*M)*(M')*ynoisy);  %Coefficient a
+    y=polyval(a,x);                     %Polynomial
+    
+    %1-b)
+    %Error vector and Residual
+    df=length(a);                       %number of coefficients
+    v=n-df;                             
+    error(:,N)=(y-ynoisy);
+    residual(N)=sum(error,'all');
+    
+    %1-c)
+    Chi_sq(N)=(1/v)*sum(((ynoisy-y).^(2)/(sigmay).^2),'all');
+    
+    %plot
+    figure(1)
+    hold on
+    plot(x,y,'b', 'LineWidth',1.2);
+end %for
+
+%Testing with Matlab built-in function
+for N=1:3
+f=polyfit(x,ynoisy,N);
+F=polyval(f,x);
+
+%error and residual
+Merror(:,N)=F-ynoisy;
+Mresidual(N)=sum(Merror(:,N),'all');
+
+%Plots
+figure(1)
+hold on
+plot(x,F,'rREPLACE_WITH_DASH_DASH','LineWidth',1.2)
+end
+legend('Data','Linear fit','Quadratic fit','Cubic fit',...
+    'MATLAB built-in Linear fit', 'MATLAB built-in Quadratic fit',...
+    'MATLAB built-in Cubic fit','Location','northwest');
+
+figure(2)
+plot(x,error(:,3));
+xlabel('x');
+ylabel('Error');
+title('Error in Cubic Least Square fit')
+
+%Displaying Results
+disp('Problem 1-b)');
+disp(['                Residual: ', num2str(residual)]);
+disp(['MATLAB built-in Residual: ', num2str(Mresidual)]);
+
+disp('Problem 1-c)');
+disp('Reduced Chi^2');
+disp(['Linear fit   : ', num2str(Chi_sq(1))]);
+disp(['Quadratic fit: ', num2str(Chi_sq(2))]);
+disp(['Cubic fit    : ', num2str(Chi_sq(3))]);
+
+disp('Problem 1-d)');
+fprintf('Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error \n seem to mostly depict noise about zero, it appears to be the best fit')
+%% Problem 2
+
+
+##### SOURCE END #####
+--></body></html>

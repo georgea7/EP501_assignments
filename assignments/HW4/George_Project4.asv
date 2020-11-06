@@ -65,24 +65,14 @@ legend('Data','Linear fit','Quadratic fit','Cubic fit',...
     'MATLAB built-in Linear fit', 'MATLAB built-in Quadratic fit',...
     'MATLAB built-in Cubic fit','Location','northwest');
 
-figure(2)
-plot(x,error(:,3));
-xlabel('x');
-ylabel('Error');
-title('Error in Cubic Least Square fit')
-
 %Displaying Results
 disp('Problem 1-b)');
 disp(['                Residual: ', num2str(residual)]);
 disp(['MATLAB built-in Residual: ', num2str(Mresidual)]);
-
-fprintf('\nProblem 1-c)\n');
+disp('Problem 1-c)');
 disp('Reduced Chi^2');
 disp(['Linear fit   : ', num2str(Chi_sq(1))]);
 disp(['Quadratic fit: ', num2str(Chi_sq(2))]);
 disp(['Cubic fit    : ', num2str(Chi_sq(3))]);
 
-fprintf('\nProblem 1-d)\n');
-fprintf('Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error \n seem to mostly depict noise about zero, it appears to be the best fit')
-%% Problem 2
 
