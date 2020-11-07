@@ -143,25 +143,50 @@ disp(<span class="string">'Problem 1-b)'</span>);
 disp([<span class="string">'                Residual: '</span>, num2str(residual)]);
 disp([<span class="string">'MATLAB built-in Residual: '</span>, num2str(Mresidual)]);
 
-disp(<span class="string">'Problem 1-c)'</span>);
+fprintf(<span class="string">'\nProblem 1-c)\n'</span>);
 disp(<span class="string">'Reduced Chi^2'</span>);
 disp([<span class="string">'Linear fit   : '</span>, num2str(Chi_sq(1))]);
 disp([<span class="string">'Quadratic fit: '</span>, num2str(Chi_sq(2))]);
 disp([<span class="string">'Cubic fit    : '</span>, num2str(Chi_sq(3))]);
 
-disp(<span class="string">'Problem 1-d)'</span>);
+fprintf(<span class="string">'\nProblem 1-d)\n'</span>);
 fprintf(<span class="string">'Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error \n seem to mostly depict noise about zero, it appears to be the best fit'</span>)
 </pre><pre class="codeoutput">Problem 1-b)
-                Residual: -1.9096e-13 -4.9072e-13 -1.5321e-13
-MATLAB built-in Residual: -4.0945e-13 -5.7288e-14  1.0658e-14
+                Residual: -5.409e-13 -6.1862e-13 -7.5806e-13
+MATLAB built-in Residual: -1.7497e-13 -6.8834e-14  7.0166e-14
+
 Problem 1-c)
 Reduced Chi^2
 Linear fit   : 2.9125
 Quadratic fit: 1.3754
 Cubic fit    : 1.0285
+
 Problem 1-d)
 Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error 
- seem to mostly depict noise about zero, it appears to be the best fit</pre><img vspace="5" hspace="5" src="George_Project4_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project4_02.png" alt=""> <h2 id="3">Problem 2</h2><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+ seem to mostly depict noise about zero, it appears to be the best fit</pre><img vspace="5" hspace="5" src="George_Project4_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project4_02.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput">load(<span class="string">'test_interp.mat'</span>)
+
+<span class="comment">%2-a)</span>
+x=[-0.83,-0.2,0.4, 0.9, 1.22];  <span class="comment">%X values</span>
+i=InterpIndex1D(xg,x);          <span class="comment">%Indices i for x_i&lt;x&lt;x_i+1</span>
+
+<span class="comment">%2-b)</span>
+y=[-0.92,-0.3,0.2, 0.7, 1.12];  <span class="comment">%X values</span>
+[i2D,j2D]=InterpIndex2D(xg,yg,x,y); <span class="comment">%Indices i for x_i&lt;x&lt;x_i+1 ...</span>
+                                    <span class="comment">%    and j for y_j&lt;y&lt;x_j+1</span>
+
+<span class="comment">%2-c)</span>
+f=f2D(:);
+finterpmanualtest=BlInterp(xg,yg,f,x,y); <span class="comment">%Manual Interpolation</span>
+
+<span class="comment">%2-d)</span>
+[X,Y]=meshgrid(xg,yg);
+
+<span class="comment">%Manual Interpolation</span>
+finterpmanual=BlInterp(xg,yg,f,xgi,ygi);
+
+<span class="comment">%Matlab built-in Interpolation</span>
+finterp=interp2(X,Y,f2D,xgi,ygi);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Introduction
 %Aldous George
@@ -241,15 +266,38 @@ disp('Problem 1-b)');
 disp(['                Residual: ', num2str(residual)]);
 disp(['MATLAB built-in Residual: ', num2str(Mresidual)]);
 
-disp('Problem 1-c)');
+fprintf('\nProblem 1-c)\n');
 disp('Reduced Chi^2');
 disp(['Linear fit   : ', num2str(Chi_sq(1))]);
 disp(['Quadratic fit: ', num2str(Chi_sq(2))]);
 disp(['Cubic fit    : ', num2str(Chi_sq(3))]);
 
-disp('Problem 1-d)');
+fprintf('\nProblem 1-d)\n');
 fprintf('Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error \n seem to mostly depict noise about zero, it appears to be the best fit')
 %% Problem 2
+load('test_interp.mat')
+
+%2-a)
+x=[-0.83,-0.2,0.4, 0.9, 1.22];  %X values
+i=InterpIndex1D(xg,x);          %Indices i for x_i<x<x_i+1
+
+%2-b)
+y=[-0.92,-0.3,0.2, 0.7, 1.12];  %X values
+[i2D,j2D]=InterpIndex2D(xg,yg,x,y); %Indices i for x_i<x<x_i+1 ...
+                                    %    and j for y_j<y<x_j+1
+
+%2-c)
+f=f2D(:);
+finterpmanualtest=BlInterp(xg,yg,f,x,y); %Manual Interpolation
+
+%2-d)
+[X,Y]=meshgrid(xg,yg);
+
+%Manual Interpolation
+finterpmanual=BlInterp(xg,yg,f,xgi,ygi);
+
+%Matlab built-in Interpolation
+finterp=interp2(X,Y,f2D,xgi,ygi);
 
 
 ##### SOURCE END #####

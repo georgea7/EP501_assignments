@@ -85,4 +85,27 @@ disp(['Cubic fit    : ', num2str(Chi_sq(3))]);
 fprintf('\nProblem 1-d)\n');
 fprintf('Since the cubic fit has the closest reduced Chi^2 value to 1 and because its error \n seem to mostly depict noise about zero, it appears to be the best fit')
 %% Problem 2
+load('test_interp.mat')
+
+%2-a)
+x=[-0.83,-0.2,0.4, 0.9, 1.22];  %X values
+i=InterpIndex1D(xg,x);          %Indices i for x_i<x<x_i+1
+
+%2-b)
+y=[-0.92,-0.3,0.2, 0.7, 1.12];  %X values
+[i2D,j2D]=InterpIndex2D(xg,yg,x,y); %Indices i for x_i<x<x_i+1 ...
+                                    %    and j for y_j<y<x_j+1
+
+%2-c)
+f=f2D(:);
+finterpmanualtest=BlInterp(xg,yg,f,x,y); %Manual Interpolation
+
+%2-d)
+[X,Y]=meshgrid(xg,yg);
+
+%Manual Interpolation
+finterpmanual=BlInterp(xg,yg,f,xgi,ygi);
+
+%Matlab built-in Interpolation
+finterp=interp2(X,Y,f2D,xgi,ygi);
 
