@@ -12,7 +12,7 @@ close all
 %Initiation
 I   = 10;               %(A)
 mu0 = 4*pi*10^(-7);     %(H/m)
-a   = 0.004;            %(m)
+a   = 0.005;            %(m)
 
 lx=100;                 %size of x
 ly=100;                 %size of y
@@ -40,6 +40,7 @@ end %for
 %plot
 %Bx
 figure(1);
+subplot(1,2,1);
 pcolor(X,Y,Bx);
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
@@ -50,7 +51,8 @@ colorbar
 shading flat
 hold on
 %By
-figure(2)
+figure(1)
+subplot(1,2,2)
 pcolor(X,Y,By);
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
@@ -61,40 +63,57 @@ colorbar
 shading flat
 
 %1-b
-figure(3)
+figure(2)
+
 quiver(X,Y,Bx',By');
 title('B Quiver plot');
 
 %1-c
-dBx=Bx(2)-Bx(1);
-dBy=By(2)-By(1);
+dx=x(2)-x(1);
+dy=y(2)-y(1);
 gradBx=zeros(size(Bx));
 gradBy=zeros(size(By));
 
-gradBx(1,1)=(Bx(2,1)-Bx(1,1))/dBx;
-for i=1:lx
-    for j=2:ly-1
-        gradBx(i,j)=(Bx(i,j+1)-Bx(i,j-1))/2/dBy;    %\partial/\partial x
-    end %for
-end %for
-gradBx(lx,ly)=(Bx(lx,ly)-Bx(lx,ly-1))/dBy;
+Bx=Bx';
+for i=1:lx      %Forward Difference
+    gradBx(1,i)=(Bx(2,i)-Bx(1,i))/dy;                   %dBx/dy
+    gradBy(1,i)=(By(2,i)-By(1,i))/dx;                   %dBy/dx
+end
 
-gradBy(1,1)=(By(1,2)-By(1,1))/dBx;
-for i=2:lx-1
-    for j=1:ly
-        gradBy(i,j)=(Bx(i+1,j)-Bx(i-1,j))/2/dBx;    %\partial/\partial x
+
+for j=1:ly      %Centered Difference
+    for i=2:lx-1
+        gradBx(i,j)=(Bx(i+1,j)-Bx(i-1,j))/2/dy;         %dBx/dy
+        gradBy(i,j)=(By(i+1,j)-By(i-1,j))/2/dx;         %dBy/dx
     end %for
 end %for
-gradBy(lx,ly)=(By(lx-1,ly)-By(lx-1,ly))/dBy;
+
+for i=1:lx      %Backward difference
+    gradBx(lx,i)=(Bx(lx,i)-Bx(lx-1,i))/dy;              %dBx/dy
+    gradBy(lx,i)=(By(lx,i)-By(lx-1,i))/dx;              %dBy/dx
+end
 
 curlB = gradBy-gradBx;
-figure(4)
+figure(3)
+subplot(1,2,1)
 pcolor(X,Y,curlB);
 xlabel('x');
 ylabel('y');
-title('Curl of B');
+title('\nabla x B');
 colorbar
 shading flat
+
+curlM = curl(X,Y,Bx,By');
+figure(3)
+subplot(1,2,2)
+pcolor(X,Y,curlM);
+xlabel('x');
+ylabel('y');
+title('MATLAB built-in \nabla x B');
+colorbar
+shading flat
+
+%d
 
 %% Problem 2
 
@@ -132,7 +151,7 @@ ylim([-3*a,3*a]);
 set(gca,'FontSize',15);
 xlabel('x');
 ylabel('y');
-title('Phi');
+title('\Phi');
 colorbar
 shading flat
 
@@ -181,10 +200,11 @@ surface(X,Y,div(:,:,end/2));
 set(gca,'FontSize',15);
 xlabel('x');
 ylabel('y');
-title('Laplacian(phi)');
+title('Laplacian(\Phi)');
 colorbar;
 shading flat
 
 %% Problem 3
+
 
 %% Problem 4
