@@ -15,8 +15,8 @@ xprime = -9*a/10;   %(m)
 xdprime = 9*a/10;   %(m)
 Eps0 = 8.854*10^-12;%(F/m)
 
-n=100;
-x=linspace(-a,a,n);
+n = 100;
+x = linspace(-a,a,n);
 
 %1-a
 disp('1-a');

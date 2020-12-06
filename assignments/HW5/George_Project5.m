@@ -118,6 +118,41 @@ shading flat
 
 %1-d
 disp('1-d')
+
+%Analytical
+for i=1:lx
+    for j=1:ly
+        cond = sqrt(x(i)^2+y(j)^2); %condition for piecewise function
+        if cond<a
+            gradBxA(i,j) = -(mu0*I/(2*pi*a^2));
+            gradByA(i,j) = (mu0*I/(2*pi*a^2));
+        else
+            gradBxA(i,j) = -(mu0*I/(2*pi))*(x(i)^2-y(j)^2)/(x(i)^2+y(j)^2)^2;
+            gradByA(i,j) = (mu0*I/(2*pi))*(-x(i)^2+y(j)^2)/(x(i)^2+y(j)^2)^2;
+        end %if
+    end %for
+end %for
+
+CurlA=gradByA-gradBxA;
+
+figure(4)
+subplot(1,2,1)
+pcolor(X,Y,CurlA);
+xlabel('x');
+ylabel('y');
+title('\nabla x B Analytical');
+colorbar
+shading flat
+
+figure(4)
+subplot(1,2,2)
+pcolor(X,Y,curlM);
+xlabel('x');
+ylabel('y');
+title('MATLAB built-in \nabla x B');
+colorbar
+shading flat
+
 %% Problem 2
 disp('Problem 2')
 %Initiation
@@ -203,11 +238,39 @@ end
 Laplace=divx+divy+divz;    %this is really laplacian b/c input is gradient
 
 figure(6);
+subplot(1,2,1)
 surface(X,Y,Laplace(:,:,end/2));
 set(gca,'FontSize',15);
 xlabel('x');
 ylabel('y');
-title('Laplacian(\Phi)');
+title('Laplacian(\Phi) Numerical');
+colorbar;
+shading flat
+
+%2-c
+laplacaA=zeros(lx,ly,lz);
+%Analytical
+for i=1:lx
+    for j=1:ly
+        for k=1:lz
+            cond = sqrt(x(i)^2+y(j)^2+z(k)^2); %condition for piecewise function
+            if cond<a
+                laplaceA(i,j,k) = -(3*Q/(4*pi*Eps0*a^3));
+            else
+                laplaceA(i,j,k) = -Q/(pi*Eps0)*(1/(x(i)^2+y(j)^2+z(k)^2)^2);
+            end %if
+        end%for
+    end%for
+end%for
+
+%plot
+figure(6);
+subplot(1,2,2)
+surface(X,Y,laplaceA(:,:,end/2));
+set(gca,'FontSize',15);
+xlabel('x');
+ylabel('y');
+title('Laplacian(\Phi) Analytical');
 colorbar;
 shading flat
 
@@ -236,5 +299,57 @@ fprintf('W = %.2f GJ\n\n',W);
 disp('Problem 4')
 %4-a
 disp('4-a');
-r0=2*a;
-r=r0*(cos(phi)+sin(phi));
+r0 = 2*a;
+rx = r0*cos(phi);
+ry = r0*sin(phi);
+
+%plot
+figure(7)
+subplot(1,2,1)
+pcolor(X,Y,Bx);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel('x');
+ylabel('y');
+title('B_x');
+colorbar
+shading flat
+hold on
+% plot(x,rx,'w')
+
+%4-c
+dphi = phi(2)-phi(1);
+
+gradrx=zeros(size(rx));
+gradry=zeros(size(ry));
+
+for i=1:lx      %Forward Difference
+    gradrx(1,i)=(rx(2,i)-rx(1,i))/dphi;                   %drx/dphi
+    gradry(1,i)=(ry(2,i)-ry(1,i))/dphi;                   %dry/dphi
+end
+
+for j=1:ly      %Centered Difference
+    for i=2:lx-1
+        gradrx(i,j)=(rx(i+1,j)-rx(i-1,j))/2/dphi;         %drx/dphi
+        gradry(i,j)=(ry(i+1,j)-ry(i-1,j))/2/dphi;         %dry/dphi
+    end %for
+end %for
+
+for i=1:lx      %Backward difference
+    gradrx(lx,i)=(rx(lx,i)-rx(lx-1,i))/dphi;              %drx/dphi
+    gradry(lx,i)=(ry(lx,i)-ry(lx-1,i))/dphi;              %dry/dphi
+end
+
+gradr=gradrx+gradry;
+gradl=gradr.*dphi;
+
+int=0;
+intg = r.*gradl;
+
+for i=1:lx-1
+    
+    int= int+(1/8)*(intg(i,j,k)+intg(i+1,j,k)+intg(i,j+1,k)+...
+        intg(i,j,k+1)+intg(i+1,j+1,k)+intg(i+1,j,k+1)+intg(i,j+1,k+1)+...
+        intg(i+1,j+1,k+1))*Eps0*dx*dy*dz;
+end %for
+
