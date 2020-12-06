@@ -1,0 +1,213 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{draftwatermark}
+
+%\SetWatermarkText{DRAFT}
+%\SetWatermarkScale{3}
+%\SetWatermarkLightness{0.5}
+
+\begin{document}
+
+\title{EP 501 FA 2020 final examination}
+
+\maketitle
+
+\textbf{Instructions:  }This is a take-home exam (work ALL problems) to be turned in 48 hours from the time it is posted (see canvas due date), unless you have notified me of a medical issue, family emergency, or other extenuating circumstance.  \emph{Unexcused late exams will not be graded.}
+
+I will be checking my email regularly over the next 48 hours to answer questions.  If you do not understand a question, please ask for a clarification.  
+
+You MAY NOT work in groups or discuss details of the solution to these or similar problems with other students or faculty.  You also MAY NOT use online ``work this problem for me'' resources (i.e. you must complete this problem without direct assistance of another human being).  You ARE ALLOWED to use internet references, your notes, textbooks, and other resources such as physics books, differential equations books, integral tables, the TI-89, or mathematical software like Mathematica, Matlab, Maple, and similar.  All normal University Honor Code rules apply, except as noted above (e.g. I am allowing use of books, notes, and internet resources).  DO NOT use symbolic processing capabilities for your numerical solutions (you can, of course, use these to check results).  
+
+You must submit your completed midterm via CANVAS as a .zip file with a complete set of Python or MATLAB codes solving these question and Word, Pages, or \LaTeX document summarizing your handwritten parts, results, and analysis.  Include citations, where appropriate, to results that you use for your solutions (e.g. ``Hoffman eqn. 3.70'', ``Wolfram website (link)'', ``Maple software'' and so on) and make sure that your work is completely described in your written solution document (i.e. it adequately developed and explained).  Please start a new page for each problem.  
+
+%\textbf{If you absolutely have no idea how to approach a problem you should email me.}  I can give hints to get you unstuck but it will reduce your maximum possible score (to be fair to others).  Requests for clarification will not affect your score in any way.  
+
+%If a question is ambiguous or seems unconstrained, please ask for clarification.  Each problem is intended to produce a fairly specific answer so let me know if you don't understand what I'm asking for.  
+
+Note that the problems are organized in order of \emph{increasing} difficulty.  You may complete any coding tasks using either Python or MATLAB.
+
+\emph{You must sign (below) and attach this page to the front of your solution when you submit your solutions for this exam}.  Electronic signatures are acceptable and encouraged.  If you are typing up your solution in \LaTeX, please note that the source code for this document is included in the course repository.  
+
+~\\~\\~\\~\\~\\~\\~\\~\\~\\~\\~\\~\\~\\~\
+
+\emph{I, \rule{7.5cm}{0.15mm} , confirm that I read the instruction above and did not discuss the solution to these problems with anyone else.}
+
+\pagebreak
+
+\begin{enumerate}
+
+  
+  \item (33 pts.) \textbf{This problem requires both written and coding components.}  
+  
+In class and in the homework we discussed the fourth order Runge-Kutta method:.  
+\begin{equation}
+  y^{n+1} = y^{n} + \frac{1}{6} \left( \Delta y_1 + 2 \Delta y_2 + 2 \Delta y_3 + \Delta y_4 \right)
+\end{equation}
+with appropriate definitions for the $\Delta y_i$ as given in the book and repeated here for convenience:
+\begin{eqnarray}
+  \Delta y_1 &=& \Delta t f(t^n,y^n) \\
+  \Delta y_2 &=& \Delta t f \left( t^n+\frac{\Delta t}{2},y^n + \frac{\Delta y_1}{2}\right) \\  
+  \Delta y_3 &=& \Delta t f \left( t^n+\frac{\Delta t}{2},y^n + \frac{\Delta y_2}{2}\right) \\  
+  \Delta y_4 &=& \Delta t f \left( t^n+\Delta t,y^n + \Delta y_3 \right) 
+\end{eqnarray}
+This problem explores the \emph{stability} of RK4 via several different approaches using the test problem:
+\begin{equation}
+  \frac{d y}{d t} = f(t,y) = - \alpha y \label{eqn:testODE}
+\end{equation}
+where $\alpha$ is a positive and real-valued constant.  
+  \begin{enumerate}
+     \item[(a)]  Combine the four update steps for RK4 into a single formula an use it to derive a condition describing the stability of RK4.  Your condition should be of the form:
+     \begin{equation}
+       \left| G(\alpha,\Delta t) \right| < 1 \label{eqn:gain}
+     \end{equation}
+     where $G$ is a polynomial in the quantity $\Delta t$.  
+     \item[(b)]  Plot your gain factor $G$ vs. $\alpha \Delta t$ and mark or otherwise identify regions of stability and instability in your plot.
+     \item[(c)]  Note that the condition in Equation \ref{eqn:gain} can be expressed as two conditions (on account of the absolute value):
+     \begin{equation}
+       -1 < G(\alpha,\Delta t)<1
+     \end{equation}
+     The marginal stability limits (the points where we transition from stable to unstable), then, are given by:
+     \begin{equation}
+       G(\alpha,\Delta t)-1=0
+     \end{equation}
+     and
+     \begin{equation}
+       G(\alpha,\Delta t)+1=0
+     \end{equation}
+     which forms a pair of root finding problems.  Plot each of these marginal stability conditions and evaluate all real-valued roots using an appropriate numerical method.  
+     \item[(d)]  What is the largest time step for which RK4 will give stable results for the test ODE of Equation \ref{eqn:testODE}?  How does that compare to RK2 stability (see class notes and RK2 scripts written in \href{https://github.com/Zettergren-Courses/EP501_matlab/blob/master/ODEs/RK_methods.m}{MATLAB} or \href{https://github.com/Zettergren-Courses/EP501_python/blob/master/ODEs/RK_methods.py}{Python}).  
+     \item[(e)]  Numerically solve the given ODE with RK4 using time steps slightly above and below your derived stability criteria and show plots for each simulation that demonstrate that it behaves as your analysis predicts for these two choices of time step.  
+   \end{enumerate}
+   
+   \pagebreak
+  
+  \item (34 pts.) \textbf{This problem requires both written and coding components.} 
+  
+Taylor series expansions were our preferred method for deriving finite difference approximations to derivatives.  In class we derived these by repeatedly generating expansions until we were able to solve for the desired derivative at the desired level of accuracy.  There is, however, a more ``organized'' process for deriving derivatives of arbitrary order - this problem explores one such process.  
+  \begin{enumerate}
+     \item[(a)]  First and second derivative approximations were generated in class via Taylor expansions (see notes).  Use Taylor series to generate a \emph{third} derivative ($d^3 f / dx^3$) finite difference formula approximation for a function $f(x)$ specified on some grid:  $f(x_i) = \left\{ f_i \right\} $ having step size $\Delta x$.  There are several such approximations - generate specifically one involving the function values $f_{i+2},f_{i+1},f_i,f_{i-1}$.  %For now this may require a bit of trial and error until you start to see a pattern emerge.
+     \item[(b)]  Write a script to test your third derivative formula on the function:
+     \begin{equation}
+       f(x) = \cos x \label{eqn:testfn}
+     \end{equation}
+     and plot your result alongside the analytical third derivative of this function (which you compute by hand).  Ignore boundary adjacent points (i.e. only compute the third derivative on ``interior'' grid points).  Use a 100 point grid covering the region $0 \le x \le 2 \pi$.
+     \item[(c)]  Generally an $N$th derivative requires $N$ Taylor series expansions in order to solve for the desired derivatives in terms of the gridded function values $\left\{ f_i \right\}$.  For example, the fourth derivative $d^4 f / dx^4$ can be derived from the four Taylor series for $f_{i+2},f_{i+1},f_{i-1},f_{i-2}$.  Generate Taylor series for these quantities in terms of the derivatives at the $i$th grid point (e.g. $f'(x_i)$ and so on). 
+     \item[(d)] Use your Taylor series equations to formulate a matrix system of equations for the unknowns $f'_i$, $f''_i$, $f'''_i$, and $f^{(4)}_i$ (viz. the derivatives up to fourth order at the $i$th grid point), express your system in the form:
+     \begin{equation}
+       \left[
+       \begin{array}{c}
+         f_{i-2} \\
+         f_{i-1} \\
+         f_{i+1} \\
+         f_{i+2}
+       \end{array}
+       \right] 
+       = 
+       + f_i 
+       \left[
+       \begin{array}{c}
+         1 \\
+         1 \\
+         1 \\
+         1
+       \end{array}
+       \right] +
+       \left[
+       \begin{array}{cccc}
+         M_{11} & M_{12}&  M_{13} & M_{14} \\
+         M_{21} & M_{22}&  M_{23} & M_{24} \\
+         M_{31} & M_{32}&  M_{33} & M_{34} \\
+         M_{41} & M_{42}&  M_{43} & M_{44}
+       \end{array}
+       \right] 
+       \left[
+       \begin{array}{c}
+         f'_i \Delta x \\
+         f''_{i} \Delta x^2 \\
+         f'''_{i} \Delta x^3 \\
+         f^{(4)}_{i} \Delta x^4
+       \end{array}
+       \right] + \mathcal{O}(\Delta x^5)
+     \end{equation}  
+     Where the $M_{jk}$ entries are obtained from the Taylor series. In compact matrix form this can be represented as:
+     \begin{equation}
+       \underline{\Delta f} = \underline{\underline{M}} ~ \underline{f}'
+     \end{equation}
+     where:
+     \begin{equation}
+       \underline{\Delta f} =        
+       \left[
+       \begin{array}{c}
+         f_{i-2}-f_i \\
+         f_{i-1}-f_i \\
+         f_{i+1}-f_i \\
+         f_{i+2}-f_i
+       \end{array}
+       \right], \qquad
+       \underline{f}' = 
+       \left[
+       \begin{array}{c}
+         f'_i \Delta x \\
+         f''_{i} \Delta x^2\\
+         f'''_{i} \Delta x^3\\
+         f^{(4)}_{i} \Delta x^4
+       \end{array}
+       \right] 
+     \end{equation}
+     \item[(e)]  Write a MATLAB or Python script to numerically invert this system using either Gauss-Jordan elimination or LU factorization to compute the $\underline{\underline{M}}^{-1}$ so that you have a system describing the derivatives as a function of the function data (differences) at various grid points:
+     \begin{equation}
+       \underline{f}' = \underline{\underline{M}}^{-1} ~ \underline{\Delta f}
+     \end{equation}
+     Once this is solved for $\underline{f}'$, one may solve for the desired derivative by hand as needed by dividing through by $\Delta x^4$ and combining $f_i$ terms.  Derive formula for the fourth derivative using your numerically computed values for $\underline{\underline{M}}^{-1}$.
+     \item[(f)]  Write a function to compute the fourth derivative using the formula derived in part e and use it to differentiate the test function (Equation \ref{eqn:testfn}), over interior grid points of your domain.  Plot the result alongside the analytical fourth derivative that you compute by hand.  
+     \item[(g)]  Extend your code from part f so that it can (in principle) be used to find formulas for derivatives of arbitrary order.  To improve accuracy use a centered stencil, e.g. for an $n$th order derivative use function values $\left\{ f_{i-\lceil n/2 \rceil} \dots f_i \dots f_{i+ \lceil n/2 \rceil} \right\}$ from grid point indices $i-\lceil n/2 \rceil \dots i \dots i+\lceil n/2 \rceil$.  Use your code to derive and develope formulas for the fifth and sixth derivatives and write these in your solution (you do not need to implement these derivatives, just use your program to derive their formulae).  
+     
+   \end{enumerate}
+   
+   \pagebreak
+   
+  \item (33 pts.) \textbf{This problem requires both written and coding components.} 
+
+Parabolic partial differential equations of the form:
+\begin{equation}
+  \frac{\partial f}{\partial t} - \lambda \frac{\partial^2 f}{\partial x^2}= 0, \label{eqn:parabolic}
+\end{equation}
+ are often difficult to deal with due to the highly restrictive stability condition applying to forward difference (in time) methods like a forward Euler approach (note the right-hand side is evaluated at the $n$ time level):
+\begin{equation}
+  \frac{f^{n+1}-f^n}{\Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^n. \label{eqn:forEuler}
+\end{equation}
+In practice methods based on forward differencing in time are often unstable for reasonable time steps.  Irrespective of the time differencing used, the spatial derivative can be any reasonable finite difference approximation; for this problem we use a second order accurate centered difference (here specified at an arbitrary $m$th time level):
+\begin{equation}
+\left[ \frac{\partial^2 f}{\partial x^2} \right]_i^m \approx \frac{f_{i+1}^m - 2 f_i^m + f_{i-1}^m}{\Delta x^2} \label{eqn:spacederiv}
+\end{equation}
+Because of overly restrictive stability criteria for forward in time differences, backward time difference formulas (BDFs) are more commonly used for parabolic equations.  This problem explores several commonly-used BDFs that will be applied to solve Equation \ref{eqn:parabolic}.  
+  \begin{enumerate}
+    \item[(a)]  The simplest BDF is just a backward Euler method:
+    \begin{equation}
+      \frac{f_i^{n+1}-f_i^n}{\Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}, \label{eqn:backEuler}
+    \end{equation}
+    where now the right-hand side is evaluated at the $n+1$ time level (contrast with Equation \ref{eqn:forEuler}).  Such approaches are \emph{unconditionally stable} for the linear test problem we are using.  Because the right-hand side is evaluated at the $n+1$ time you will need to solve a tridiagonal system of equations \emph{at each time step}.  Develop, starting from equation \ref{eqn:backEuler} the system of equations corresponding to the backward Euler (in time) method.   
+    \item[(b)]  Write a MATLAB or Python script that solves Equation \ref{eqn:parabolic} using a backward Euler in time method with a centered in space derivatives (Equation \ref{eqn:spacederiv}).  You may use built-in MATLAB or Python utilities for the matrix solution or you can leverage your tridiagonal solver from the midterm or the Gaussian elimination tools from the repositories.  Note that both repositories have an example of the Crank-Nicolson method (in \href{https://github.com/Zettergren-Courses/EP501_matlab/blob/master/PDEs/parabolic.m}{MATLAB} or \href{https://github.com/Zettergren-Courses/EP501_matlab/blob/master/PDEs/parabolic.m}{Python}) which is quite similar to backward Euler and may serve as a useful template.  Plot your results in a manner similar to what is done for the example script provided.  Use the parameters:
+    \begin{eqnarray}
+      \lambda &=& 2 \\
+      \Delta x &=& \frac{1}{64} \\
+      \Delta t &=& 5 \frac{\Delta x^2}{2 \lambda} \\
+      0 \le &x& \le 1 \\
+      0 \le &t& \le 1024 \frac{1}{ \lambda \frac{2 \pi}{\left( 2 \Delta x \right)^2} }
+    \end{eqnarray}
+    \item[(c)]  The backward Euler method is only first order accurate in time.  A second order in time BDF approach can be developed using a second order accurate backward difference for the time derivative:
+    \begin{equation}
+      \left[ \frac{\partial f}{\partial t} \right]_i \approx \frac{3f_i^{n+1} - 4f_i^n + y_i^{n-1}}{2 \Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}
+    \end{equation}
+    Develop a numerical solution to Equation \ref{eqn:parabolic} based on this approach.  Note that you will need to store data for $f_i$ at two previous time levels ($n$ and $n-1$) as opposed to the backward Euler approach which only requires prior data from the $n$ time level.  Develop and write down your system of equations that would need to be solved at each time step.  
+    \item[(d)]  Make a version of your parabolic solver from part b that implements the second order BDF derived in part c and run it on the same test problem.  Plot your results and compare them against the backward Euler approach and analytical solution.  
+  \end{enumerate}
+
+    
+\end{enumerate}
+
+\end{document}
