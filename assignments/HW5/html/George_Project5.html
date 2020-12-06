@@ -1,0 +1,555 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>George_Project5</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-04"><meta name="DC.source" content="George_Project5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">Problem 2</a></li><li><a href="#4">Problem 3</a></li><li><a href="#5">Problem 4</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
+<span class="comment">%EP 501</span>
+<span class="comment">%Project 5</span>
+<span class="comment">%This code contains excerpts from codes provided by Dr. Zettergen.</span>
+<span class="comment">%https://github.com/Zettergren-Courses/EP501_matlab/</span>
+clc
+clearvars
+close <span class="string">all</span>
+</pre><h2 id="2">Problem 1</h2><pre class="codeinput">disp(<span class="string">'Problem 1'</span>);
+<span class="comment">%Initiation</span>
+I   = 10;               <span class="comment">%(A)</span>
+mu0 = 4*pi*10^(-7);     <span class="comment">%(H/m)</span>
+a   = 0.005;            <span class="comment">%(m)</span>
+
+lx=100;                 <span class="comment">%size of x</span>
+ly=100;                 <span class="comment">%size of y</span>
+x = linspace(-3*a,3*a,lx);
+y = linspace(-3*a,3*a,ly);
+[X,Y] = meshgrid(x,y);
+
+Bx = zeros(lx,ly);
+By = zeros(lx,ly);
+
+<span class="keyword">for</span> i=1:lx
+    <span class="keyword">for</span> j=1:ly
+        cond = sqrt(x(i)^2+y(j)^2); <span class="comment">%condition for piecewise function</span>
+        <span class="keyword">if</span> cond&lt;a
+            Bx(i,j) = (mu0*I/(2*pi*a^2))*cond*(-(y(j)/cond));
+            By(i,j) = (mu0*I/(2*pi*a^2))*cond*(x(i)/cond);
+        <span class="keyword">else</span>
+            Bx(i,j) = (mu0*I/(2*pi))*(1/cond)*(-(y(j)/cond));
+            By(i,j) = (mu0*I/(2*pi))*(1/cond)*(x(i)/cond);
+        <span class="keyword">end</span> <span class="comment">%if</span>
+    <span class="keyword">end</span> <span class="comment">%for</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="comment">%1-a</span>
+disp(<span class="string">'1-a'</span>);
+<span class="comment">%plot</span>
+<span class="comment">%Bx</span>
+figure(1);
+subplot(1,2,1);
+pcolor(X,Y,Bx);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'B_x'</span>);
+colorbar
+shading <span class="string">flat</span>
+hold <span class="string">on</span>
+<span class="comment">%By</span>
+figure(1)
+subplot(1,2,2)
+pcolor(X,Y,By);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'B_y'</span>);
+colorbar
+shading <span class="string">flat</span>
+
+<span class="comment">%1-b</span>
+disp(<span class="string">'1-b'</span>)
+figure(2)
+quiver(X,Y,Bx',By');
+title(<span class="string">'B Quiver plot'</span>);
+
+<span class="comment">%1-c</span>
+disp(<span class="string">'1-c'</span>)
+dx=x(2)-x(1);
+dy=y(2)-y(1);
+gradBx=zeros(size(Bx));
+gradBy=zeros(size(By));
+
+Bx=Bx';
+<span class="keyword">for</span> i=1:lx      <span class="comment">%Forward Difference</span>
+    gradBx(1,i)=(Bx(2,i)-Bx(1,i))/dy;                   <span class="comment">%dBx/dy</span>
+    gradBy(1,i)=(By(2,i)-By(1,i))/dx;                   <span class="comment">%dBy/dx</span>
+<span class="keyword">end</span>
+
+
+<span class="keyword">for</span> j=1:ly      <span class="comment">%Centered Difference</span>
+    <span class="keyword">for</span> i=2:lx-1
+        gradBx(i,j)=(Bx(i+1,j)-Bx(i-1,j))/2/dy;         <span class="comment">%dBx/dy</span>
+        gradBy(i,j)=(By(i+1,j)-By(i-1,j))/2/dx;         <span class="comment">%dBy/dx</span>
+    <span class="keyword">end</span> <span class="comment">%for</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="keyword">for</span> i=1:lx      <span class="comment">%Backward difference</span>
+    gradBx(lx,i)=(Bx(lx,i)-Bx(lx-1,i))/dy;              <span class="comment">%dBx/dy</span>
+    gradBy(lx,i)=(By(lx,i)-By(lx-1,i))/dx;              <span class="comment">%dBy/dx</span>
+<span class="keyword">end</span>
+
+curlB = gradBy-gradBx;
+figure(3)
+subplot(1,2,1)
+pcolor(X,Y,curlB);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'\nabla x B'</span>);
+colorbar
+shading <span class="string">flat</span>
+
+curlM = curl(X,Y,Bx,By');
+figure(3)
+subplot(1,2,2)
+pcolor(X,Y,curlM);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'MATLAB built-in \nabla x B'</span>);
+colorbar
+shading <span class="string">flat</span>
+
+<span class="comment">%1-d</span>
+disp(<span class="string">'1-d'</span>)
+</pre><pre class="codeoutput">Problem 1
+1-a
+1-b
+1-c
+1-d
+</pre><img vspace="5" hspace="5" src="George_Project5_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_02.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_03.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput">disp(<span class="string">'Problem 2'</span>)
+<span class="comment">%Initiation</span>
+Q = 1;              <span class="comment">%(C)</span>
+a = 1;              <span class="comment">%(m)</span>
+Eps0 = 8.854*10^-12;<span class="comment">%(F/m)</span>
+
+lx = 100;                 <span class="comment">%size of x</span>
+ly = 100;                 <span class="comment">%size of y</span>
+lz = 100;                 <span class="comment">%size of z</span>
+x = linspace(-3*a,3*a,lx);
+y = linspace(-3*a,3*a,ly);
+z = linspace(-3*a,3*a,lz);
+
+<span class="comment">%2-a</span>
+disp(<span class="string">'2-a'</span>);
+phi=zeros(lx,ly,lz);
+[X,Y] = meshgrid(x,y);
+
+<span class="keyword">for</span> i=1:lx
+    <span class="keyword">for</span> j=1:ly
+        <span class="keyword">for</span> k=1:lz
+            cond = sqrt(x(i)^2+y(j)^2+z(k)^2); <span class="comment">%condition for piecewise function</span>
+            <span class="keyword">if</span> cond&lt;a
+                phi(i,j,k) = Q/(4*pi*Eps0*a)-(Q/(8*pi*Eps0*a^3))*(x(i)^2 + y(j)^2 + z(k)^2 -a^2);
+            <span class="keyword">else</span>
+                phi(i,j,k) = Q/(4*pi*Eps0*cond);
+            <span class="keyword">end</span> <span class="comment">%if</span>
+        <span class="keyword">end</span><span class="comment">%for</span>
+    <span class="keyword">end</span><span class="comment">%for</span>
+<span class="keyword">end</span><span class="comment">%for</span>
+figure(5)
+pcolor(X,Y,phi(:,:,end/2));
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+set(gca,<span class="string">'FontSize'</span>,15);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'\Phi'</span>);
+colorbar
+shading <span class="string">flat</span>
+
+<span class="comment">%2-b</span>
+disp(<span class="string">'2-b'</span>)
+<span class="comment">%Laplacian</span>
+dx = x(2)-x(1);
+dy = y(2)-y(1);
+dz = z(2)-z(1);
+
+f=phi;
+g=phi;
+h=phi;
+
+<span class="keyword">for</span> l=1:2
+    <span class="comment">%x-derivative part of the divergence</span>
+    divx=zeros(size(f));
+    divx(1,:,:)=(f(2,:,:)-f(1,:,:))/dx;
+    <span class="keyword">for</span> i=2:lx-1
+        divx(i,:,:)=(f(i+1,:,:)-f(i-1,:,:))/2/dx;
+    <span class="keyword">end</span> <span class="comment">%for</span>
+    divx(lx,:,:)=(f(lx,:,:)-f(lx-1,:,:))/dx;
+
+    <span class="comment">%y-derivative part of the divergence</span>
+    divy=zeros(size(g));
+    divy(:,1,:)=(g(:,2,:)-g(:,1,:))/dy;
+    <span class="keyword">for</span> j=2:ly-1
+        divy(:,j,:)=(g(:,j+1,:)-g(:,j-1,:))/2/dy;
+    <span class="keyword">end</span> <span class="comment">%for</span>
+    divy(:,ly,:)=(g(:,ly,:)-g(:,ly-1,:))/dy;
+
+    <span class="comment">%z-derivative part of the divergence</span>
+    divz=zeros(size(h));
+    divz(:,:,1)=(h(:,:,2)-h(:,:,1))/dz;
+    <span class="keyword">for</span> k=2:lz-1
+        divz(:,:,k)=(h(:,:,k+1)-h(:,:,k-1))/2/dz;
+    <span class="keyword">end</span> <span class="comment">%for</span>
+    divz(:,:,lz)=(h(:,:,lz)-h(:,:,lz-1))/dz;
+    f=divx;
+    g=divy;
+    h=divz;
+<span class="keyword">end</span>
+
+Laplace=divx+divy+divz;    <span class="comment">%this is really laplacian b/c input is gradient</span>
+
+figure(6);
+surface(X,Y,Laplace(:,:,end/2));
+set(gca,<span class="string">'FontSize'</span>,15);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'Laplacian(\Phi)'</span>);
+colorbar;
+shading <span class="string">flat</span>
+</pre><pre class="codeoutput">Problem 2
+2-a
+2-b
+</pre><img vspace="5" hspace="5" src="George_Project5_04.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_05.png" alt=""> <h2 id="4">Problem 3</h2><pre class="codeinput">disp(<span class="string">'Problem 3'</span>)
+<span class="comment">%3-a</span>
+disp(<span class="string">'3-a'</span>)
+int=0;
+intg = phi.*Laplace;
+<span class="keyword">for</span> i=1:lx-1
+    <span class="keyword">for</span> j=1:ly-1
+        <span class="keyword">for</span> k=1:lz-1
+            int= int+(1/8)*(intg(i,j,k)+intg(i+1,j,k)+intg(i,j+1,k)+<span class="keyword">...</span>
+                intg(i,j,k+1)+intg(i+1,j+1,k)+intg(i+1,j,k+1)+intg(i,j+1,k+1)+<span class="keyword">...</span>
+                intg(i+1,j+1,k+1))*Eps0*dx*dy*dz;
+        <span class="keyword">end</span> <span class="comment">%for</span>
+    <span class="keyword">end</span> <span class="comment">%for</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
+W=-0.5*int;
+W=W/10^9;
+
+fprintf(<span class="string">'W = %.2f GJ\n\n'</span>,W);
+</pre><pre class="codeoutput">Problem 3
+3-a
+W = 5.40 GJ
+
+</pre><h2 id="5">Problem 4</h2><pre class="codeinput">disp(<span class="string">'Problem 4'</span>)
+<span class="comment">%4-a</span>
+disp(<span class="string">'4-a'</span>);
+</pre><pre class="codeoutput">Problem 4
+4-a
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Introduction
+%Aldous George
+%EP 501
+%Project 5
+%This code contains excerpts from codes provided by Dr. Zettergen.
+%https://github.com/Zettergren-Courses/EP501_matlab/
+clc
+clearvars
+close all
+%% Problem 1
+
+disp('Problem 1');
+%Initiation
+I   = 10;               %(A)
+mu0 = 4*pi*10^(-7);     %(H/m)
+a   = 0.005;            %(m)
+
+lx=100;                 %size of x
+ly=100;                 %size of y
+x = linspace(-3*a,3*a,lx);
+y = linspace(-3*a,3*a,ly);
+[X,Y] = meshgrid(x,y);
+
+Bx = zeros(lx,ly);
+By = zeros(lx,ly);
+
+for i=1:lx
+    for j=1:ly
+        cond = sqrt(x(i)^2+y(j)^2); %condition for piecewise function
+        if cond<a
+            Bx(i,j) = (mu0*I/(2*pi*a^2))*cond*(-(y(j)/cond));
+            By(i,j) = (mu0*I/(2*pi*a^2))*cond*(x(i)/cond);
+        else
+            Bx(i,j) = (mu0*I/(2*pi))*(1/cond)*(-(y(j)/cond));
+            By(i,j) = (mu0*I/(2*pi))*(1/cond)*(x(i)/cond);
+        end %if
+    end %for
+end %for
+
+%1-a
+disp('1-a');
+%plot
+%Bx
+figure(1);
+subplot(1,2,1);
+pcolor(X,Y,Bx);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel('x');
+ylabel('y');
+title('B_x');
+colorbar
+shading flat
+hold on
+%By
+figure(1)
+subplot(1,2,2)
+pcolor(X,Y,By);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel('x');
+ylabel('y');
+title('B_y');
+colorbar
+shading flat
+
+%1-b
+disp('1-b')
+figure(2)
+quiver(X,Y,Bx',By');
+title('B Quiver plot');
+
+%1-c
+disp('1-c')
+dx=x(2)-x(1);
+dy=y(2)-y(1);
+gradBx=zeros(size(Bx));
+gradBy=zeros(size(By));
+
+Bx=Bx';
+for i=1:lx      %Forward Difference
+    gradBx(1,i)=(Bx(2,i)-Bx(1,i))/dy;                   %dBx/dy
+    gradBy(1,i)=(By(2,i)-By(1,i))/dx;                   %dBy/dx
+end
+
+
+for j=1:ly      %Centered Difference
+    for i=2:lx-1
+        gradBx(i,j)=(Bx(i+1,j)-Bx(i-1,j))/2/dy;         %dBx/dy
+        gradBy(i,j)=(By(i+1,j)-By(i-1,j))/2/dx;         %dBy/dx
+    end %for
+end %for
+
+for i=1:lx      %Backward difference
+    gradBx(lx,i)=(Bx(lx,i)-Bx(lx-1,i))/dy;              %dBx/dy
+    gradBy(lx,i)=(By(lx,i)-By(lx-1,i))/dx;              %dBy/dx
+end
+
+curlB = gradBy-gradBx;
+figure(3)
+subplot(1,2,1)
+pcolor(X,Y,curlB);
+xlabel('x');
+ylabel('y');
+title('\nabla x B');
+colorbar
+shading flat
+
+curlM = curl(X,Y,Bx,By');
+figure(3)
+subplot(1,2,2)
+pcolor(X,Y,curlM);
+xlabel('x');
+ylabel('y');
+title('MATLAB built-in \nabla x B');
+colorbar
+shading flat
+
+%1-d
+disp('1-d')
+%% Problem 2
+disp('Problem 2')
+%Initiation
+Q = 1;              %(C)
+a = 1;              %(m)
+Eps0 = 8.854*10^-12;%(F/m)
+
+lx = 100;                 %size of x
+ly = 100;                 %size of y
+lz = 100;                 %size of z
+x = linspace(-3*a,3*a,lx);
+y = linspace(-3*a,3*a,ly);
+z = linspace(-3*a,3*a,lz);
+
+%2-a
+disp('2-a');
+phi=zeros(lx,ly,lz);
+[X,Y] = meshgrid(x,y);
+
+for i=1:lx
+    for j=1:ly
+        for k=1:lz
+            cond = sqrt(x(i)^2+y(j)^2+z(k)^2); %condition for piecewise function
+            if cond<a
+                phi(i,j,k) = Q/(4*pi*Eps0*a)-(Q/(8*pi*Eps0*a^3))*(x(i)^2 + y(j)^2 + z(k)^2 -a^2);
+            else
+                phi(i,j,k) = Q/(4*pi*Eps0*cond);
+            end %if
+        end%for
+    end%for
+end%for
+figure(5)
+pcolor(X,Y,phi(:,:,end/2));
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+set(gca,'FontSize',15);
+xlabel('x');
+ylabel('y');
+title('\Phi');
+colorbar
+shading flat
+
+%2-b
+disp('2-b')
+%Laplacian
+dx = x(2)-x(1);
+dy = y(2)-y(1);
+dz = z(2)-z(1);
+
+f=phi;
+g=phi;
+h=phi;
+
+for l=1:2
+    %x-derivative part of the divergence
+    divx=zeros(size(f));
+    divx(1,:,:)=(f(2,:,:)-f(1,:,:))/dx;
+    for i=2:lx-1
+        divx(i,:,:)=(f(i+1,:,:)-f(i-1,:,:))/2/dx;
+    end %for
+    divx(lx,:,:)=(f(lx,:,:)-f(lx-1,:,:))/dx;
+    
+    %y-derivative part of the divergence
+    divy=zeros(size(g));
+    divy(:,1,:)=(g(:,2,:)-g(:,1,:))/dy;
+    for j=2:ly-1
+        divy(:,j,:)=(g(:,j+1,:)-g(:,j-1,:))/2/dy;
+    end %for
+    divy(:,ly,:)=(g(:,ly,:)-g(:,ly-1,:))/dy;
+    
+    %z-derivative part of the divergence
+    divz=zeros(size(h));
+    divz(:,:,1)=(h(:,:,2)-h(:,:,1))/dz;
+    for k=2:lz-1
+        divz(:,:,k)=(h(:,:,k+1)-h(:,:,k-1))/2/dz;
+    end %for
+    divz(:,:,lz)=(h(:,:,lz)-h(:,:,lz-1))/dz;
+    f=divx;
+    g=divy;
+    h=divz;
+end
+
+Laplace=divx+divy+divz;    %this is really laplacian b/c input is gradient
+
+figure(6);
+surface(X,Y,Laplace(:,:,end/2));
+set(gca,'FontSize',15);
+xlabel('x');
+ylabel('y');
+title('Laplacian(\Phi)');
+colorbar;
+shading flat
+
+%% Problem 3
+disp('Problem 3')
+%3-a
+disp('3-a')
+int=0;
+intg = phi.*Laplace;
+for i=1:lx-1
+    for j=1:ly-1
+        for k=1:lz-1
+            int= int+(1/8)*(intg(i,j,k)+intg(i+1,j,k)+intg(i,j+1,k)+...
+                intg(i,j,k+1)+intg(i+1,j+1,k)+intg(i+1,j,k+1)+intg(i,j+1,k+1)+...
+                intg(i+1,j+1,k+1))*Eps0*dx*dy*dz;
+        end %for
+    end %for
+end %for
+W=-0.5*int;
+W=W/10^9;
+
+fprintf('W = %.2f GJ\n\n',W);
+
+
+%% Problem 4
+disp('Problem 4')
+%4-a
+disp('4-a');
+
+##### SOURCE END #####
+--></body></html>

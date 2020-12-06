@@ -9,6 +9,7 @@ clearvars
 close all
 %% Problem 1
 
+disp('Problem 1');
 %Initiation
 I   = 10;               %(A)
 mu0 = 4*pi*10^(-7);     %(H/m)
@@ -37,6 +38,7 @@ for i=1:lx
 end %for
 
 %1-a
+disp('1-a');
 %plot
 %Bx
 figure(1);
@@ -63,12 +65,13 @@ colorbar
 shading flat
 
 %1-b
+disp('1-b')
 figure(2)
-
 quiver(X,Y,Bx',By');
 title('B Quiver plot');
 
 %1-c
+disp('1-c')
 dx=x(2)-x(1);
 dy=y(2)-y(1);
 gradBx=zeros(size(Bx));
@@ -113,10 +116,10 @@ title('MATLAB built-in \nabla x B');
 colorbar
 shading flat
 
-%d
-
+%1-d
+disp('1-d')
 %% Problem 2
-
+disp('Problem 2')
 %Initiation
 Q = 1;              %(C)
 a = 1;              %(m)
@@ -129,6 +132,8 @@ x = linspace(-3*a,3*a,lx);
 y = linspace(-3*a,3*a,ly);
 z = linspace(-3*a,3*a,lz);
 
+%2-a
+disp('2-a');
 phi=zeros(lx,ly,lz);
 [X,Y] = meshgrid(x,y);
 
@@ -155,6 +160,8 @@ title('\Phi');
 colorbar
 shading flat
 
+%2-b
+disp('2-b')
 %Laplacian
 dx = x(2)-x(1);
 dy = y(2)-y(1);
@@ -193,10 +200,10 @@ for l=1:2
     h=divz;
 end
 
-div=divx+divy+divz;    %this is really laplacian b/c input is gradient
+Laplace=divx+divy+divz;    %this is really laplacian b/c input is gradient
 
 figure(6);
-surface(X,Y,div(:,:,end/2));
+surface(X,Y,Laplace(:,:,end/2));
 set(gca,'FontSize',15);
 xlabel('x');
 ylabel('y');
@@ -205,6 +212,29 @@ colorbar;
 shading flat
 
 %% Problem 3
+disp('Problem 3')
+%3-a
+disp('3-a')
+int=0;
+intg = phi.*Laplace;
+for i=1:lx-1
+    for j=1:ly-1
+        for k=1:lz-1
+            int= int+(1/8)*(intg(i,j,k)+intg(i+1,j,k)+intg(i,j+1,k)+...
+                intg(i,j,k+1)+intg(i+1,j+1,k)+intg(i+1,j,k+1)+intg(i,j+1,k+1)+...
+                intg(i+1,j+1,k+1))*Eps0*dx*dy*dz;
+        end %for
+    end %for
+end %for
+W=-0.5*int;
+W=W/10^9;
+
+fprintf('W = %.2f GJ\n\n',W);
 
 
 %% Problem 4
+disp('Problem 4')
+%4-a
+disp('4-a');
+r0=2*a;
+r=r0*(cos(phi)+sin(phi));

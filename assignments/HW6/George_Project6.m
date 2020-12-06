@@ -13,6 +13,23 @@ a = 0.01;           %(m)
 l = a/5;            %(m)
 xprime = -9*a/10;   %(m)
 xdprime = 9*a/10;   %(m)
+Eps0 = 8.854*10^-12;%(F/m)
+
+n=100;
+x=linspace(-a,a,n);
+
+%1-a
+disp('1-a');
+Eps = Eps0*10*(tanh((x-xprime)/l)-tanh((x-xdprime)/l));
+
+%plot
+figure(1)
+plot(x,Eps);
+set(gca,'FontSize',15);
+xlabel('x');
+ylabel('\epsilon');
+title('Variation of Dielectric Function')
+
 
 
 
