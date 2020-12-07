@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>George_Project5</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-04"><meta name="DC.source" content="George_Project5.m"><style type="text/css">
+      --><title>George_Project5</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-06"><meta name="DC.source" content="George_Project5.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -109,7 +109,7 @@ disp(<span class="string">'1-a'</span>);
 <span class="comment">%Bx</span>
 figure(1);
 subplot(1,2,1);
-pcolor(X,Y,Bx);
+pcolor(X,Y,Bx');
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
 xlabel(<span class="string">'x'</span>);
@@ -121,7 +121,7 @@ hold <span class="string">on</span>
 <span class="comment">%By</span>
 figure(1)
 subplot(1,2,2)
-pcolor(X,Y,By);
+pcolor(X,Y,By');
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
 xlabel(<span class="string">'x'</span>);
@@ -133,6 +133,9 @@ shading <span class="string">flat</span>
 <span class="comment">%1-b</span>
 disp(<span class="string">'1-b'</span>)
 figure(2)
+pcolor(X,Y,Bx+By)
+shading <span class="string">flat</span>
+hold <span class="string">on</span>
 quiver(X,Y,Bx',By');
 title(<span class="string">'B Quiver plot'</span>);
 
@@ -184,12 +187,46 @@ shading <span class="string">flat</span>
 
 <span class="comment">%1-d</span>
 disp(<span class="string">'1-d'</span>)
+
+<span class="comment">%Analytical</span>
+<span class="keyword">for</span> i=1:lx
+    <span class="keyword">for</span> j=1:ly
+        cond = sqrt(x(i)^2+y(j)^2); <span class="comment">%condition for piecewise function</span>
+        <span class="keyword">if</span> cond&lt;a
+            gradBxA(i,j) = -(mu0*I/(2*pi*a^2));
+            gradByA(i,j) = (mu0*I/(2*pi*a^2));
+        <span class="keyword">else</span>
+            gradBxA(i,j) = -(mu0*I/(2*pi))*(x(i)^2-y(j)^2)/(x(i)^2+y(j)^2)^2;
+            gradByA(i,j) = (mu0*I/(2*pi))*(-x(i)^2+y(j)^2)/(x(i)^2+y(j)^2)^2;
+        <span class="keyword">end</span> <span class="comment">%if</span>
+    <span class="keyword">end</span> <span class="comment">%for</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+CurlA=gradByA-gradBxA;
+
+figure(4)
+subplot(1,2,1)
+pcolor(X,Y,CurlA);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'\nabla x B Analytical'</span>);
+colorbar
+shading <span class="string">flat</span>
+
+figure(4)
+subplot(1,2,2)
+pcolor(X,Y,curlM);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'MATLAB built-in \nabla x B'</span>);
+colorbar
+shading <span class="string">flat</span>
 </pre><pre class="codeoutput">Problem 1
 1-a
 1-b
 1-c
 1-d
-</pre><img vspace="5" hspace="5" src="George_Project5_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_02.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_03.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput">disp(<span class="string">'Problem 2'</span>)
+</pre><img vspace="5" hspace="5" src="George_Project5_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_02.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_03.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_04.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput">disp(<span class="string">'Problem 2'</span>)
 <span class="comment">%Initiation</span>
 Q = 1;              <span class="comment">%(C)</span>
 a = 1;              <span class="comment">%(m)</span>
@@ -273,17 +310,45 @@ h=phi;
 Laplace=divx+divy+divz;    <span class="comment">%this is really laplacian b/c input is gradient</span>
 
 figure(6);
+subplot(1,2,1)
 surface(X,Y,Laplace(:,:,end/2));
 set(gca,<span class="string">'FontSize'</span>,15);
 xlabel(<span class="string">'x'</span>);
 ylabel(<span class="string">'y'</span>);
-title(<span class="string">'Laplacian(\Phi)'</span>);
+title(<span class="string">'Laplacian(\Phi) Numerical'</span>);
+colorbar;
+shading <span class="string">flat</span>
+
+<span class="comment">%2-c</span>
+laplacaA=zeros(lx,ly,lz);
+<span class="comment">%Analytical</span>
+<span class="keyword">for</span> i=1:lx
+    <span class="keyword">for</span> j=1:ly
+        <span class="keyword">for</span> k=1:lz
+            cond = sqrt(x(i)^2+y(j)^2+z(k)^2); <span class="comment">%condition for piecewise function</span>
+            <span class="keyword">if</span> cond&lt;a
+                laplaceA(i,j,k) = -(3*Q/(4*pi*Eps0*a^3));
+            <span class="keyword">else</span>
+                laplaceA(i,j,k) = -Q/(pi*Eps0)*(1/(x(i)^2+y(j)^2+z(k)^2)^2);
+            <span class="keyword">end</span> <span class="comment">%if</span>
+        <span class="keyword">end</span><span class="comment">%for</span>
+    <span class="keyword">end</span><span class="comment">%for</span>
+<span class="keyword">end</span><span class="comment">%for</span>
+
+<span class="comment">%plot</span>
+figure(6);
+subplot(1,2,2)
+surface(X,Y,laplaceA(:,:,end/2));
+set(gca,<span class="string">'FontSize'</span>,15);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'Laplacian(\Phi) Analytical'</span>);
 colorbar;
 shading <span class="string">flat</span>
 </pre><pre class="codeoutput">Problem 2
 2-a
 2-b
-</pre><img vspace="5" hspace="5" src="George_Project5_04.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_05.png" alt=""> <h2 id="4">Problem 3</h2><pre class="codeinput">disp(<span class="string">'Problem 3'</span>)
+</pre><img vspace="5" hspace="5" src="George_Project5_05.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_06.png" alt=""> <h2 id="4">Problem 3</h2><pre class="codeinput">disp(<span class="string">'Problem 3'</span>)
 <span class="comment">%3-a</span>
 disp(<span class="string">'3-a'</span>)
 int=0;
@@ -308,9 +373,99 @@ W = 5.40 GJ
 </pre><h2 id="5">Problem 4</h2><pre class="codeinput">disp(<span class="string">'Problem 4'</span>)
 <span class="comment">%4-a</span>
 disp(<span class="string">'4-a'</span>);
+phi=linspace(0,2*pi,100);
+r0 = 2*a;
+rx = r0*cos(phi);
+ry = r0*sin(phi);
+
+<span class="comment">%plot</span>
+figure(7)
+subplot(2,2,1)
+<span class="comment">%Bx with r</span>
+pcolor(X,Y,Bx);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'B_x'</span>);
+colorbar
+shading <span class="string">flat</span>
+hold <span class="string">on</span>
+plot(rx,ry,<span class="string">'w'</span>)
+<span class="comment">%By with r</span>
+subplot(2,2,2)
+pcolor(X,Y,By');
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+title(<span class="string">'B_y'</span>);
+colorbar
+shading <span class="string">flat</span>
+hold <span class="string">on</span>
+plot(rx,ry,<span class="string">'w'</span>)
+<span class="comment">%Bx along r</span>
+subplot(2,2,3);
+plot(phi,r0*sin(phi))
+ylabel(<span class="string">'B_x'</span>);
+xlabel(<span class="string">'\Phi [rad]'</span>)
+title(<span class="string">'B_x along r'</span>);
+<span class="comment">%By along r</span>
+subplot(2,2,4);
+plot(phi,r0*cos(phi))
+ylabel(<span class="string">'B_y'</span>);
+xlabel(<span class="string">'\Phi [rad]'</span>)
+title(<span class="string">'B_y along r'</span>);
+
+<span class="comment">%4-c</span>
+dphi = phi(2)-phi(1);
+
+gradrx=zeros(size(rx));
+gradry=zeros(size(ry));
+
+<span class="comment">%Forward Difference</span>
+gradrx(i)=(rx(2)-rx(1))/dphi;                   <span class="comment">%drx/dphi</span>
+gradry(i)=(ry(2)-ry(1))/dphi;                   <span class="comment">%dry/dphi</span>
+
+
+<span class="comment">%Centered Difference</span>
+<span class="keyword">for</span> i=2:lx-1
+    gradrx(i)=(rx(i+1)-rx(i-1))/2/dphi;         <span class="comment">%drx/dphi</span>
+    gradry(i)=(ry(i+1)-ry(i-1))/2/dphi;         <span class="comment">%dry/dphi</span>
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="comment">%Backward difference</span>
+gradrx(lx)=(rx(lx)-rx(lx-1))/dphi;              <span class="comment">%drx/dphi</span>
+gradry(lx)=(ry(lx)-ry(lx-1))/dphi;              <span class="comment">%dry/dphi</span>
+
+<span class="comment">%plot</span>
+figure(8)
+subplot(1,2,1);
+plot(gradrx,gradry,<span class="string">'LineWidth'</span>,2);
+title(<span class="string">'Tangent vector to the path r (Numerical)'</span>);
+xlabel(<span class="string">'dx/d\phi'</span>);
+ylabel(<span class="string">'dy/d\phi'</span>);
+subplot(1,2,2)
+plot(r0*sin(phi),-r0*cos(phi),<span class="string">'LineWidth'</span>,2);
+title(<span class="string">'Tangent vector to the path r (Analytical)'</span>);
+xlabel(<span class="string">'dx/d\phi'</span>);
+ylabel(<span class="string">'dy/d\phi'</span>);
+
+gradr=gradrx+gradry;
+gradl=gradr.*dphi;
+
+int=0;
+intg = (rx+ry);
+
+<span class="keyword">for</span> i=1:lx-1
+    int= int+(1/2)*(intg(i)+intg(i+1))*gradr(i);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+I=int;
+fprintf(<span class="string">'I = %.2f A'</span>, I);
 </pre><pre class="codeoutput">Problem 4
 4-a
-</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+I = 8.43 A</pre><img vspace="5" hspace="5" src="George_Project5_07.png" alt=""> <img vspace="5" hspace="5" src="George_Project5_08.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Introduction
 %Aldous George
@@ -357,7 +512,7 @@ disp('1-a');
 %Bx
 figure(1);
 subplot(1,2,1);
-pcolor(X,Y,Bx);
+pcolor(X,Y,Bx');
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
 xlabel('x');
@@ -369,7 +524,7 @@ hold on
 %By
 figure(1)
 subplot(1,2,2)
-pcolor(X,Y,By);
+pcolor(X,Y,By');
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
 xlabel('x');
@@ -381,6 +536,9 @@ shading flat
 %1-b
 disp('1-b')
 figure(2)
+pcolor(X,Y,Bx+By)
+shading flat
+hold on
 quiver(X,Y,Bx',By');
 title('B Quiver plot');
 
@@ -432,6 +590,41 @@ shading flat
 
 %1-d
 disp('1-d')
+
+%Analytical
+for i=1:lx
+    for j=1:ly
+        cond = sqrt(x(i)^2+y(j)^2); %condition for piecewise function
+        if cond<a
+            gradBxA(i,j) = -(mu0*I/(2*pi*a^2));
+            gradByA(i,j) = (mu0*I/(2*pi*a^2));
+        else
+            gradBxA(i,j) = -(mu0*I/(2*pi))*(x(i)^2-y(j)^2)/(x(i)^2+y(j)^2)^2;
+            gradByA(i,j) = (mu0*I/(2*pi))*(-x(i)^2+y(j)^2)/(x(i)^2+y(j)^2)^2;
+        end %if
+    end %for
+end %for
+
+CurlA=gradByA-gradBxA;
+
+figure(4)
+subplot(1,2,1)
+pcolor(X,Y,CurlA);
+xlabel('x');
+ylabel('y');
+title('\nabla x B Analytical');
+colorbar
+shading flat
+
+figure(4)
+subplot(1,2,2)
+pcolor(X,Y,curlM);
+xlabel('x');
+ylabel('y');
+title('MATLAB built-in \nabla x B');
+colorbar
+shading flat
+
 %% Problem 2
 disp('Problem 2')
 %Initiation
@@ -517,11 +710,39 @@ end
 Laplace=divx+divy+divz;    %this is really laplacian b/c input is gradient
 
 figure(6);
+subplot(1,2,1)
 surface(X,Y,Laplace(:,:,end/2));
 set(gca,'FontSize',15);
 xlabel('x');
 ylabel('y');
-title('Laplacian(\Phi)');
+title('Laplacian(\Phi) Numerical');
+colorbar;
+shading flat
+
+%2-c
+laplacaA=zeros(lx,ly,lz);
+%Analytical
+for i=1:lx
+    for j=1:ly
+        for k=1:lz
+            cond = sqrt(x(i)^2+y(j)^2+z(k)^2); %condition for piecewise function
+            if cond<a
+                laplaceA(i,j,k) = -(3*Q/(4*pi*Eps0*a^3));
+            else
+                laplaceA(i,j,k) = -Q/(pi*Eps0)*(1/(x(i)^2+y(j)^2+z(k)^2)^2);
+            end %if
+        end%for
+    end%for
+end%for
+
+%plot
+figure(6);
+subplot(1,2,2)
+surface(X,Y,laplaceA(:,:,end/2));
+set(gca,'FontSize',15);
+xlabel('x');
+ylabel('y');
+title('Laplacian(\Phi) Analytical');
 colorbar;
 shading flat
 
@@ -550,6 +771,96 @@ fprintf('W = %.2f GJ\n\n',W);
 disp('Problem 4')
 %4-a
 disp('4-a');
+phi=linspace(0,2*pi,100);
+r0 = 2*a;
+rx = r0*cos(phi);
+ry = r0*sin(phi);
+
+%plot
+figure(7)
+subplot(2,2,1)
+%Bx with r
+pcolor(X,Y,Bx);
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel('x');
+ylabel('y');
+title('B_x');
+colorbar
+shading flat
+hold on
+plot(rx,ry,'w')
+%By with r
+subplot(2,2,2)
+pcolor(X,Y,By');
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel('x');
+ylabel('y');
+title('B_y');
+colorbar
+shading flat
+hold on
+plot(rx,ry,'w')
+%Bx along r
+subplot(2,2,3);
+plot(phi,r0*sin(phi))
+ylabel('B_x');
+xlabel('\Phi [rad]')
+title('B_x along r');
+%By along r
+subplot(2,2,4);
+plot(phi,r0*cos(phi))
+ylabel('B_y');
+xlabel('\Phi [rad]')
+title('B_y along r');
+
+%4-c
+dphi = phi(2)-phi(1);
+
+gradrx=zeros(size(rx));
+gradry=zeros(size(ry));
+
+%Forward Difference
+gradrx(i)=(rx(2)-rx(1))/dphi;                   %drx/dphi
+gradry(i)=(ry(2)-ry(1))/dphi;                   %dry/dphi
+
+
+%Centered Difference
+for i=2:lx-1
+    gradrx(i)=(rx(i+1)-rx(i-1))/2/dphi;         %drx/dphi
+    gradry(i)=(ry(i+1)-ry(i-1))/2/dphi;         %dry/dphi
+end %for
+
+%Backward difference
+gradrx(lx)=(rx(lx)-rx(lx-1))/dphi;              %drx/dphi
+gradry(lx)=(ry(lx)-ry(lx-1))/dphi;              %dry/dphi
+
+%plot
+figure(8)
+subplot(1,2,1);
+plot(gradrx,gradry,'LineWidth',2);
+title('Tangent vector to the path r (Numerical)');
+xlabel('dx/d\phi');
+ylabel('dy/d\phi');
+subplot(1,2,2)
+plot(r0*sin(phi),-r0*cos(phi),'LineWidth',2);
+title('Tangent vector to the path r (Analytical)');
+xlabel('dx/d\phi');
+ylabel('dy/d\phi');
+
+gradr=gradrx+gradry;
+gradl=gradr.*dphi;
+
+int=0;
+intg = (rx+ry);
+
+for i=1:lx-1
+    int= int+(1/2)*(intg(i)+intg(i+1))*gradr(i);
+end %for
+
+I=int;
+fprintf('I = %.2f A', I);
 
 ##### SOURCE END #####
 --></body></html>

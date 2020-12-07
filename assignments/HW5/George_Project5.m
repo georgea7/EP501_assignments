@@ -43,7 +43,7 @@ disp('1-a');
 %Bx
 figure(1);
 subplot(1,2,1);
-pcolor(X,Y,Bx);
+pcolor(X,Y,Bx');
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
 xlabel('x');
@@ -55,7 +55,7 @@ hold on
 %By
 figure(1)
 subplot(1,2,2)
-pcolor(X,Y,By);
+pcolor(X,Y,By');
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
 xlabel('x');
@@ -67,6 +67,9 @@ shading flat
 %1-b
 disp('1-b')
 figure(2)
+pcolor(X,Y,Bx+By)
+shading flat
+hold on
 quiver(X,Y,Bx',By');
 title('B Quiver plot');
 
@@ -299,13 +302,15 @@ fprintf('W = %.2f GJ\n\n',W);
 disp('Problem 4')
 %4-a
 disp('4-a');
+phi=linspace(0,2*pi,100);
 r0 = 2*a;
 rx = r0*cos(phi);
 ry = r0*sin(phi);
 
 %plot
 figure(7)
-subplot(1,2,1)
+subplot(2,2,1)
+%Bx with r
 pcolor(X,Y,Bx);
 xlim([-3*a,3*a]);
 ylim([-3*a,3*a]);
@@ -315,7 +320,31 @@ title('B_x');
 colorbar
 shading flat
 hold on
-% plot(x,rx,'w')
+plot(rx,ry,'w')
+%By with r
+subplot(2,2,2)
+pcolor(X,Y,By');
+xlim([-3*a,3*a]);
+ylim([-3*a,3*a]);
+xlabel('x');
+ylabel('y');
+title('B_y');
+colorbar
+shading flat
+hold on
+plot(rx,ry,'w')
+%Bx along r
+subplot(2,2,3);
+plot(phi,r0*sin(phi))
+ylabel('B_x');
+xlabel('\Phi [rad]')
+title('B_x along r');
+%By along r
+subplot(2,2,4);
+plot(phi,r0*cos(phi))
+ylabel('B_y');
+xlabel('\Phi [rad]')
+title('B_y along r');
 
 %4-c
 dphi = phi(2)-phi(1);
@@ -323,33 +352,43 @@ dphi = phi(2)-phi(1);
 gradrx=zeros(size(rx));
 gradry=zeros(size(ry));
 
-for i=1:lx      %Forward Difference
-    gradrx(1,i)=(rx(2,i)-rx(1,i))/dphi;                   %drx/dphi
-    gradry(1,i)=(ry(2,i)-ry(1,i))/dphi;                   %dry/dphi
-end
+%Forward Difference
+gradrx(i)=(rx(2)-rx(1))/dphi;                   %drx/dphi
+gradry(i)=(ry(2)-ry(1))/dphi;                   %dry/dphi
 
-for j=1:ly      %Centered Difference
-    for i=2:lx-1
-        gradrx(i,j)=(rx(i+1,j)-rx(i-1,j))/2/dphi;         %drx/dphi
-        gradry(i,j)=(ry(i+1,j)-ry(i-1,j))/2/dphi;         %dry/dphi
-    end %for
+
+%Centered Difference
+for i=2:lx-1
+    gradrx(i)=(rx(i+1)-rx(i-1))/2/dphi;         %drx/dphi
+    gradry(i)=(ry(i+1)-ry(i-1))/2/dphi;         %dry/dphi
 end %for
 
-for i=1:lx      %Backward difference
-    gradrx(lx,i)=(rx(lx,i)-rx(lx-1,i))/dphi;              %drx/dphi
-    gradry(lx,i)=(ry(lx,i)-ry(lx-1,i))/dphi;              %dry/dphi
-end
+%Backward difference
+gradrx(lx)=(rx(lx)-rx(lx-1))/dphi;              %drx/dphi
+gradry(lx)=(ry(lx)-ry(lx-1))/dphi;              %dry/dphi
+
+%plot
+figure(8)
+subplot(1,2,1);
+plot(gradrx,gradry,'LineWidth',2);
+title('Tangent vector to the path r (Numerical)');
+xlabel('dx/d\phi');
+ylabel('dy/d\phi');
+subplot(1,2,2)
+plot(r0*sin(phi),-r0*cos(phi),'LineWidth',2);
+title('Tangent vector to the path r (Analytical)');
+xlabel('dx/d\phi');
+ylabel('dy/d\phi');
 
 gradr=gradrx+gradry;
 gradl=gradr.*dphi;
 
 int=0;
-intg = r.*gradl;
+intg = (rx+ry);
 
 for i=1:lx-1
-    
-    int= int+(1/8)*(intg(i,j,k)+intg(i+1,j,k)+intg(i,j+1,k)+...
-        intg(i,j,k+1)+intg(i+1,j+1,k)+intg(i+1,j,k+1)+intg(i,j+1,k+1)+...
-        intg(i+1,j+1,k+1))*Eps0*dx*dy*dz;
+    int= int+(1/2)*(intg(i)+intg(i+1))*gradr(i)*dphi;
 end %for
 
+I=int;
+fprintf('I = %.2f A', I);
