@@ -63,11 +63,14 @@ ylabel('\Psi(x) [V]')
 title('Electrostatic Potential')
 
 %1-e
-gradEps=zeros(lx);
+disp('1-e')
+gradEps=zeros(1,lx);
 for i=1:lx-2
     gradEps(i) = (-Eps(i+2)+ 4*Eps(i+1)-3*Eps(i))/(2/dx);
 end
-gradEps(lx-1) = (-Eps(lx) +3*Eps(lx-1)-3*Eps(lx-2))/2/dx;
+gradEps(lx-1) =(3*Eps(lx-1)-4*Eps(lx-2)+Eps(lx-3))/2/dx;
+gradEps(lx) = (3*Eps(lx) -4*Eps(lx-1)+Eps(lx-2))/2/dx;
+
 
 M2mod = zeros(lx);
 M2mod(1,1) = -1/dx;
@@ -89,6 +92,7 @@ ylabel('\Psi(x) [V]')
 title('Electrostatic Potential')
 legend('First Order', 'Second order')
 
+fprintf('The second order is clearly not working corrrectly. I tried troubleshooting, but I couldnt figure out \n what I''m doing wrong\n\n');
 %% Problem 2
 
 %Initiation
@@ -245,12 +249,16 @@ ylabel(ax(2),'v_y');
 title('RK2 t=25');
 
 fprintf('As seen in plot, when timestep is set to 25 RK 4 still manages to accurately solve the problem ');
-fprintf('\n while RK2 has failed. Therefore, RK4 is better since it can solve with fewer timesteps.')
+fprintf('\n while RK2 has failed. Therefore, RK4 is better since it can solve with fewer timesteps.\n')
 
 %2-c
+disp('2-c')
+y=linspace(0,5,100);
+By=zeros(1,100);
 By=B*(1+0.5*(y));
 omega=q*By/m;
-t=linspace(tmin,tmax,300);
+tmax=5*2*pi/abs(omega(1));
+t=linspace(tmin,tmax,100);
 dt=t(2)-t(1);
 lt=numel(t);
 %RK4
@@ -277,11 +285,5 @@ for n=2:lt
 end %for
 
 figure(7);
-subplot(1,2,1)
-ax=plotyy(t,Vx,t,Vy);
-set(ax(1),'FontSize',12);
-set(ax(2),'FontSize',12);
-xlabel('time (s)');
-ylabel(ax(1),'v_x');
-ylabel(ax(2),'v_y');
-title('RK4')
+plot(Vx,Vy);
+fprintf('The plot is clearly not trochoidal, and I''m not sure why'); 

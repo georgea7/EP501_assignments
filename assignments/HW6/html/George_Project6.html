@@ -1,0 +1,657 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>George_Project6</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-06"><meta name="DC.source" content="George_Project6.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Introduction</a></li><li><a href="#2">Problem 1</a></li><li><a href="#3">Problem 2</a></li></ul></div><h2 id="1">Introduction</h2><pre class="codeinput"><span class="comment">%Aldous George</span>
+<span class="comment">%EP 501</span>
+<span class="comment">%Project 6</span>
+<span class="comment">%This code contains excerpts from codes provided by Dr. Zettergen.</span>
+<span class="comment">%https://github.com/Zettergren-Courses/EP501_matlab/</span>
+clc
+clearvars
+close <span class="string">all</span>
+</pre><h2 id="2">Problem 1</h2><pre class="codeinput"><span class="comment">%Initiation</span>
+a = 0.01;           <span class="comment">%(m)</span>
+l = a/5;            <span class="comment">%(m)</span>
+xprime = -9*a/10;   <span class="comment">%(m)</span>
+xdprime = 9*a/10;   <span class="comment">%(m)</span>
+Eps0 = 8.854*10^-12;<span class="comment">%(F/m)</span>
+
+lx = 20;
+x = linspace(-a,a,lx);
+
+<span class="comment">%1-a</span>
+disp(<span class="string">'1-a'</span>);
+Eps = Eps0*10*(tanh((x-xprime)/l)-tanh((x-xdprime)/l));
+
+<span class="comment">%plot</span>
+figure(1)
+plot(x,Eps);
+set(gca,<span class="string">'FontSize'</span>,15);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'\epsilon'</span>);
+title(<span class="string">'Variation of Dielectric Function'</span>)
+
+<span class="comment">%1-b</span>
+gradeps = zeros(1,lx);
+dx = x(2)-x(1);
+gradeps(1) = (Eps(2)-Eps(1))/dx;
+<span class="keyword">for</span> i = 2:lx-1
+    gradeps(i) = (Eps(i+1)-Eps(i-1))/2/dx;
+<span class="keyword">end</span>
+gradeps(lx) = (Eps(lx)-Eps(lx-1))/dx;
+
+M2 = zeros(lx);
+M2(1,1) = -1/dx;
+M2(1,2) = 1/dx;
+<span class="keyword">for</span> i=2:lx-1
+   M2(i,i) = -2*Eps(i)/dx^2;
+   M2(i,i+1) = Eps(i)/dx^2 + gradeps(i)/2/dx;
+   M2(i,i-1) = Eps(i)/dx^2 - gradeps(i)/2/dx;
+<span class="keyword">end</span>
+M2(lx,lx) = 1;
+
+<span class="comment">%1-c</span>
+bc = zeros(lx,1);
+bc(1) = 1000;
+bc(lx) = 100;
+
+<span class="comment">%1-d</span>
+a = M2\bc;
+figure(2)
+plot(x,a);
+xlabel(<span class="string">'x [m]'</span>)
+ylabel(<span class="string">'\Psi(x) [V]'</span>)
+title(<span class="string">'Electrostatic Potential'</span>)
+
+<span class="comment">%1-e</span>
+disp(<span class="string">'1-e'</span>)
+gradEps=zeros(1,lx);
+<span class="keyword">for</span> i=1:lx-2
+    gradEps(i) = (-Eps(i+2)+ 4*Eps(i+1)-3*Eps(i))/(2/dx);
+<span class="keyword">end</span>
+gradEps(lx-1) =(3*Eps(lx-1)-4*Eps(lx-2)+Eps(lx-3))/2/dx;
+gradEps(lx) = (3*Eps(lx) -4*Eps(lx-1)+Eps(lx-2))/2/dx;
+
+
+M2mod = zeros(lx);
+M2mod(1,1) = -1/dx;
+M2mod(1,2) = 1/dx;
+<span class="keyword">for</span> i=2:lx-1
+   M2mod(i,i) = -2*Eps(i)/dx^2;
+   M2mod(i,i+1) = Eps(i)/dx^2 + gradEps(i)/2/dx;
+   M2mod(i,i-1) = Eps(i)/dx^2 - gradEps(i)/2/dx;
+<span class="keyword">end</span>
+M2mod(lx,lx) = 1;
+a2 =M2mod\bc;
+
+figure(3)
+plot(x,a);
+hold <span class="string">on</span>
+plot(x,a2);
+xlabel(<span class="string">'x [m]'</span>)
+ylabel(<span class="string">'\Psi(x) [V]'</span>)
+title(<span class="string">'Electrostatic Potential'</span>)
+legend(<span class="string">'First Order'</span>, <span class="string">'Second order'</span>)
+
+fprintf(<span class="string">'The second order is clearly not working corrrectly. I tried troubleshooting, but I couldnt figure out \n what I''m doing wrong\n\n'</span>);
+</pre><pre class="codeoutput">1-a
+1-e
+The second order is clearly not working corrrectly. I tried troubleshooting, but I couldnt figure out 
+ what I'm doing wrong
+
+</pre><img vspace="5" hspace="5" src="George_Project6_01.png" alt=""> <img vspace="5" hspace="5" src="George_Project6_02.png" alt=""> <img vspace="5" hspace="5" src="George_Project6_03.png" alt=""> <h2 id="3">Problem 2</h2><pre class="codeinput"><span class="comment">%Initiation</span>
+m = 1.67*10^(-27);            <span class="comment">%(kg)</span>
+q = 1.6*10^(-19);             <span class="comment">%(C)</span>
+B = 50000*10^-9;                    <span class="comment">%(nT)</span>
+
+
+omega=q*B/m;    <span class="comment">%frequency of oscillation (can be shown via solution by hand gives a SHO)</span>
+tmin=0;
+tmax=2*2*pi/abs(omega);    <span class="comment">% follow particle for two oscillation periods</span>
+t=linspace(tmin,tmax,100);
+dt=t(2)-t(1);
+lt=numel(t);
+
+<span class="comment">%2-a</span>
+disp(<span class="string">'2-a'</span>);
+<span class="comment">%RK2</span>
+vx=zeros(1,lt);
+vy=zeros(1,lt);
+vx(1)=1e3;     <span class="comment">% vx initial conditions</span>
+vy(1)=1e3;     <span class="comment">% vy initial conditions</span>
+<span class="comment">% Loop for applying RK2 to a system of two equations</span>
+<span class="keyword">for</span> n=2:lt
+    <span class="comment">%step x and y components together, this is the half update</span>
+    vxhalf=vx(n-1)+dt/2*(omega*vy(n-1));
+    vyhalf=vy(n-1)-dt/2*(omega*vx(n-1));
+
+    <span class="comment">%now the full update</span>
+    vx(n)=vx(n-1)+dt*(omega*vyhalf);
+    vy(n)=vy(n-1)-dt*(omega*vxhalf);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="comment">%RK4</span>
+Vx=zeros(1,lt);
+Vy=zeros(1,lt);
+Vx(1)=1e3;     <span class="comment">% vx initial conditions</span>
+Vy(1)=1e3;     <span class="comment">% vy initial conditions</span>
+<span class="comment">% Loop for applying RK3 to a system of two equations</span>
+<span class="keyword">for</span> n=2:lt
+    k1x=dt*(omega*Vy(n-1));    <span class="comment">%k1 for the x differential equation</span>
+    k1y=-dt*(omega*Vx(n-1));    <span class="comment">%k1 for the y differential equation</span>
+
+    k2x=dt*omega*(Vy(n-1)+k1y/2);
+    k2y=-dt*omega*(Vx(n-1)+k1x/2);
+
+    k3x=dt*omega*(Vy(n-1)+k2y/2);
+    k3y=-dt*omega*(Vx(n-1)+k2x/2);
+
+    k4x=dt*omega*(Vy(n-1)+k3y);
+    k4y=-dt*omega*(Vx(n-1)+k3x);
+
+    Vx(n)=Vx(n-1)+1/6*(k1x+2*k2x+2*k3x+k4x);
+    Vy(n)=Vy(n-1)+1/6*(k1y+2*k2y+2*k3y+k4y);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+
+x=cumtrapz(t,vx);    <span class="comment">%Matlab built-in for accumulating an integral value</span>
+y=cumtrapz(t,vy);
+vz=1e3;
+z=vz*t;
+
+<span class="comment">% Plot velocity solutions</span>
+figure(4);
+subplot(1,2,1)
+ax=plotyy(t,Vx,t,Vy);
+set(ax(1),<span class="string">'FontSize'</span>,12);
+set(ax(2),<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'time (s)'</span>);
+ylabel(ax(1),<span class="string">'v_x'</span>);
+ylabel(ax(2),<span class="string">'v_y'</span>);
+title(<span class="string">'RK4 t=100'</span>);
+subplot(1,2,2)
+ax=plotyy(t,vx,t,vy);
+set(ax(1),<span class="string">'FontSize'</span>,12);
+set(ax(2),<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'time (s)'</span>);
+ylabel(ax(1),<span class="string">'v_x'</span>);
+ylabel(ax(2),<span class="string">'v_y'</span>);
+title(<span class="string">'RK2 t=100'</span>);
+
+
+<span class="comment">% Comet plot demo</span>
+figure(5);
+comet3(x,y,z)
+set(gca,<span class="string">'FontSize'</span>,20);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+zlabel(<span class="string">'z'</span>);
+
+<span class="comment">%2-b</span>
+disp(<span class="string">'2-b'</span>)
+
+t=linspace(tmin,tmax,25);
+dt=t(2)-t(1);
+lt=numel(t);
+
+<span class="comment">%RK2</span>
+vx=zeros(1,lt);
+vy=zeros(1,lt);
+vx(1)=1e3;     <span class="comment">% vx initial conditions</span>
+vy(1)=1e3;     <span class="comment">% vy initial conditions</span>
+<span class="comment">% Loop for applying RK2 to a system of two equations</span>
+<span class="keyword">for</span> n=2:lt
+    <span class="comment">%step x and y components together, this is the half update</span>
+    vxhalf=vx(n-1)+dt/2*(omega*vy(n-1));
+    vyhalf=vy(n-1)-dt/2*(omega*vx(n-1));
+
+    <span class="comment">%now the full update</span>
+    vx(n)=vx(n-1)+dt*(omega*vyhalf);
+    vy(n)=vy(n-1)-dt*(omega*vxhalf);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="comment">%RK4</span>
+Vx=zeros(1,lt);
+Vy=zeros(1,lt);
+Vx(1)=1e3;     <span class="comment">% vx initial conditions</span>
+Vy(1)=1e3;     <span class="comment">% vy initial conditions</span>
+<span class="comment">% Loop for applying RK3 to a system of two equations</span>
+<span class="keyword">for</span> n=2:lt
+    k1x=dt*(omega*Vy(n-1));    <span class="comment">%k1 for the x differential equation</span>
+    k1y=-dt*(omega*Vx(n-1));    <span class="comment">%k1 for the y differential equation</span>
+
+    k2x=dt*omega*(Vy(n-1)+k1y/2);
+    k2y=-dt*omega*(Vx(n-1)+k1x/2);
+
+    k3x=dt*omega*(Vy(n-1)+k2y/2);
+    k3y=-dt*omega*(Vx(n-1)+k2x/2);
+
+    k4x=dt*omega*(Vy(n-1)+k3y);
+    k4y=-dt*omega*(Vx(n-1)+k3x);
+
+    Vx(n)=Vx(n-1)+1/6*(k1x+2*k2x+2*k3x+k4x);
+    Vy(n)=Vy(n-1)+1/6*(k1y+2*k2y+2*k3y+k4y);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+<span class="comment">% Plot velocity solutions</span>
+figure(6);
+subplot(1,2,1)
+ax=plotyy(t,Vx,t,Vy);
+set(ax(1),<span class="string">'FontSize'</span>,12);
+set(ax(2),<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'time (s)'</span>);
+ylabel(ax(1),<span class="string">'v_x'</span>);
+ylabel(ax(2),<span class="string">'v_y'</span>);
+title(<span class="string">'RK4 t=25'</span>);
+subplot(1,2,2)
+ax=plotyy(t,vx,t,vy);
+set(ax(1),<span class="string">'FontSize'</span>,12);
+set(ax(2),<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'time (s)'</span>);
+ylabel(ax(1),<span class="string">'v_x'</span>);
+ylabel(ax(2),<span class="string">'v_y'</span>);
+title(<span class="string">'RK2 t=25'</span>);
+
+fprintf(<span class="string">'As seen in plot, when timestep is set to 25 RK 4 still manages to accurately solve the problem '</span>);
+fprintf(<span class="string">'\n while RK2 has failed. Therefore, RK4 is better since it can solve with fewer timesteps.\n'</span>)
+
+<span class="comment">%2-c</span>
+disp(<span class="string">'2-c'</span>)
+y=linspace(0,5,100);
+By=zeros(1,100);
+By=B*(1+0.5*(y));
+omega=q*By/m;
+tmax=5*2*pi/abs(omega(1));
+t=linspace(tmin,tmax,100);
+dt=t(2)-t(1);
+lt=numel(t);
+<span class="comment">%RK4</span>
+Vx=zeros(1,lt);
+Vy=zeros(1,lt);
+Vx(1)=1e3;     <span class="comment">% vx initial conditions</span>
+Vy(1)=1e3;     <span class="comment">% vy initial conditions</span>
+<span class="comment">% Loop for applying RK3 to a system of two equations</span>
+<span class="keyword">for</span> n=2:lt
+    k1x=dt*(omega(n-1)*Vy(n-1));    <span class="comment">%k1 for the x differential equation</span>
+    k1y=-dt*(omega(n-1)*Vx(n-1));    <span class="comment">%k1 for the y differential equation</span>
+
+    k2x=dt*omega(n-1)*(Vy(n-1)+k1y/2);
+    k2y=-dt*omega(n-1)*(Vx(n-1)+k1x/2);
+
+    k3x=dt*omega(n-1)*(Vy(n-1)+k2y/2);
+    k3y=-dt*omega(n-1)*(Vx(n-1)+k2x/2);
+
+    k4x=dt*omega(n-1)*(Vy(n-1)+k3y);
+    k4y=-dt*omega(n-1)*(Vx(n-1)+k3x);
+
+    Vx(n)=Vx(n-1)+1/6*(k1x+2*k2x+2*k3x+k4x);
+    Vy(n)=Vy(n-1)+1/6*(k1y+2*k2y+2*k3y+k4y);
+<span class="keyword">end</span> <span class="comment">%for</span>
+
+figure(7);
+plot(Vx,Vy);
+fprintf(<span class="string">'The plot is clearly not trochoidal, and I''m not sure why'</span>);
+</pre><pre class="codeoutput">2-a
+2-b
+As seen in plot, when timestep is set to 25 RK 4 still manages to accurately solve the problem 
+ while RK2 has failed. Therefore, RK4 is better since it can solve with fewer timesteps.
+2-c
+The plot is clearly not trochoidal, and I'm not sure why</pre><img vspace="5" hspace="5" src="George_Project6_04.png" alt=""> <img vspace="5" hspace="5" src="George_Project6_05.png" alt=""> <img vspace="5" hspace="5" src="George_Project6_06.png" alt=""> <img vspace="5" hspace="5" src="George_Project6_07.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Introduction
+%Aldous George
+%EP 501
+%Project 6
+%This code contains excerpts from codes provided by Dr. Zettergen.
+%https://github.com/Zettergren-Courses/EP501_matlab/
+clc
+clearvars
+close all
+%% Problem 1
+%Initiation
+a = 0.01;           %(m)
+l = a/5;            %(m)
+xprime = -9*a/10;   %(m)
+xdprime = 9*a/10;   %(m)
+Eps0 = 8.854*10^-12;%(F/m)
+
+lx = 20;
+x = linspace(-a,a,lx);
+
+%1-a
+disp('1-a');
+Eps = Eps0*10*(tanh((x-xprime)/l)-tanh((x-xdprime)/l));
+
+%plot
+figure(1)
+plot(x,Eps);
+set(gca,'FontSize',15);
+xlabel('x');
+ylabel('\epsilon');
+title('Variation of Dielectric Function')
+
+%1-b
+gradeps = zeros(1,lx);
+dx = x(2)-x(1);
+gradeps(1) = (Eps(2)-Eps(1))/dx;
+for i = 2:lx-1
+    gradeps(i) = (Eps(i+1)-Eps(i-1))/2/dx;
+end
+gradeps(lx) = (Eps(lx)-Eps(lx-1))/dx;
+
+M2 = zeros(lx);
+M2(1,1) = -1/dx;
+M2(1,2) = 1/dx;
+for i=2:lx-1
+   M2(i,i) = -2*Eps(i)/dx^2;
+   M2(i,i+1) = Eps(i)/dx^2 + gradeps(i)/2/dx;
+   M2(i,i-1) = Eps(i)/dx^2 - gradeps(i)/2/dx;
+end
+M2(lx,lx) = 1;
+
+%1-c
+bc = zeros(lx,1);
+bc(1) = 1000;
+bc(lx) = 100;
+
+%1-d
+a = M2\bc;
+figure(2)
+plot(x,a);
+xlabel('x [m]')
+ylabel('\Psi(x) [V]')
+title('Electrostatic Potential')
+
+%1-e
+disp('1-e')
+gradEps=zeros(1,lx);
+for i=1:lx-2
+    gradEps(i) = (-Eps(i+2)+ 4*Eps(i+1)-3*Eps(i))/(2/dx);
+end
+gradEps(lx-1) =(3*Eps(lx-1)-4*Eps(lx-2)+Eps(lx-3))/2/dx;
+gradEps(lx) = (3*Eps(lx) -4*Eps(lx-1)+Eps(lx-2))/2/dx;
+
+
+M2mod = zeros(lx);
+M2mod(1,1) = -1/dx;
+M2mod(1,2) = 1/dx; 
+for i=2:lx-1
+   M2mod(i,i) = -2*Eps(i)/dx^2;
+   M2mod(i,i+1) = Eps(i)/dx^2 + gradEps(i)/2/dx;
+   M2mod(i,i-1) = Eps(i)/dx^2 - gradEps(i)/2/dx;
+end
+M2mod(lx,lx) = 1;
+a2 =M2mod\bc; 
+
+figure(3)
+plot(x,a);
+hold on
+plot(x,a2);
+xlabel('x [m]')
+ylabel('\Psi(x) [V]')
+title('Electrostatic Potential')
+legend('First Order', 'Second order')
+
+fprintf('The second order is clearly not working corrrectly. I tried troubleshooting, but I couldnt figure out \n what I''m doing wrong\n\n');
+%% Problem 2
+
+%Initiation
+m = 1.67*10^(-27);            %(kg)
+q = 1.6*10^(-19);             %(C)
+B = 50000*10^-9;                    %(nT)
+
+
+omega=q*B/m;    %frequency of oscillation (can be shown via solution by hand gives a SHO)
+tmin=0;
+tmax=2*2*pi/abs(omega);    % follow particle for two oscillation periods
+t=linspace(tmin,tmax,100);
+dt=t(2)-t(1);
+lt=numel(t);
+
+%2-a
+disp('2-a');
+%RK2
+vx=zeros(1,lt);
+vy=zeros(1,lt);
+vx(1)=1e3;     % vx initial conditions
+vy(1)=1e3;     % vy initial conditions
+% Loop for applying RK2 to a system of two equations
+for n=2:lt
+    %step x and y components together, this is the half update
+    vxhalf=vx(n-1)+dt/2*(omega*vy(n-1));
+    vyhalf=vy(n-1)-dt/2*(omega*vx(n-1));
+    
+    %now the full update
+    vx(n)=vx(n-1)+dt*(omega*vyhalf);
+    vy(n)=vy(n-1)-dt*(omega*vxhalf);    
+end %for
+
+%RK4
+Vx=zeros(1,lt);
+Vy=zeros(1,lt);
+Vx(1)=1e3;     % vx initial conditions
+Vy(1)=1e3;     % vy initial conditions
+% Loop for applying RK3 to a system of two equations
+for n=2:lt
+    k1x=dt*(omega*Vy(n-1));    %k1 for the x differential equation
+    k1y=-dt*(omega*Vx(n-1));    %k1 for the y differential equation
+    
+    k2x=dt*omega*(Vy(n-1)+k1y/2);
+    k2y=-dt*omega*(Vx(n-1)+k1x/2);
+    
+    k3x=dt*omega*(Vy(n-1)+k2y/2);
+    k3y=-dt*omega*(Vx(n-1)+k2x/2);
+    
+    k4x=dt*omega*(Vy(n-1)+k3y);
+    k4y=-dt*omega*(Vx(n-1)+k3x);
+    
+    Vx(n)=Vx(n-1)+1/6*(k1x+2*k2x+2*k3x+k4x);
+    Vy(n)=Vy(n-1)+1/6*(k1y+2*k2y+2*k3y+k4y);
+end %for
+
+
+x=cumtrapz(t,vx);    %Matlab built-in for accumulating an integral value
+y=cumtrapz(t,vy);
+vz=1e3;
+z=vz*t;
+
+% Plot velocity solutions
+figure(4);
+subplot(1,2,1)
+ax=plotyy(t,Vx,t,Vy);
+set(ax(1),'FontSize',12);
+set(ax(2),'FontSize',12);
+xlabel('time (s)');
+ylabel(ax(1),'v_x');
+ylabel(ax(2),'v_y');
+title('RK4 t=100');
+subplot(1,2,2)
+ax=plotyy(t,vx,t,vy);
+set(ax(1),'FontSize',12);
+set(ax(2),'FontSize',12);
+xlabel('time (s)');
+ylabel(ax(1),'v_x');
+ylabel(ax(2),'v_y');
+title('RK2 t=100');
+
+
+% Comet plot demo
+figure(5);
+comet3(x,y,z)
+set(gca,'FontSize',20);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+%2-b
+disp('2-b')
+
+t=linspace(tmin,tmax,25);
+dt=t(2)-t(1);
+lt=numel(t);
+
+%RK2
+vx=zeros(1,lt);
+vy=zeros(1,lt);
+vx(1)=1e3;     % vx initial conditions
+vy(1)=1e3;     % vy initial conditions
+% Loop for applying RK2 to a system of two equations
+for n=2:lt
+    %step x and y components together, this is the half update
+    vxhalf=vx(n-1)+dt/2*(omega*vy(n-1));
+    vyhalf=vy(n-1)-dt/2*(omega*vx(n-1));
+    
+    %now the full update
+    vx(n)=vx(n-1)+dt*(omega*vyhalf);
+    vy(n)=vy(n-1)-dt*(omega*vxhalf);    
+end %for
+
+%RK4
+Vx=zeros(1,lt);
+Vy=zeros(1,lt);
+Vx(1)=1e3;     % vx initial conditions
+Vy(1)=1e3;     % vy initial conditions
+% Loop for applying RK3 to a system of two equations
+for n=2:lt
+    k1x=dt*(omega*Vy(n-1));    %k1 for the x differential equation
+    k1y=-dt*(omega*Vx(n-1));    %k1 for the y differential equation
+    
+    k2x=dt*omega*(Vy(n-1)+k1y/2);
+    k2y=-dt*omega*(Vx(n-1)+k1x/2);
+    
+    k3x=dt*omega*(Vy(n-1)+k2y/2);
+    k3y=-dt*omega*(Vx(n-1)+k2x/2);
+    
+    k4x=dt*omega*(Vy(n-1)+k3y);
+    k4y=-dt*omega*(Vx(n-1)+k3x);
+    
+    Vx(n)=Vx(n-1)+1/6*(k1x+2*k2x+2*k3x+k4x);
+    Vy(n)=Vy(n-1)+1/6*(k1y+2*k2y+2*k3y+k4y);
+end %for
+
+% Plot velocity solutions
+figure(6);
+subplot(1,2,1)
+ax=plotyy(t,Vx,t,Vy);
+set(ax(1),'FontSize',12);
+set(ax(2),'FontSize',12);
+xlabel('time (s)');
+ylabel(ax(1),'v_x');
+ylabel(ax(2),'v_y');
+title('RK4 t=25');
+subplot(1,2,2)
+ax=plotyy(t,vx,t,vy);
+set(ax(1),'FontSize',12);
+set(ax(2),'FontSize',12);
+xlabel('time (s)');
+ylabel(ax(1),'v_x');
+ylabel(ax(2),'v_y');
+title('RK2 t=25');
+
+fprintf('As seen in plot, when timestep is set to 25 RK 4 still manages to accurately solve the problem ');
+fprintf('\n while RK2 has failed. Therefore, RK4 is better since it can solve with fewer timesteps.\n')
+
+%2-c
+disp('2-c')
+y=linspace(0,5,100);
+By=zeros(1,100);
+By=B*(1+0.5*(y));
+omega=q*By/m;
+tmax=5*2*pi/abs(omega(1));
+t=linspace(tmin,tmax,100);
+dt=t(2)-t(1);
+lt=numel(t);
+%RK4
+Vx=zeros(1,lt);
+Vy=zeros(1,lt);
+Vx(1)=1e3;     % vx initial conditions
+Vy(1)=1e3;     % vy initial conditions
+% Loop for applying RK3 to a system of two equations
+for n=2:lt
+    k1x=dt*(omega(n-1)*Vy(n-1));    %k1 for the x differential equation
+    k1y=-dt*(omega(n-1)*Vx(n-1));    %k1 for the y differential equation
+    
+    k2x=dt*omega(n-1)*(Vy(n-1)+k1y/2);
+    k2y=-dt*omega(n-1)*(Vx(n-1)+k1x/2);
+    
+    k3x=dt*omega(n-1)*(Vy(n-1)+k2y/2);
+    k3y=-dt*omega(n-1)*(Vx(n-1)+k2x/2);
+    
+    k4x=dt*omega(n-1)*(Vy(n-1)+k3y);
+    k4y=-dt*omega(n-1)*(Vx(n-1)+k3x);
+    
+    Vx(n)=Vx(n-1)+1/6*(k1x+2*k2x+2*k3x+k4x);
+    Vy(n)=Vy(n-1)+1/6*(k1y+2*k2y+2*k3y+k4y);
+end %for
+
+figure(7);
+plot(Vx,Vy);
+fprintf('The plot is clearly not trochoidal, and I''m not sure why'); 
+##### SOURCE END #####
+--></body></html>
