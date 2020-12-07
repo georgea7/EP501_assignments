@@ -199,6 +199,10 @@ Because of overly restrictive stability criteria for forward in time differences
       0 \le &x& \le 1 \\
       0 \le &t& \le 1024 \frac{1}{ \lambda \frac{2 \pi}{\left( 2 \Delta x \right)^2} }
     \end{eqnarray}
+    For boundary conditions assume that the $f$ goes to zero at the edges of the domain.  Use the initial conditions:
+    \begin{equation}
+      f(x,0)=\sin (2 \pi x) + \sin (8 \pi x)
+    \end{equation}
     \item[(c)]  The backward Euler method is only first order accurate in time.  A second order in time BDF approach can be developed using a second order accurate backward difference for the time derivative:
     \begin{equation}
       \left[ \frac{\partial f}{\partial t} \right]_i \approx \frac{3f_i^{n+1} - 4f_i^n + y_i^{n-1}}{2 \Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}
