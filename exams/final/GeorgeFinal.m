@@ -173,3 +173,95 @@ title('\Delta t = 0.6667');
 %% Problem 2
 
 
+%2-d
+disp('2-d)');
+
+M = [ -2,2,-4/3,2/3; -1,1/2,-1/6,1/24; 1,1/2,1/6,1/24; 2,2,4/3,2/3];
+
+%% Problem 3
+clc
+clearvars
+close all
+
+%Parameters
+lamda=2;
+dx=1/64;
+lx=65;
+dt=5*dx^2/(2*lamda);
+x=0:dx:1;
+
+
+tmax=1024*(1/(lamda*2*pi/(2*dx)^2));
+t=0:dt:tmax;
+lt=numel(t);
+
+%Boundary Conditions
+f=zeros(lx,lt);
+f(:,lt)=sin(2*pi*x)+sin(8*pi*x);
+
+%https://www.modellingsimulation.com/p/backward-time-centered-space-approach.html
+A=zeros(lx,lx);
+b=zeros(1,lx);
+%b
+ff=f;
+%Euler iterations
+for n=lt-1:-1:2
+    A(1,1)=1;
+    b(1)=0; 
+    for i=2:lx-1     %interior grid points
+        %i-1 coeff
+        A(i,i-1)=-lamda/2/dx^2;
+        
+        %i coeff
+        A(i,i)=1/dt+lamda/dx^2;
+        
+        %i+1 coeff
+        A(i,i+1)=-lamda/2/dx^2;
+        
+        b(i)=ff(i,n+1)/dt+(ff(i+1,n+1)-2*ff(i,n+1)+ff(i-1,n+1))/dx^2*(lamda/2);        
+    end %for
+    A(lx,lx)=1;
+    b(lx)=0;
+    
+    [Amod,ord] = Gauss_elim(A,b',false);
+    fnow=backsub(Amod(ord,:));
+    ff(:,n)=fnow;
+end %for
+ff=flip(ff,2);
+
+%d
+fs=f;
+
+
+figure(1);
+subplot(131);
+imagesc(t,x,ff);
+colorbar;
+axis xy;
+xlabel('time (s)');
+ylabel('x (m)')
+title('Euler')
+set(gca,'FontSize',16);
+
+subplot(132);
+imagesc(t,x,fs);
+colorbar;
+axis xy;
+xlabel('time (s)');
+ylabel('x (m)')
+title('Second order')
+set(gca,'FontSize',16);
+
+%Compute and plot the analytical solution (see course repository ./test_problems/ for derivation)
+[T,X]=meshgrid(t,x);
+exact=exp(-4*pi^2*lamda*T).*sin(2*pi*X)+exp(-64*pi^2*lamda*T).*sin(8*pi*X);
+
+figure(1);
+subplot(133);
+imagesc(t,x,exact);
+colorbar;
+axis xy;
+xlabel('time (s)');
+ylabel('x (m)');
+title('Exact');
+set(gca,'FontSize',16);

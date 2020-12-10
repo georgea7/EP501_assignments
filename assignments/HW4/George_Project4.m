@@ -109,3 +109,6 @@ finterpmanual=BlInterp(xg,yg,f,xgi,ygi);
 %Matlab built-in Interpolation
 finterp=interp2(X,Y,f2D,xgi,ygi);
 
+[XGi, YGi]=meshgrid(xgi,ygi);
+figure(3)
+imagesc(finterpmanual);
