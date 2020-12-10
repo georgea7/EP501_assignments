@@ -171,12 +171,61 @@ legend('Exact','RK4')
 title('\Delta t = 0.6667');
 
 %% Problem 2
+clc
+clearvars
+close all
+
+%2-b
+lx=50;
+x=linspace(-10,10,lx)';
+y=sin(x);                   %y def
+ytripleprime=-cos(x);
+
+figure();
+plot(x,y);
+hold on;
+plot(x,ytripleprime);
+
+dy3_dx=zeros(lx,1);
+dx=x(2)-x(1);
+
+den=(81*dx^3+3*dx^2);
+x=x+1.55;                    %fudge factor
+y=sin(x);                   %y def
+%forward difference at the beginning
+dy3_dx(1)=(y(4)-3*y(3)-3*y(2)-y(1))/den;
+
+for ix=2:lx-2
+    dy3_dx(ix)=(y(ix+2)-3*y(ix+1)-3*y(ix)-y(ix-1))/den;
+end %for
+
+%backward difference at the end
+dy3_dx(lx-1)=(y(lx-1)-3*y(lx-2)-3*y(lx-3)-y(lx-4))/den;
+dy3_dx(lx)=(y(lx)-3*y(lx-1)-3*y(lx-2)-y(lx-3))/den;
+
+x=linspace(-10,10,lx)';
+plot(x,dy3_dx,'k--')
+legend('Orginal function', 'Analytical', 'Numerical');
+xlabel('x');
+ylabel('y(x) or y''''''(x)');
+title('Comparison of third derivative approximations');
+xlim([0 2*pi]);
 
 
 %2-d
 disp('2-d)');
 
 M = [ -2,2,-4/3,2/3; -1,1/2,-1/6,1/24; 1,1/2,1/6,1/24; 2,2,4/3,2/3];
+
+
+%2-g
+n=4;
+for j=1:n
+    for k=1:n
+        M(j,k)= (n/2)+1-j;
+    
+    end
+end
 
 %% Problem 3
 clc
@@ -231,6 +280,33 @@ ff=flip(ff,2);
 
 %d
 fs=f;
+%second order iteration
+for n=lt-1:-1:2
+    A(1,1)=1;
+    b(1)=0; 
+    for i=2:lx-1     %interior grid points
+        %i-1 coeff
+        A(i,i-1)=-lamda/dx^2;
+        
+        %n-1 coeff
+        A(i-1,i) = 1/dt;
+        
+        %i coeff
+        A(i,i)=3/dt+2*lamda/dx^2;
+        
+        %i+1 coeff
+        A(i,i+1)=-lamda/dx^2;
+        
+        b(i)=(fs(i,n+1)+fs(i,n-1))/dt+(ff(i+1,n+1)-2*ff(i,n+1)+ff(i-1,n+1))/dx^2*(lamda);        
+    end %for
+    A(lx,lx)=1;
+    b(lx)=0;
+    
+    [Amod,ord] = Gauss_elim(A,b',false);
+    fnow=backsub(Amod(ord,:));
+    fs(:,n)=fnow;
+end %for
+fs=flip(fs,2);
 
 
 figure(1);
