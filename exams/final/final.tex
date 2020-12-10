@@ -205,7 +205,7 @@ Because of overly restrictive stability criteria for forward in time differences
     \end{equation}
     \item[(c)]  The backward Euler method is only first order accurate in time.  A second order in time BDF approach can be developed using a second order accurate backward difference for the time derivative:
     \begin{equation}
-      \left[ \frac{\partial f}{\partial t} \right]_i \approx \frac{3f_i^{n+1} - 4f_i^n + y_i^{n-1}}{2 \Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}
+      \left[ \frac{\partial f}{\partial t} \right]_i \approx \frac{3f_i^{n+1} - 4f_i^n + f_i^{n-1}}{2 \Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}
     \end{equation}
     Develop a numerical solution to Equation \ref{eqn:parabolic} based on this approach.  Note that you will need to store data for $f_i$ at two previous time levels ($n$ and $n-1$) as opposed to the backward Euler approach which only requires prior data from the $n$ time level.  Develop and write down your system of equations that would need to be solved at each time step.  
     \item[(d)]  Make a version of your parabolic solver from part b that implements the second order BDF derived in part c and run it on the same test problem.  Plot your results and compare them against the backward Euler approach and analytical solution.  
