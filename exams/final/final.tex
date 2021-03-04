@@ -80,7 +80,7 @@ where $\alpha$ is a positive and real-valued constant.
      \end{equation}
      which forms a pair of root finding problems.  Plot each of these marginal stability conditions and evaluate all real-valued roots using an appropriate numerical method.  
      \item[(d)]  What is the largest time step for which RK4 will give stable results for the test ODE of Equation \ref{eqn:testODE}?  How does that compare to RK2 stability (see class notes and RK2 scripts written in \href{https://github.com/Zettergren-Courses/EP501_matlab/blob/master/ODEs/RK_methods.m}{MATLAB} or \href{https://github.com/Zettergren-Courses/EP501_python/blob/master/ODEs/RK_methods.py}{Python}).  
-     \item[(e)]  Numerically solve the given ODE with RK4 using time steps slightly above and below your derived stability criteria and show plots for each simulation that demonstrate that it behaves as your analysis predicts for these two choices of time step.  
+     \item[(e)]  Numerically solve the given ODE with RK4 using time steps slightly above and below your derived stability criteria and show plots for each simulation that demonstrate that it behaves as your analysis predicts for these two choices of time step.  You may use the initial condition $y(0)=1$ and make sure you run your simulation long enough to see the exponential decay of the solution.  You may adopt whatever value you wish for $\alpha$ (e.g. $\alpha=1$ is fine).  
    \end{enumerate}
    
    \pagebreak
@@ -205,7 +205,7 @@ Because of overly restrictive stability criteria for forward in time differences
     \end{equation}
     \item[(c)]  The backward Euler method is only first order accurate in time.  A second order in time BDF approach can be developed using a second order accurate backward difference for the time derivative:
     \begin{equation}
-      \left[ \frac{\partial f}{\partial t} \right]_i \approx \frac{3f_i^{n+1} - 4f_i^n + y_i^{n-1}}{2 \Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}
+      \left[ \frac{\partial f}{\partial t} \right]_i \approx \frac{3f_i^{n+1} - 4f_i^n + f_i^{n-1}}{2 \Delta t} =  \lambda_i \left[ \frac{\partial^2 f}{\partial x^2} \right]_i^{n+1}
     \end{equation}
     Develop a numerical solution to Equation \ref{eqn:parabolic} based on this approach.  Note that you will need to store data for $f_i$ at two previous time levels ($n$ and $n-1$) as opposed to the backward Euler approach which only requires prior data from the $n$ time level.  Develop and write down your system of equations that would need to be solved at each time step.  
     \item[(d)]  Make a version of your parabolic solver from part b that implements the second order BDF derived in part c and run it on the same test problem.  Plot your results and compare them against the backward Euler approach and analytical solution.  
